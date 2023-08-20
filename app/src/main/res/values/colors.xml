@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="primaryColor">#42C83C</color>
+    <color name="primaryLightColor">#99FFFFFF</color>
+    <color name="primaryDarkColor">#c53a00</color>
+
+    <color name="primaryTextColor">#2196F3</color>
+    <color name="error_color">@android:color/holo_red_light</color>
+    <color name="light_text_color">#FFFFFFFF</color>
+    <color name="text_color">#333333</color>
+    <color name="hint_text_color">#B7B7B7</color>
+    <color name="regular_price_color">#cbcbcb</color>
+    <color name="inactive_text_color">#8D8D8D</color>
+</resources>

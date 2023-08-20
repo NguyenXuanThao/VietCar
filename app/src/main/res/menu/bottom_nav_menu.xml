@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottomNavHome"
+        android:icon="@drawable/ic_home"
+        android:title="Trang chủ"/>
+    <item
+        android:id="@+id/bottomNavProduct"
+        android:icon="@drawable/ic_steering"
+        android:title="Sản Phẩm"/>
+    <item
+        android:id="@+id/bottomNavWallet"
+        android:icon="@drawable/ic_wallet"
+        android:title="Ví"/>
+    <item
+        android:id="@+id/bottomNavStore"
+        android:icon="@drawable/ic_store"
+        android:title="Cửa hàng"/>
+    <item
+        android:id="@+id/bottomNavAccount"
+        android:icon="@drawable/ic_account"
+        android:title="Tài khoản"/>
+
+</menu>
