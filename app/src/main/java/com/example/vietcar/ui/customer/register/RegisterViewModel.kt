@@ -1,4 +1,4 @@
-package com.example.vietcar.activities.register
+package com.example.vietcar.ui.customer.register
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

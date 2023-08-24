@@ -1,4 +1,4 @@
-package com.example.vietcar.ui.product.viewmodel
+package com.example.vietcar.ui.category.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ProductViewModel @Inject constructor(
+class CategoryViewModel @Inject constructor(
     private val carRepository: CarRepository
 ) : ViewModel() {
 
@@ -19,9 +19,9 @@ class ProductViewModel @Inject constructor(
     val productResponse
         get() = _productResponse
 
-    fun getAllProduct() {
+    fun getAllProduct(categoryId: String) {
         viewModelScope.launch {
-            _productResponse.value = carRepository.getAllProduct()
+            _productResponse.value = carRepository.getListProduct(categoryId)
         }
     }
 }

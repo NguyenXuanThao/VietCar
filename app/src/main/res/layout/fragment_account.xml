@@ -15,33 +15,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgAvatar"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:src="@drawable/ic_avatar"
+    <FrameLayout
+        android:id="@+id/frameAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline2">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_avatar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgWarning"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            app:tint="#D56A48"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/warning" />
+
+    </FrameLayout>
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
-        android:layout_width="95dp"
+        android:layout_width="wrap_content"
         android:layout_height="29dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_login_red"
         android:padding="6dp"
-        android:text="Đăng Nhập"
+        android:text="Đăng nhập"
         android:textColor="#B2401C"
-        app:layout_constraintEnd_toEndOf="@+id/imgAvatar"
-        app:layout_constraintStart_toStartOf="@+id/imgAvatar"
-        app:layout_constraintTop_toBottomOf="@+id/imgAvatar" />
+        app:layout_constraintEnd_toEndOf="@+id/frameAvatar"
+        app:layout_constraintStart_toStartOf="@+id/frameAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/frameAvatar" />
 
     <TextView
         android:id="@+id/tvPhoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="36dp"
         android:text="0349398702"
         android:textColor="#F61414"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +70,7 @@
         android:id="@+id/cvEditFile"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:background="#F5F4F4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +82,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:text="Chỉnh sửa hồ sơ" />
+            android:text="Chỉnh sửa hồ sơ"
+            android:textColor="@color/black" />
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView

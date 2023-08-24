@@ -1,4 +1,4 @@
-package com.example.vietcar.activities.login
+package com.example.vietcar.ui.customer.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

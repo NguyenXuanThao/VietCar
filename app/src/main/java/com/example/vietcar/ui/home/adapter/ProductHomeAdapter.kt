@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.vietcar.data.model.product_group.Product
+import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.ItemProductBinding
 
 class ProductHomeAdapter : RecyclerView.Adapter<ProductHomeAdapter.ProductViewHolder>() {
@@ -45,7 +45,7 @@ class ProductHomeAdapter : RecyclerView.Adapter<ProductHomeAdapter.ProductViewHo
 
         fun bind(product: Product) {
             binding.tvNameProduct.text = product.name
-            val price = String.format("%,d đ", product.total_price.toLong())
+            val price = product.total_price?.let { String.format("%,d đ", it.toLong()) }
             binding.tvPriceProduct.text = price
 
             val uriImage = "https://vietcargroup.com${product.avatar}"

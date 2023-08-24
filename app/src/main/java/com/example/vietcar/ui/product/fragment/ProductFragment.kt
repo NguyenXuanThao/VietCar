@@ -27,7 +27,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
     }
 
     override fun initData() {
-        productViewModel.getListProduct()
+        productViewModel.getAllProduct()
     }
 
 }

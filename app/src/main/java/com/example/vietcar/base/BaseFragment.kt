@@ -31,11 +31,14 @@ abstract class BaseFragment<VB : ViewBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkLogin()
         obServerLivedata()
         initData()
         initView()
         evenClick()
     }
+
+    open fun checkLogin() {}
 
     open fun obServerLivedata() {}
 

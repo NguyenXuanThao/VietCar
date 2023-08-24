@@ -9,7 +9,22 @@
         android:id="@+id/bottomNavHome"
         android:name="com.example.vietcar.ui.home.fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_bottomNavHome_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_bottomNavHome_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/bottomNavProduct"
         android:name="com.example.vietcar.ui.product.fragment.ProductFragment"
@@ -19,7 +34,9 @@
         android:id="@+id/bottomNavAccount"
         android:name="com.example.vietcar.ui.account.fragment.AccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account">
+
+    </fragment>
     <fragment
         android:id="@+id/bottomNavStore"
         android:name="com.example.vietcar.StoreFragment"
@@ -30,4 +47,30 @@
         android:name="com.example.vietcar.WalletFragment"
         android:label="fragment_wallet"
         tools:layout="@layout/fragment_wallet" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.vietcar.ui.customer.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.vietcar.ui.customer.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.vietcar.ui.category.fragment.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category">
+
+        <argument
+            android:name="category"
+            android:defaultValue="@null"
+            app:argType="com.example.vietcar.data.model.category.Category"
+            app:nullable="true" />
+    </fragment>
 </navigation>

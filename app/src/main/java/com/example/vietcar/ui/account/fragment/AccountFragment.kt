@@ -1,5 +1,6 @@
 package com.example.vietcar.ui.account.fragment
 
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
@@ -38,6 +39,13 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
         accountAdapter.differ.submitList(listCategory)
         binding.rvAccountScreen.adapter = accountAdapter
         binding.rvAccountScreen.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.btnLogin.setOnClickListener {
+        }
     }
 
 }

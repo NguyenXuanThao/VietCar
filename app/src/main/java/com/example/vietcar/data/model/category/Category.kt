@@ -1,7 +1,13 @@
 package com.example.vietcar.data.model.category
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Category(
-    val `data`: List<CategoryData>,
-    val message: String,
-    val status: Int
-)
+    val avatar: String?,
+    val description: String?,
+    val id: Int?,
+    val name: String?,
+    val status: Int?
+): Parcelable

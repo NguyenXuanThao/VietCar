@@ -22,48 +22,103 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgAvatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+        <FrameLayout
+            android:id="@+id/frameAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:src="@drawable/ic_avatar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_avatar" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgWarning"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/warning"
+                android:visibility="gone"
+                app:tint="#D56A48" />
+
+        </FrameLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnHomeLogin"
-            android:layout_width="95dp"
-            android:layout_height="29dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/bg_login"
-            android:padding="6dp"
             android:text="Đăng Nhập"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
-            app:layout_constraintStart_toEndOf="@+id/imgAvatar"
-            app:layout_constraintTop_toTopOf="@+id/imgAvatar" />
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/frameAvatar"
+            app:layout_constraintStart_toEndOf="@+id/frameAvatar"
+            app:layout_constraintTop_toTopOf="@+id/frameAvatar" />
+
+        <TextView
+            android:id="@+id/tvPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
+            android:text="0349398702"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/frameAvatar"
+            app:layout_constraintTop_toTopOf="@+id/frameAvatar" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnVerify"
+            android:layout_width="92dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/bg_login"
+            android:text="Chưa xác thực"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/tvPhoneNumber"
+            app:layout_constraintTop_toBottomOf="@+id/tvPhoneNumber" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="@+id/imgShopping"
+            app:layout_constraintEnd_toStartOf="@+id/imgShopping"
+            app:layout_constraintTop_toTopOf="@+id/imgShopping" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgShopping"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_shopping"
+            app:layout_constraintBottom_toBottomOf="@+id/imgNotify"
+            app:layout_constraintEnd_toStartOf="@+id/imgNotify"
+            app:layout_constraintTop_toTopOf="@+id/imgNotify" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgNotify"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="44dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="32dp"
             android:src="@drawable/ic_notify"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_search"
-            app:layout_constraintBottom_toBottomOf="@+id/imgNotify"
-            app:layout_constraintEnd_toStartOf="@+id/imgNotify"
-            app:layout_constraintTop_toTopOf="@+id/imgNotify" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

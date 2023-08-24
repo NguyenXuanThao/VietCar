@@ -45,7 +45,7 @@ class AccountAdapter: RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
         fun bind(accountScreenCategory: AccountScreenCategory) {
 
             binding.tvTitle.text = accountScreenCategory.title
-            binding.imgIcon.setImageResource(accountScreenCategory.image)
+            binding.imgIcon.setImageResource(accountScreenCategory.image!!)
         }
     }
 }

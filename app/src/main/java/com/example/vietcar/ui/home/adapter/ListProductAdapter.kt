@@ -6,19 +6,19 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.vietcar.data.model.product_group.ProductGroupData
+import com.example.vietcar.data.model.product_group.ProductGroup
 import com.example.vietcar.databinding.ItemListProductBinding
 
 class ListProductAdapter : RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>() {
 
     private var binding: ItemListProductBinding? = null
 
-    private val diffUtil = object : DiffUtil.ItemCallback<ProductGroupData>() {
-        override fun areItemsTheSame(oldItem: ProductGroupData, newItem: ProductGroupData): Boolean {
+    private val diffUtil = object : DiffUtil.ItemCallback<ProductGroup>() {
+        override fun areItemsTheSame(oldItem: ProductGroup, newItem: ProductGroup): Boolean {
             return oldItem.name == newItem.name
         }
 
-        override fun areContentsTheSame(oldItem: ProductGroupData, newItem: ProductGroupData): Boolean {
+        override fun areContentsTheSame(oldItem: ProductGroup, newItem: ProductGroup): Boolean {
             return oldItem == newItem
         }
 
@@ -45,11 +45,11 @@ class ListProductAdapter : RecyclerView.Adapter<ListProductAdapter.ListProductVi
     inner class ListProductViewHolder(private val binding: ItemListProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(productGroupData: ProductGroupData) {
+        fun bind(productGroup: ProductGroup) {
             val productAdapter = ProductHomeAdapter()
-            val productList = productGroupData.product.take(4)
+            val productList = productGroup.product.take(4)
             productAdapter.differ.submitList(productList)
-            binding.tvNameListProduct.text = productGroupData.name
+            binding.tvNameListProduct.text = productGroup.name
             binding.rvListProduct.adapter = productAdapter
             binding.rvListProduct.layoutManager =
                 GridLayoutManager(itemView.context, 2)

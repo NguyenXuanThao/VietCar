@@ -2,11 +2,11 @@ package com.example.vietcar.di.repository
 
 import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.api.CarApi
-import com.example.vietcar.data.model.category.Category
+import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.ListProduct
-import com.example.vietcar.data.model.product_group.ProductGroup
+import com.example.vietcar.data.model.product_group.ListProductGroup
 import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
 import kotlinx.coroutines.Dispatchers
@@ -17,21 +17,27 @@ class CarRepository @Inject constructor(
     private val carApi: CarApi
 ) : ICarRepository {
 
-    override suspend fun getCategory(): Category {
+    override suspend fun getCategory(): ListCategory {
         return withContext(Dispatchers.IO) {
             carApi.getCategory(DataLocal.BEARER_TOKEN)
         }
     }
 
-    override suspend fun getProductGroup(): ProductGroup {
+    override suspend fun getListProductGroup(): ListProductGroup {
         return withContext(Dispatchers.IO) {
-            carApi.getProductGroup(DataLocal.BEARER_TOKEN)
+            carApi.getListProductGroup(DataLocal.BEARER_TOKEN)
         }
     }
 
-    override suspend fun getListProduct(): ListProduct {
+    override suspend fun getListProduct(categoryId: String): ListProduct {
         return withContext(Dispatchers.IO) {
-            carApi.getListProduct(DataLocal.BEARER_TOKEN)
+            carApi.getListProduct(DataLocal.BEARER_TOKEN, categoryId = categoryId)
+        }
+    }
+
+    override suspend fun getAllProduct(): ListProduct {
+        return withContext(Dispatchers.IO) {
+            carApi.getAllProduct(DataLocal.BEARER_TOKEN)
         }
     }
 

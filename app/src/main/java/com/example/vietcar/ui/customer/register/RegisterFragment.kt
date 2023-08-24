@@ -1,61 +1,37 @@
-package com.example.vietcar.activities.register
+package com.example.vietcar.ui.customer.register
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
-import com.example.vietcar.R
+import androidx.fragment.app.viewModels
+import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.ErrorDialog
 import com.example.vietcar.data.model.register.RegisterBody
-import com.example.vietcar.data.model.register.RegisterResponse
-import com.example.vietcar.databinding.ActivityRegisterBinding
+import com.example.vietcar.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityRegisterBinding
+@AndroidEntryPoint
+class RegisterFragment : BaseFragment<FragmentRegisterBinding>(
+    FragmentRegisterBinding::inflate
+) {
 
     private val registerViewModel: RegisterViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        observerLiveData()
-        initData()
-        eventClick()
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        window?.decorView?.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
-        window.statusBarColor = Color.TRANSPARENT
-    }
-
-    private fun observerLiveData() {
+    override fun obServerLivedata() {
+        super.obServerLivedata()
 
         registerViewModel.registerResponse.observe(this) { registerResponse ->
             if (registerResponse.status == 0) {
                 Log.d("ThaoNX", "Chuyển màn hình")
-            }else {
-                showDialogError(registerResponse.message)
+            } else {
+                registerResponse.message?.let { showDialogError(it) }
             }
         }
     }
 
-    private fun initData() {
-
-    }
-
-    private fun eventClick() {
+    override fun evenClick() {
+        super.evenClick()
 
         binding.btnRegister.setOnClickListener {
 
@@ -82,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun showDialogError(content: String) {
-        val errorDialog = ErrorDialog(this, content)
+        val errorDialog = ErrorDialog(requireContext(), content)
         errorDialog.show()
         errorDialog.window?.setGravity(Gravity.CENTER)
         errorDialog.window?.setLayout(
