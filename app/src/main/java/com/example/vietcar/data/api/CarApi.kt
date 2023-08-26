@@ -40,7 +40,7 @@ interface CarApi {
 
 
     @GET("api/noauth/getListGroup")
-    suspend fun getListProductGroup(
+    suspend fun getProductGroup(
         @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("pageIndex") pageIndex: String = "0",
@@ -48,20 +48,33 @@ interface CarApi {
     ): ListProductGroup
 
     @GET("api/noauth/getListProduct")
-    suspend fun getAllProduct(
-        @Header("Authorization") token: String,
-        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
-        @Query("pageIndex") pageIndex: String = "0",
-        @Query("group_id") groupId: String = "0"
-    ): ListProduct
-
-    @GET("api/noauth/getListProduct")
-    suspend fun getListProduct(
+    suspend fun getListProductCategory(
         @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("pageIndex") pageIndex: String = "0",
         @Query("category_id") categoryId: String?,
-        @Query("group_id") groupId: String = "0"
+    ): ListProduct
+
+    @GET("api/noauth/getListProduct")
+    suspend fun getListProductGroup(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Query("pageIndex") pageIndex: String = "0",
+        @Query("group_id") groupId: String?,
+    ): ListProduct
+
+    @GET("api/noauth/getListProduct")
+    suspend fun getAllProduct(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Query("pageIndex") pageIndex: String = "0",
+    ): ListProduct
+
+    @GET("api/noauth/getListProductRelation")
+    suspend fun getRelatedProducts(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Query("product_id") productId: String
     ): ListProduct
 
 

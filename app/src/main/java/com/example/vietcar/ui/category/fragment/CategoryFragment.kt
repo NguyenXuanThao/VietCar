@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
-import com.example.vietcar.data.model.category.Category
+import com.example.vietcar.common.DataLocal
+import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.databinding.FragmentCategoryBinding
 import com.example.vietcar.ui.category.viewmodel.CategoryViewModel
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -31,52 +31,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     private val categoryViewModel: CategoryViewModel by viewModels()
     private var productAdapter = ProductAdapter()
     private val args: CategoryFragmentArgs by navArgs()
-    private var category: Category? = null
-
-    val categoryList = listOf(
-        Category(
-            avatar = "https://vietcargroup.com/avatar/1669603756.png",
-            null,
-            null,
-            "Gía đỡ, số điện thoại-Tâu sạc",
-            null
-        ),
-        Category(
-            avatar = "https://vietcargroup.com/avatar/1669603756.png",
-            null,
-            null,
-            "Fragment 1",
-            null
-        ),
-        Category(
-            avatar = "https://vietcargroup.com/avatar/1669603756.png",
-            null,
-            null,
-            "Fragment 1",
-            null
-        ),
-        Category(
-            avatar = "https://vietcargroup.com/avatar/1669603756.png",
-            null,
-            null,
-            "Fragment 1",
-            null
-        ),
-        Category(
-            avatar = "https://vietcargroup.com/avatar/1669603756.png",
-            null,
-            null,
-            "Fragment 1",
-            null
-        ),
-        Category(
-            avatar = "https://vietcargroup.com/avatar/1669603756.png",
-            null,
-            null,
-            "Fragment 1",
-            null
-        ),
-    )
+    private var position: Int? = null
+    private var categories: ListCategory? = null
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
@@ -88,9 +44,12 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     @SuppressLint("SuspiciousIndentation")
     override fun obServerLivedata() {
 
-        category = args.category
+        position = args.position
+        categories = args.listCategory
 
-        binding.tvTitle.text = category?.name
+        if (position != null && categories!!.data.isNotEmpty()) {
+            binding.tvTitle.text = categories!!.data[position!!].name
+        }
 
         categoryViewModel.productResponse.observe(viewLifecycleOwner) { products ->
             productAdapter.differ.submitList(products.data)
@@ -101,13 +60,20 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
 
     override fun initData() {
 
-        category?.let { categoryViewModel.getAllProduct(it.id.toString()) }
+        categories!!.data[position!!].id?.toString()?.let { categoryViewModel.getListProductCategory(it) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
+        bottomNavigationView.visibility = View.GONE
     }
 
     override fun initView() {
         super.initView()
 
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
+       bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
         bottomNavigationView.visibility = View.GONE
 
         setUpNavigationView()
@@ -136,7 +102,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     private fun setUpNavigationView() {
         val menu = binding.navigationView.menu
 
-        categoryList.forEachIndexed { index, menuItemObject ->
+        categories?.data?.forEachIndexed { index, menuItemObject ->
             val menuItem = menu.add(R.id.dynamic_group, Menu.NONE, index, null)
             menuItem.setActionView(R.layout.custom_layout_menu)
             val actionView = menuItem.actionView
@@ -144,8 +110,17 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
             val iconImageView = actionView?.findViewById<ImageView>(R.id.imgCategory)
             val textTextView = actionView?.findViewById<TextView>(R.id.tvNameCategory)
 
-            Glide.with(requireContext()).load(menuItemObject.avatar)
-                .into(iconImageView!!)
+            val uriImage = "https://vietcargroup.com${menuItemObject.avatar}"
+            val uriScreen = "https://vietcargroup.com/avatar/1669603516.png"
+
+            if (menuItemObject.avatar != DataLocal.EMPTY) {
+                Glide.with(requireContext()).load(uriImage)
+                    .into(iconImageView!!)
+            } else {
+                Glide.with(requireContext()).load(uriScreen)
+                    .into(iconImageView!!)
+            }
+
             textTextView?.text = menuItemObject.name
 
             actionView.tag = index
@@ -156,7 +131,9 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
                 val selectedItemIndex = view?.tag as? Int
 
                 if (selectedItemIndex != null) {
-                    Log.d("Menu Click", "Selected item index: $selectedItemIndex")
+                    categories!!.data[selectedItemIndex].id?.toString()
+                        ?.let { categoryViewModel.getListProductCategory(it) }
+                    binding.tvTitle.text = categories!!.data[selectedItemIndex].name
                 } else {
                     Log.d("Menu Click", "Tag is null or not an Int")
                 }

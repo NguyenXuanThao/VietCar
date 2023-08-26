@@ -12,12 +12,16 @@ interface ICarRepository {
 
     suspend fun getCategory(): ListCategory
 
-    suspend fun getListProductGroup(): ListProductGroup
+    suspend fun getProductGroup(): ListProductGroup
 
-    suspend fun getListProduct(categoryId: String): ListProduct
+    suspend fun getListProductCategory(categoryId: String): ListProduct
+
+    suspend fun getListProductGroup(groupId: String): ListProduct
     suspend fun getAllProduct(): ListProduct
 
-    suspend fun login(loginBody: LoginBody) : LoginResponse
+    suspend fun login(loginBody: LoginBody): LoginResponse
 
     suspend fun register(registerBody: RegisterBody): RegisterResponse
+
+    suspend fun getRelatedProducts(productId: String): ListProduct
 }

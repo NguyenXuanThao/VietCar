@@ -1,13 +1,17 @@
 package com.example.vietcar.ui.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.data.model.product_group.ProductGroup
 import com.example.vietcar.databinding.ItemListProductBinding
+import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
+import com.example.vietcar.ui.product.adapter.ProductAdapter
 
 class ListProductAdapter : RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>() {
 
@@ -46,13 +50,22 @@ class ListProductAdapter : RecyclerView.Adapter<ListProductAdapter.ListProductVi
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(productGroup: ProductGroup) {
-            val productAdapter = ProductHomeAdapter()
-            val productList = productGroup.product.take(4)
+            val productAdapter = ProductAdapter()
+            val productList = productGroup.product
+
+            Log.d("ThaoNX4", productList.size.toString())
+
             productAdapter.differ.submitList(productList)
             binding.tvNameListProduct.text = productGroup.name
             binding.rvListProduct.adapter = productAdapter
             binding.rvListProduct.layoutManager =
                 GridLayoutManager(itemView.context, 2)
+
+            binding.tvShowAll.setOnClickListener {mView ->
+
+                val action = HomeFragmentDirections.actionBottomNavHomeToProductGroupFragment(productGroup.id.toString(), adapterPosition)
+                mView.findNavController().navigate(action)
+            }
         }
     }
 }

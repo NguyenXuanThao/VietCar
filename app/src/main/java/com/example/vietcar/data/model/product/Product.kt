@@ -1,5 +1,10 @@
 package com.example.vietcar.data.model.product
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
+@Parcelize
 data class Product(
     val avatar: String?,
     val category_id: Int?,
@@ -15,4 +20,4 @@ data class Product(
     val status: Int?,
     val total_price: Int?,
     val unit: String?
-)
+): Parcelable

@@ -4,10 +4,10 @@
     android:layout_width="148dp"
     android:layout_height="216dp"
     android:layout_marginStart="20dp"
-    android:layout_marginBottom="4dp"
-    android:layout_weight="1"
     android:layout_marginTop="4dp"
-    android:layout_marginEnd="10dp">
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="4dp"
+    android:layout_weight="1">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgProduct"
-            android:layout_width="116dp"
+            android:layout_width="92dp"
             android:layout_height="88dp"
             android:layout_marginTop="12dp"
             android:scaleType="fitXY"
@@ -23,6 +23,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgShopping"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_shopping"
+            app:layout_constraintStart_toEndOf="@+id/imgProduct"
+            app:layout_constraintTop_toTopOf="@+id/imgProduct"
+            app:tint="@color/primaryDarkColor" />
 
         <TextView
             android:id="@+id/tvNameProduct"

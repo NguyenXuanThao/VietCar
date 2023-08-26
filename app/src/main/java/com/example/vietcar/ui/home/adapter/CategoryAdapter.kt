@@ -7,12 +7,15 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.vietcar.click.ItemCategoryClick
 import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.model.category.Category
+import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.databinding.ItemCategoryBinding
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 
-class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ItemCategoryViewHolder>() {
+class CategoryAdapter(private val itemCategoryClick: ItemCategoryClick) :
+    RecyclerView.Adapter<CategoryAdapter.ItemCategoryViewHolder>() {
 
     private var binding: ItemCategoryBinding? = null
 
@@ -46,12 +49,12 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ItemCategoryViewHol
     inner class ItemCategoryViewHolder(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: Category) {
-            binding.tvNameCategory.text = data.name
-            val uriImage = "https://vietcargroup.com${data.avatar}"
+        fun bind(category: Category) {
+            binding.tvNameCategory.text = category.name
+            val uriImage = "https://vietcargroup.com${category.avatar}"
             val uriScreen = "https://vietcargroup.com/avatar/1669603516.png"
 
-            if (data.avatar != DataLocal.EMPTY) {
+            if (category.avatar != DataLocal.EMPTY) {
                 Glide.with(itemView.context).load(uriImage)
                     .into(binding.imgCategory)
             } else {
@@ -59,11 +62,9 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ItemCategoryViewHol
                     .into(binding.imgCategory)
             }
 
-            itemView.setOnClickListener { mView ->
-                val action = HomeFragmentDirections.actionBottomNavHomeToCategoryFragment(data)
-                mView.findNavController().navigate(action)
+            itemView.setOnClickListener {
+                itemCategoryClick.onItemClick(adapterPosition)
             }
-
         }
     }
 }

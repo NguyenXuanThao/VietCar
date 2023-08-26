@@ -2,14 +2,19 @@ package com.example.vietcar.ui.product.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.vietcar.R
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.ItemProductBinding
+import com.example.vietcar.ui.category.fragment.CategoryFragmentDirections
+import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
+import com.example.vietcar.ui.product_group.fragment.ProductGroupFragmentDirections
 
-class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     private var binding: ItemProductBinding? = null
 
@@ -51,6 +56,32 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
             val uriImage = "https://vietcargroup.com${product.avatar}"
             Glide.with(itemView.context).load(uriImage)
                 .into(binding.imgProduct)
+
+            itemView.setOnClickListener { mView ->
+
+                val action1 =
+                    CategoryFragmentDirections.actionCategoryFragmentToDetailProductFragment(product)
+                val action2 =
+                    ProductGroupFragmentDirections.actionProductGroupFragmentToDetailProductFragment(
+                        product
+                    )
+                val action3 =
+                    HomeFragmentDirections.actionBottomNavHomeToDetailProductFragment(
+                        product
+                    )
+
+                when (mView.findNavController().currentDestination?.id) {
+                    R.id.categoryFragment -> {
+                        mView.findNavController().navigate(action1)
+                    }
+                    R.id.bottomNavHome -> {
+                        mView.findNavController().navigate(action3)
+                    }
+                    else -> {
+                        mView.findNavController().navigate(action2)
+                    }
+                }
+            }
         }
     }
 }

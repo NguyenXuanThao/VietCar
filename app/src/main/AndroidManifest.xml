@@ -16,16 +16,6 @@
         android:theme="@style/Base.Theme.VietCar"
         tools:targetApi="31">
         <activity
-            android:name=".activities.register.RegisterActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".activities.login.LoginActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
             android:name=".activities.SplashActivity"
             android:exported="true">
 

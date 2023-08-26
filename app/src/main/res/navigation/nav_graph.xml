@@ -24,6 +24,12 @@
         <argument
             android:name="password"
             app:argType="string" />
+        <action
+            android:id="@+id/action_bottomNavHome_to_productGroupFragment"
+            app:destination="@id/productGroupFragment" />
+        <action
+            android:id="@+id/action_bottomNavHome_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavProduct"
@@ -68,9 +74,42 @@
         tools:layout="@layout/fragment_category">
 
         <argument
-            android:name="category"
+            android:name="position"
+            app:argType="integer" />
+        <argument
+            android:name="listCategory"
             android:defaultValue="@null"
-            app:argType="com.example.vietcar.data.model.category.Category"
+            app:argType="com.example.vietcar.data.model.category.ListCategory"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_categoryFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailProductFragment"
+        android:name="com.example.vietcar.ui.detail_product.fragment.ProductDetailFragment"
+        android:label="fragment_detail_product"
+        tools:layout="@layout/fragment_product_detail">
+        <argument
+            android:name="product"
+            android:defaultValue="@null"
+            app:argType="com.example.vietcar.data.model.product.Product"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/productGroupFragment"
+        android:name="com.example.vietcar.ui.product_group.fragment.ProductGroupFragment"
+        android:label="fragment_product_group"
+        tools:layout="@layout/fragment_product_group">
+        <argument
+            android:name="groupId"
+            app:argType="string" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_productGroupFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
+    </fragment>
+
 </navigation>

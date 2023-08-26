@@ -3,13 +3,18 @@ package com.example.vietcar.ui.home.fragment
 import android.content.Context
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.ui.home.adapter.CategoryAdapter
 import com.example.vietcar.ui.home.adapter.ListProductAdapter
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.click.ItemCategoryClick
+import com.example.vietcar.data.model.category.Category
+import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.databinding.FragmentHomeBinding
 import com.example.vietcar.ui.customer.login.LoginViewModel
@@ -20,16 +25,17 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(
     FragmentHomeBinding::inflate
-) {
+), ItemCategoryClick {
 
     private val homeViewModel: HomeViewModel by viewModels()
     private val loginViewModel: LoginViewModel by viewModels()
 
-    private var categoryAdapter = CategoryAdapter()
+    private var categoryAdapter = CategoryAdapter(this)
     private var listProductAdapter = ListProductAdapter()
 
     private var phoneNumber: String? = null
     private var password: String? = null
+    private var categories: ListCategory? = null
 
     override fun checkLogin() {
         super.checkLogin()
@@ -70,8 +76,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             }
         }
 
-        homeViewModel.categoryResponse.observe(viewLifecycleOwner) { category ->
-            categoryAdapter.differ.submitList(category.data)
+        homeViewModel.categoryResponse.observe(viewLifecycleOwner) { listCategory ->
+
+            categories = listCategory
+
+            categoryAdapter.differ.submitList(listCategory.data)
             binding.rvCategory.adapter = categoryAdapter
             binding.rvCategory.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
@@ -96,6 +105,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
         binding.btnHomeLogin.setOnClickListener {
             transitToLoginScreen()
+        }
+
+        binding.imgShopping.setOnClickListener {
+//            Toast.makeText(requireContext(), "đề ngày mai đi", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -129,5 +142,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             val bodyLogin = LoginBody(phone = retrievedNumber!!, password = retrievedPassword!!)
             loginViewModel.login(bodyLogin)
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        val action = HomeFragmentDirections.actionBottomNavHomeToCategoryFragment(position, categories)
+       findNavController().navigate(action)
     }
 }

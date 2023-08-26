@@ -23,15 +23,21 @@ class CarRepository @Inject constructor(
         }
     }
 
-    override suspend fun getListProductGroup(): ListProductGroup {
+    override suspend fun getProductGroup(): ListProductGroup {
         return withContext(Dispatchers.IO) {
-            carApi.getListProductGroup(DataLocal.BEARER_TOKEN)
+            carApi.getProductGroup(DataLocal.BEARER_TOKEN)
         }
     }
 
-    override suspend fun getListProduct(categoryId: String): ListProduct {
+    override suspend fun getListProductCategory(categoryId: String): ListProduct {
         return withContext(Dispatchers.IO) {
-            carApi.getListProduct(DataLocal.BEARER_TOKEN, categoryId = categoryId)
+            carApi.getListProductCategory(DataLocal.BEARER_TOKEN, categoryId = categoryId)
+        }
+    }
+
+    override suspend fun getListProductGroup(groupId: String): ListProduct {
+        return withContext(Dispatchers.IO) {
+            carApi.getListProductGroup(DataLocal.BEARER_TOKEN, groupId = groupId)
         }
     }
 
@@ -50,6 +56,12 @@ class CarRepository @Inject constructor(
     override suspend fun register(registerBody: RegisterBody): RegisterResponse {
         return withContext(Dispatchers.IO) {
             carApi.register(token = DataLocal.BEARER_TOKEN, body = registerBody)
+        }
+    }
+
+    override suspend fun getRelatedProducts(productId: String): ListProduct {
+        return withContext(Dispatchers.IO) {
+            carApi.getRelatedProducts(token = DataLocal.BEARER_TOKEN, productId = productId)
         }
     }
 

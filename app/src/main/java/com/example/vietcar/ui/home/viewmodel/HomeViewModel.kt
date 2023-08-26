@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(
 
     fun getProductGroup() {
         viewModelScope.launch {
-            _listProductGroupResponse.value = carRepository.getListProductGroup()
+            _listProductGroupResponse.value = carRepository.getProductGroup()
         }
     }
 }
