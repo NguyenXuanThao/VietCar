@@ -24,4 +24,6 @@ interface ICarRepository {
     suspend fun register(registerBody: RegisterBody): RegisterResponse
 
     suspend fun getRelatedProducts(productId: String): ListProduct
+
+    suspend fun getProductShoppingCart(): ListProduct
 }

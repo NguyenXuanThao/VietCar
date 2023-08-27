@@ -18,18 +18,15 @@
             android:id="@+id/action_bottomNavHome_to_categoryFragment"
             app:destination="@id/categoryFragment" />
 
-        <argument
-            android:name="phoneNumber"
-            app:argType="string" />
-        <argument
-            android:name="password"
-            app:argType="string" />
         <action
             android:id="@+id/action_bottomNavHome_to_productGroupFragment"
             app:destination="@id/productGroupFragment" />
         <action
             android:id="@+id/action_bottomNavHome_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
+        <action
+            android:id="@+id/action_bottomNavHome_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavProduct"
@@ -111,5 +108,10 @@
             android:id="@+id/action_productGroupFragment_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/shoppingCartFragment"
+        android:name="com.example.vietcar.ui.shopping_cart.fragment.ShoppingCartFragment"
+        android:label="fragment_shopping_cart"
+        tools:layout="@layout/fragment_shopping_cart" />
 
 </navigation>

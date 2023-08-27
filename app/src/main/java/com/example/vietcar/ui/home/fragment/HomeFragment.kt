@@ -2,20 +2,25 @@ package com.example.vietcar.ui.home.fragment
 
 import android.content.Context
 import android.util.Log
+import android.view.Gravity
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.ui.home.adapter.CategoryAdapter
 import com.example.vietcar.ui.home.adapter.ListProductAdapter
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.base.dialogs.ConfirmDialog
+import com.example.vietcar.base.dialogs.ErrorDialog
 import com.example.vietcar.click.ItemCategoryClick
 import com.example.vietcar.data.model.category.Category
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
+import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.databinding.FragmentHomeBinding
 import com.example.vietcar.ui.customer.login.LoginViewModel
 import com.example.vietcar.ui.home.viewmodel.HomeViewModel
@@ -25,56 +30,44 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(
     FragmentHomeBinding::inflate
-), ItemCategoryClick {
+), ItemCategoryClick, ConfirmDialog.ConfirmCallback {
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private val loginViewModel: LoginViewModel by viewModels()
 
     private var categoryAdapter = CategoryAdapter(this)
     private var listProductAdapter = ListProductAdapter()
 
-    private var phoneNumber: String? = null
-    private var password: String? = null
+    private var status = 1
+
     private var categories: ListCategory? = null
 
     override fun checkLogin() {
         super.checkLogin()
+        Log.d("HomeFragment", "checkLogin")
 
         parentFragmentManager.setFragmentResultListener(
             "loginResult",
             viewLifecycleOwner
         ) { _, result ->
+            val loginData = result.getParcelable<LoginResponse>("loginData")
 
-            phoneNumber = result.getString("phoneNumber")
-            password = result.getString("password")
+            binding.btnHomeLogin.visibility = View.GONE
+            binding.btnVerify.visibility = View.VISIBLE
+            binding.tvPhoneNumber.visibility = View.VISIBLE
+            binding.tvPhoneNumber.text = loginData!!.data!!.phone.toString()
+            binding.imgWarning.visibility = View.VISIBLE
 
-            if (phoneNumber != null && password != null) {
-                saveData(phoneNumber!!, password!!)
-            } else {
-                Log.d("ThaoNX", "data is null")
-            }
-            retrieveData()
+            status = loginData.status!!
+            saveData(loginData.status, loginData.data!!.phone.toString())
+
+            Log.d("HomeFragment", loginData.status.toString())
         }
 
         retrieveData()
+
     }
 
     override fun obServerLivedata() {
-
-        loginViewModel.loginResponse.observe(this) { loginResponse ->
-
-            if (loginResponse != null) {
-                loginResponse.message?.let { Log.d("HomeFragment", it) }
-
-                binding.btnHomeLogin.visibility = View.GONE
-                binding.btnVerify.visibility = View.VISIBLE
-                binding.tvPhoneNumber.visibility = View.VISIBLE
-                binding.tvPhoneNumber.text = loginResponse.data!!.phone.toString()
-                binding.imgWarning.visibility = View.VISIBLE
-            } else {
-                Log.d("HomeFragment", "null")
-            }
-        }
 
         homeViewModel.categoryResponse.observe(viewLifecycleOwner) { listCategory ->
 
@@ -108,8 +101,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         }
 
         binding.imgShopping.setOnClickListener {
-//            Toast.makeText(requireContext(), "đề ngày mai đi", Toast.LENGTH_SHORT).show()
+            if (status == 0) {
+
+                val action = HomeFragmentDirections.actionBottomNavHomeToShoppingCartFragment()
+                findNavController().navigate(action)
+            }else {
+                showDialogConfirm()
+            }
         }
+    }
+
+    private fun showDialogConfirm() {
+
+        val confirmDialog = ConfirmDialog(requireContext(), this, "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?", "Đồng ý", "Hủy")
+        confirmDialog.show()
+        confirmDialog.window?.setGravity(Gravity.CENTER)
+        confirmDialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 
     private fun transitToLoginScreen() {
@@ -117,13 +127,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         findNavController().navigate(action)
     }
 
-    private fun saveData(phoneNumber: String, password: String) {
+    private fun saveData(status: Int, phoneNumber: String) {
         val sharedPreferences =
             requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
+        editor.putInt("status_key", status)
         editor.putString("number_key", phoneNumber)
-        editor.putString("password_key", password)
 
         editor.apply()
     }
@@ -132,20 +142,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         val sharedPreferences =
             requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-        val retrievedNumber = sharedPreferences.getString("number_key", "")
-        val retrievedPassword = sharedPreferences.getString("password_key", "")
+        val retrievedPhone = sharedPreferences.getString("number_key", "")
+        val retrievedStatus = sharedPreferences.getInt("status_key", 1)
 
-        if (retrievedNumber != "" && retrievedPassword != "") {
-            Log.d("ThaoNX", "retrieveData: $retrievedNumber & $retrievedPassword")
+        status = retrievedStatus
 
-            obServerLivedata()
-            val bodyLogin = LoginBody(phone = retrievedNumber!!, password = retrievedPassword!!)
-            loginViewModel.login(bodyLogin)
+        if (retrievedPhone != "" && retrievedStatus != 1) {
+            Log.d("ThaoNX", "retrieveData: $retrievedPhone & $retrievedStatus")
+
+            binding.btnHomeLogin.visibility = View.GONE
+            binding.btnVerify.visibility = View.VISIBLE
+            binding.tvPhoneNumber.visibility = View.VISIBLE
+            binding.tvPhoneNumber.text = retrievedPhone.toString()
+            binding.imgWarning.visibility = View.VISIBLE
         }
     }
 
     override fun onItemClick(position: Int) {
-        val action = HomeFragmentDirections.actionBottomNavHomeToCategoryFragment(position, categories)
-       findNavController().navigate(action)
+        val action =
+            HomeFragmentDirections.actionBottomNavHomeToCategoryFragment(position, categories)
+        findNavController().navigate(action)
+    }
+
+    override fun negativeAction() {
+        Log.d("HomeFragment", "Hủy bỏ")
+    }
+
+    override fun positiveAction() {
+       transitToLoginScreen()
     }
 }

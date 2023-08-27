@@ -77,5 +77,11 @@ interface CarApi {
         @Query("product_id") productId: String
     ): ListProduct
 
+    @GET("api/auth/cart/listProduct")
+    suspend fun getProductShoppingCart(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+    ): ListProduct
+
 
 }

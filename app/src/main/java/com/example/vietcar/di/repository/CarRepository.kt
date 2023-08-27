@@ -65,4 +65,10 @@ class CarRepository @Inject constructor(
         }
     }
 
+    override suspend fun getProductShoppingCart(): ListProduct {
+        return withContext(Dispatchers.IO) {
+            carApi.getProductShoppingCart(DataLocal.BEARER_TOKEN)
+        }
+    }
+
 }

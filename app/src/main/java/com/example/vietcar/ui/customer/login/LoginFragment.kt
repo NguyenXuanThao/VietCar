@@ -1,13 +1,8 @@
 package com.example.vietcar.ui.customer.login
 
-import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -16,7 +11,7 @@ import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.ErrorDialog
 import com.example.vietcar.data.model.login.LoginBody
-import com.example.vietcar.databinding.FragmentHomeBinding
+import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.databinding.FragmentLoginBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,10 +24,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     private lateinit var bottomNavigationView: BottomNavigationView
     private val loginViewModel: LoginViewModel by viewModels()
 
+    private var loginData : LoginResponse? = null
+
     override fun obServerLivedata() {
         super.obServerLivedata()
 
         loginViewModel.loginResponse.observe(this) { loginResponse ->
+
+            loginData = loginResponse
 
             if (loginResponse.status == 0) {
                 backToHomeFragment()
@@ -43,15 +42,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     }
 
     private fun backToHomeFragment() {
-        val phoneNumber = binding.textIPPhone.editText?.text.toString()
-        val password = binding.textIPPassword.editText?.text.toString()
 
-        val result = Bundle().apply {
-            putString("phoneNumber", phoneNumber)
-            putString("password", password)
-        }
+        val args = bundleOf("loginData" to loginData)
 
-        setFragmentResult("loginResult", result)
+        setFragmentResult("loginResult", args)
 
         findNavController().popBackStack()
     }
