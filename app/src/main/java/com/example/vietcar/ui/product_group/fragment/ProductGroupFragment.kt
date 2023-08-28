@@ -6,6 +6,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.FragmentProductGroupBinding
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.example.vietcar.ui.product_group.viewmodel.ProductGroupViewModel
@@ -15,9 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
     FragmentProductGroupBinding::inflate
-) {
+), ItemShoppingCartClick {
 
-    private val productAdapter = ProductAdapter()
+    private val productAdapter = ProductAdapter(this)
 
     private var groupId: String? = null
 
@@ -70,6 +72,10 @@ class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
         super.initData()
 
         groupId?.let { productGroupViewModel.getListProductGroup(it) }
+
+    }
+
+    override fun onItemClick(product: Product) {
 
     }
 

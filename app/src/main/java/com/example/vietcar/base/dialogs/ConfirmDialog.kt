@@ -37,7 +37,6 @@ class ConfirmDialog(
             callback?.positiveAction()
             dismiss()
         }
-
     }
 
     interface ConfirmCallback {

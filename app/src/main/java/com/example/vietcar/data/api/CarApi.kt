@@ -5,7 +5,10 @@ import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.ListProduct
+import com.example.vietcar.data.model.product.Product
+import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.data.model.product_group.ListProductGroup
+import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
 import retrofit2.http.Body
@@ -82,6 +85,13 @@ interface CarApi {
         @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
     ): ListProduct
+
+    @POST("api/auth/cart/addProductToCart")
+    suspend fun addProductToCart(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Body body: ProductBody
+    ) : ProductToCart
 
 
 }

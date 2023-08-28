@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.FragmentProductDetailBinding
 import com.example.vietcar.ui.detail_product.viewmodel.ProductDetailViewModel
@@ -25,13 +26,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     FragmentProductDetailBinding::inflate
-) {
+), ItemShoppingCartClick {
 
     private var product: Product? = null
 
     private val args: ProductDetailFragmentArgs by navArgs()
 
-    private val productAdapter = ProductAdapter()
+    private val productAdapter = ProductAdapter(this)
 
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
 
@@ -182,5 +183,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
         if (product!!.sort_description != null) {
             binding.webViewSortDetail.loadData(product!!.sort_description!!, "text/html", "UTF-8")
         }
+    }
+
+    override fun onItemClick(product: Product) {
+
     }
 }

@@ -19,5 +19,6 @@ data class Product(
     val sort_description: String?,
     val status: Int?,
     val total_price: Int?,
-    val unit: String?
+    val unit: String?,
+    val quantity_buy: Int?
 ): Parcelable

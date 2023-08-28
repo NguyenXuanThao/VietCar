@@ -48,7 +48,8 @@ class ShoppingCartAdapter : RecyclerView.Adapter<ShoppingCartAdapter.ShoppingCar
         fun bind(product: Product) {
             binding.tvNameProduct.text = product.name
             val price = product.net_price?.let { String.format("%,d đ", it.toLong()) }
-            binding.tvPrice.text = price
+            binding.tvPriceProduct.text = price
+            binding.tvProductNumber.text = product.quantity_buy.toString()
 
             val uriImage = "https://vietcargroup.com${product.avatar}"
             Glide.with(itemView.context).load(uriImage)

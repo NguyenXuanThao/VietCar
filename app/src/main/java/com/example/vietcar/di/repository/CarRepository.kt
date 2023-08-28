@@ -6,7 +6,10 @@ import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.ListProduct
+import com.example.vietcar.data.model.product.Product
+import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.data.model.product_group.ListProductGroup
+import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
 import kotlinx.coroutines.Dispatchers
@@ -68,6 +71,12 @@ class CarRepository @Inject constructor(
     override suspend fun getProductShoppingCart(): ListProduct {
         return withContext(Dispatchers.IO) {
             carApi.getProductShoppingCart(DataLocal.BEARER_TOKEN)
+        }
+    }
+
+    override suspend fun addProductToCart(body: ProductBody): ProductToCart {
+        return withContext(Dispatchers.IO) {
+            carApi.addProductToCart(DataLocal.BEARER_TOKEN, body = body)
         }
     }
 

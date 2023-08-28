@@ -3,6 +3,8 @@ package com.example.vietcar.ui.product.fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.FragmentProductBinding
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.example.vietcar.ui.product.viewmodel.ProductViewModel
@@ -13,10 +15,10 @@ import dagger.hilt.android.HiltAndroidApp
 @AndroidEntryPoint
 class ProductFragment : BaseFragment<FragmentProductBinding>(
     FragmentProductBinding::inflate
-) {
+), ItemShoppingCartClick {
 
     private val productViewModel: ProductViewModel by viewModels()
-    private var productAdapter = ProductAdapter()
+    private var productAdapter = ProductAdapter(this)
 
     override fun obServerLivedata() {
         productViewModel.productResponse.observe(viewLifecycleOwner) { products ->
@@ -28,6 +30,10 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
 
     override fun initData() {
         productViewModel.getAllProduct()
+    }
+
+    override fun onItemClick(product: Product) {
+        TODO("Not yet implemented")
     }
 
 }

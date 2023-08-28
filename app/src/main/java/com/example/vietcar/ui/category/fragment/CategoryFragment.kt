@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.model.category.ListCategory
+import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.FragmentCategoryBinding
 import com.example.vietcar.ui.category.viewmodel.CategoryViewModel
 import com.example.vietcar.ui.product.adapter.ProductAdapter
@@ -27,9 +29,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     FragmentCategoryBinding::inflate
-) {
+), ItemShoppingCartClick {
     private val categoryViewModel: CategoryViewModel by viewModels()
-    private var productAdapter = ProductAdapter()
+    private var productAdapter = ProductAdapter(this)
     private val args: CategoryFragmentArgs by navArgs()
     private var position: Int? = null
     private var categories: ListCategory? = null
@@ -139,6 +141,10 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
                 }
             }
         }
+    }
+
+    override fun onItemClick(product: Product) {
+
     }
 
 

@@ -7,39 +7,42 @@
     android:padding="8dp">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgProduct"
+        android:id="@+id/imgProductDialog"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_launcher_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/cvDeleteProduct" />
 
     <TextView
-        android:id="@+id/tvNameProduct"
+        android:id="@+id/tvName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginEnd="4dp"
+        android:text="Gối tựa đầu ô tô - tựa lưng cao su non cao cấp"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/cvDeleteProduct"
-        app:layout_constraintStart_toEndOf="@+id/imgProduct"
-        app:layout_constraintTop_toTopOf="@+id/imgProduct"
+        app:layout_constraintStart_toEndOf="@+id/imgProductDialog"
+        app:layout_constraintTop_toTopOf="@+id/imgProductDialog"
         tools:ignore="NotSibling" />
 
     <TextView
-        android:id="@+id/tvPriceProduct"
+        android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="198.000đ"
         android:textColor="#D30404"
-        android:textStyle="bold"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/tvNameProduct"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameProduct" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <LinearLayout
+        android:id="@+id/lnNumber"
         android:layout_width="100dp"
         android:layout_height="32dp"
         android:layout_marginTop="12dp"
@@ -47,11 +50,11 @@
         android:orientation="horizontal"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        app:layout_constraintStart_toStartOf="@+id/tvNameProduct"
-        app:layout_constraintTop_toBottomOf="@+id/tvPriceProduct">
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrice">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgIncrease"
+            android:id="@+id/imgDecrease"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -64,7 +67,7 @@
             android:background="#3E3C3B" />
 
         <TextView
-            android:id="@+id/tvProductNumber"
+            android:id="@+id/tvProductNumberDialog"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -79,7 +82,7 @@
             android:background="#3E3C3B" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgDecrease"
+            android:id="@+id/imgIncrease"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -93,11 +96,11 @@
         android:id="@+id/cvDeleteProduct"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_marginTop="8dp"
         android:backgroundTint="#CDCDCD"
         app:cardCornerRadius="9dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvNameProduct">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="16dp"
@@ -106,5 +109,23 @@
             android:src="@drawable/baseline_clear_24" />
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAddProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#CA0606"
+        android:text="Thêm vào giỏ"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lnNumber" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vietcar.data.model.category.ListCategory
+import com.example.vietcar.data.model.product.Product
+import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.data.model.product_group.ListProductGroup
+import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.di.repository.ICarRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,6 +27,10 @@ class HomeViewModel @Inject constructor(
     val listProductGroupResponse
         get() = _listProductGroupResponse
 
+    private val _productResponse: MutableLiveData<ProductToCart> = MutableLiveData()
+    val productResponse
+        get() = _productResponse
+
 
     fun getCategory() {
         viewModelScope.launch {
@@ -34,6 +41,12 @@ class HomeViewModel @Inject constructor(
     fun getProductGroup() {
         viewModelScope.launch {
             _listProductGroupResponse.value = carRepository.getProductGroup()
+        }
+    }
+
+    fun addProductToCart(body: ProductBody) {
+        viewModelScope.launch {
+            _productResponse.value = carRepository.addProductToCart(body)
         }
     }
 }

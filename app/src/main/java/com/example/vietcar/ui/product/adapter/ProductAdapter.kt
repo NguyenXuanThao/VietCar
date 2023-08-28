@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vietcar.R
+import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.ItemProductBinding
 import com.example.vietcar.ui.category.fragment.CategoryFragmentDirections
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product_group.fragment.ProductGroupFragmentDirections
 
-class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter (private val itemShoppingCartClick: ItemShoppingCartClick) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     private var binding: ItemProductBinding? = null
 
@@ -56,6 +57,10 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
             val uriImage = "https://vietcargroup.com${product.avatar}"
             Glide.with(itemView.context).load(uriImage)
                 .into(binding.imgProduct)
+
+            binding.imgShopping.setOnClickListener {
+                itemShoppingCartClick.onItemClick(product)
+            }
 
             itemView.setOnClickListener { mView ->
 

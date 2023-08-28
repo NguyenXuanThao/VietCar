@@ -4,7 +4,10 @@ import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.ListProduct
+import com.example.vietcar.data.model.product.Product
+import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.data.model.product_group.ListProductGroup
+import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
 
@@ -26,4 +29,6 @@ interface ICarRepository {
     suspend fun getRelatedProducts(productId: String): ListProduct
 
     suspend fun getProductShoppingCart(): ListProduct
+
+    suspend fun addProductToCart(body: ProductBody): ProductToCart
 }

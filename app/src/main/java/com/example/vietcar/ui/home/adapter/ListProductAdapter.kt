@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.data.model.product_group.ProductGroup
 import com.example.vietcar.databinding.ItemListProductBinding
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 
-class ListProductAdapter : RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>() {
+class ListProductAdapter (private val itemShoppingCartClick: ItemShoppingCartClick) : RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>() {
 
     private var binding: ItemListProductBinding? = null
 
@@ -50,7 +51,7 @@ class ListProductAdapter : RecyclerView.Adapter<ListProductAdapter.ListProductVi
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(productGroup: ProductGroup) {
-            val productAdapter = ProductAdapter()
+            val productAdapter = ProductAdapter(itemShoppingCartClick)
             val productList = productGroup.product
 
             Log.d("ThaoNX4", productList.size.toString())

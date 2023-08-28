@@ -5,24 +5,23 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.ui.home.adapter.CategoryAdapter
 import com.example.vietcar.ui.home.adapter.ListProductAdapter
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
-import com.example.vietcar.base.dialogs.ErrorDialog
 import com.example.vietcar.click.ItemCategoryClick
-import com.example.vietcar.data.model.category.Category
+import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.data.model.category.ListCategory
-import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
+import com.example.vietcar.data.model.product.Product
+import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentHomeBinding
-import com.example.vietcar.ui.customer.login.LoginViewModel
 import com.example.vietcar.ui.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,12 +29,17 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(
     FragmentHomeBinding::inflate
-), ItemCategoryClick, ConfirmDialog.ConfirmCallback {
+), ItemCategoryClick, ConfirmDialog.ConfirmCallback, AddProductDialog.AddProductCallBack,
+    ItemShoppingCartClick {
 
     private val homeViewModel: HomeViewModel by viewModels()
 
+    private var productId = 0
+
     private var categoryAdapter = CategoryAdapter(this)
-    private var listProductAdapter = ListProductAdapter()
+    private var listProductAdapter = ListProductAdapter(this)
+
+    private var isClickAddProduct = false
 
     private var status = 1
 
@@ -85,6 +89,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             binding.rvListProduct.adapter = listProductAdapter
             binding.rvListProduct.layoutManager = LinearLayoutManager(requireContext())
         }
+
+        homeViewModel.productResponse.observe(viewLifecycleOwner) { productToCart ->
+            if (isClickAddProduct) {
+                Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
+                isClickAddProduct = false
+            }
+        }
     }
 
     override fun initData() {
@@ -105,7 +116,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
                 val action = HomeFragmentDirections.actionBottomNavHomeToShoppingCartFragment()
                 findNavController().navigate(action)
-            }else {
+            } else {
                 showDialogConfirm()
             }
         }
@@ -113,7 +124,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     private fun showDialogConfirm() {
 
-        val confirmDialog = ConfirmDialog(requireContext(), this, "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?", "Đồng ý", "Hủy")
+        val confirmDialog = ConfirmDialog(
+            requireContext(),
+            this,
+            "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
+            "Đồng ý",
+            "Hủy"
+        )
         confirmDialog.show()
         confirmDialog.window?.setGravity(Gravity.CENTER)
         confirmDialog.window?.setLayout(
@@ -169,6 +186,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     }
 
     override fun positiveAction() {
-       transitToLoginScreen()
+        transitToLoginScreen()
+    }
+
+    override fun onItemClick(product: Product) {
+        productId = product.id!!
+        val addProductDialog = AddProductDialog(
+            requireContext(),
+            this,
+            product.name,
+            product.net_price.toString(),
+            product.avatar,
+            "Thêm vào giỏ"
+        )
+        addProductDialog.show()
+        addProductDialog.window?.setGravity(Gravity.CENTER)
+        addProductDialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+    override fun clickAddProduct(number: Int) {
+        isClickAddProduct = true
+        Log.d("HomeFragment", "number $number; product id $productId")
+
+        val body = ProductBody(productId, number)
+        homeViewModel.addProductToCart(body)
     }
 }
