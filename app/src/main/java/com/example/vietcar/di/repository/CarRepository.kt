@@ -6,8 +6,8 @@ import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.ListProduct
-import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
+import com.example.vietcar.data.model.product.ProductOfCartBody
 import com.example.vietcar.data.model.product_group.ListProductGroup
 import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.data.model.register.RegisterBody
@@ -77,6 +77,18 @@ class CarRepository @Inject constructor(
     override suspend fun addProductToCart(body: ProductBody): ProductToCart {
         return withContext(Dispatchers.IO) {
             carApi.addProductToCart(DataLocal.BEARER_TOKEN, body = body)
+        }
+    }
+
+    override suspend fun updateQuantity(body: ProductOfCartBody): ProductToCart {
+        return withContext(Dispatchers.IO) {
+            carApi.updateQuantity(DataLocal.BEARER_TOKEN, body = body)
+        }
+    }
+
+    override suspend fun deleteProductOfCart(cartId: Int): ProductToCart {
+        return withContext(Dispatchers.IO) {
+            carApi.deleteProductOfCart(DataLocal.BEARER_TOKEN, cartId = cartId)
         }
     }
 

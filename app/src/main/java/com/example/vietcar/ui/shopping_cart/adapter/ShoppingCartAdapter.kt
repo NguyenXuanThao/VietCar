@@ -1,15 +1,18 @@
 package com.example.vietcar.ui.shopping_cart.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.vietcar.click.ItemProductOfCartClick
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.ItemShoppingCartBinding
 
-class ShoppingCartAdapter : RecyclerView.Adapter<ShoppingCartAdapter.ShoppingCartViewHolder>() {
+class ShoppingCartAdapter(private val itemProductOfCartClick: ItemProductOfCartClick) :
+    RecyclerView.Adapter<ShoppingCartAdapter.ShoppingCartViewHolder>() {
 
     private var binding: ItemShoppingCartBinding? = null
 
@@ -54,6 +57,30 @@ class ShoppingCartAdapter : RecyclerView.Adapter<ShoppingCartAdapter.ShoppingCar
             val uriImage = "https://vietcargroup.com${product.avatar}"
             Glide.with(itemView.context).load(uriImage)
                 .into(binding.imgProduct)
+
+            binding.imgIncrease.setOnClickListener {
+                if (product.quantity_buy != null) {
+                    product.quantity_buy = product.quantity_buy!! + 1
+
+                    binding.tvProductNumber.text = product.quantity_buy.toString()
+                    Log.d("ShoppingCartAdapter", product.quantity_buy.toString())
+                    itemProductOfCartClick.increase(product)
+                }
+            }
+
+            binding.imgDecrease.setOnClickListener {
+                if (product.quantity_buy != null && product.quantity_buy!! > 1) {
+                    product.quantity_buy = product.quantity_buy!! - 1
+
+                    binding.tvProductNumber.text = product.quantity_buy.toString()
+                    Log.d("ShoppingCartAdapter", product.quantity_buy.toString())
+                    itemProductOfCartClick.decrease(product)
+                }
+            }
+
+            binding.cvDeleteProduct.setOnClickListener {
+                itemProductOfCartClick.delete(product)
+            }
         }
     }
 }

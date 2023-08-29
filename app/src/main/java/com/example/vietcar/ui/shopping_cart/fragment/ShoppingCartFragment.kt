@@ -1,14 +1,14 @@
 package com.example.vietcar.ui.shopping_cart.fragment
 
-import android.graphics.Typeface
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.click.ItemProductOfCartClick
+import com.example.vietcar.data.model.product.Product
+import com.example.vietcar.data.model.product.ProductOfCartBody
 import com.example.vietcar.databinding.FragmentShoppingCartBinding
 import com.example.vietcar.ui.shopping_cart.adapter.ShoppingCartAdapter
 import com.example.vietcar.ui.shopping_cart.viewmodel.ShoppingCartViewModel
@@ -18,15 +18,17 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
     FragmentShoppingCartBinding::inflate
-) {
+), ItemProductOfCartClick {
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private val shoppingCartViewModel: ShoppingCartViewModel by viewModels()
 
-    private var shoppingCartAdapter = ShoppingCartAdapter()
+    private var shoppingCartAdapter = ShoppingCartAdapter(this)
 
     private var totalMoney = 0
+
+    private var listProduct: ArrayList<Product>? = ArrayList()
 
     override fun onResume() {
         super.onResume()
@@ -45,24 +47,31 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
 
         shoppingCartViewModel.productResponse.observe(viewLifecycleOwner) { products ->
 
+            listProduct = products.data as ArrayList<Product>
+
             shoppingCartAdapter.differ.submitList(products.data)
-
-            for (product in products.data) {
-                val netPrice = product.net_price!! * product.quantity_buy!!
-                totalMoney += netPrice
-            }
-
-            val convertTotalMoney = totalMoney.let { String.format("%,d đ", it.toLong()) }
-
-            val spannable = SpannableString("Tổng: $convertTotalMoney")
-
-            spannable.setSpan(StyleSpan(Typeface.BOLD), 0, 5, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-            binding.tvTotal.text = spannable
 
             binding.rvProductFragment.adapter = shoppingCartAdapter
             binding.rvProductFragment.layoutManager = LinearLayoutManager(requireContext())
+
+            totalMoney(products.data)
         }
+
+        shoppingCartViewModel.productOfCartResponse.observe(viewLifecycleOwner) { productToCart ->
+
+
+        }
+    }
+
+    private fun totalMoney(listProduct: ArrayList<Product>) {
+        for (product in listProduct) {
+            val netPrice = product.net_price!! * product.quantity_buy!!
+            totalMoney += netPrice
+        }
+
+        val convertTotalMoney = totalMoney.let { String.format("%,d đ", it.toLong()) }
+
+        binding.tvTotal.text = convertTotalMoney
     }
 
     override fun initData() {
@@ -71,5 +80,58 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
         shoppingCartViewModel.getProductShoppingCart()
     }
 
+    override fun increase(product: Product) {
+
+        Log.d("ThaoNX", product.quantity_buy.toString())
+
+        val body = ProductOfCartBody(product.cart_id!!, product.quantity_buy!!)
+
+        shoppingCartViewModel.updateQuantity(body)
+
+        val totalMoney = binding.tvTotal.text.toString().replace("[^0-9]".toRegex(), "").toLong()
+            .toInt() + product.net_price!!
+
+        val price = totalMoney.let { String.format("%,d đ", it.toLong()) }
+
+        binding.tvTotal.text = price
+
+    }
+
+    override fun decrease(product: Product) {
+        Log.d("ThaoNX", product.quantity_buy.toString())
+
+        val body = ProductOfCartBody(product.cart_id!!, product.quantity_buy!!)
+
+        shoppingCartViewModel.updateQuantity(body)
+
+        val totalMoney =
+            binding.tvTotal.text.toString().replace("[^0-9]".toRegex(), "").toLong()
+                .toInt() - product.net_price!!
+
+        val price = totalMoney.let { String.format("%,d đ", it.toLong()) }
+
+        binding.tvTotal.text = price
+    }
+
+    override fun delete(product: Product) {
+
+        shoppingCartViewModel.deleteProductOfCart(product.cart_id!!)
+
+        val totalMoney =
+            binding.tvTotal.text.toString().replace("[^0-9]".toRegex(), "").toLong()
+                .toInt() - product.net_price!! * product.quantity_buy!!
+
+        val price = totalMoney.let { String.format("%,d đ", it.toLong()) }
+
+        binding.tvTotal.text = price
+
+        listProduct!!.remove(product)
+
+        shoppingCartAdapter.differ.submitList(listProduct)
+
+        binding.rvProductFragment.adapter = shoppingCartAdapter
+        binding.rvProductFragment.layoutManager = LinearLayoutManager(requireContext())
+
+    }
 
 }

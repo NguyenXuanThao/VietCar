@@ -5,16 +5,18 @@ import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.ListProduct
-import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
+import com.example.vietcar.data.model.product.ProductOfCartBody
 import com.example.vietcar.data.model.product_group.ListProductGroup
 import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface CarApi {
@@ -91,7 +93,21 @@ interface CarApi {
         @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: ProductBody
-    ) : ProductToCart
+    ): ProductToCart
+
+    @PUT("api/auth/cart/changeQuantityProductOfCart")
+    suspend fun updateQuantity(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Body body: ProductOfCartBody
+    ): ProductToCart
+
+    @DELETE("api/auth/cart/deleteProductOfCart")
+    suspend fun deleteProductOfCart(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Query("cart_id") cartId : Int
+    ): ProductToCart
 
 
 }

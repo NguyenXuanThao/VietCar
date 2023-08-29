@@ -8,6 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class Product(
     val avatar: String?,
     val category_id: Int?,
+    val cart_id: Int?,
     val description: String?,
     val flag_price: Int?,
     val id: Int?,
@@ -20,5 +21,5 @@ data class Product(
     val status: Int?,
     val total_price: Int?,
     val unit: String?,
-    val quantity_buy: Int?
-): Parcelable
+    var quantity_buy: Int?
+) : Parcelable

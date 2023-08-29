@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPriceProduct">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgIncrease"
+            android:id="@+id/imgDecrease"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -79,7 +79,7 @@
             android:background="#3E3C3B" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgDecrease"
+            android:id="@+id/imgIncrease"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
