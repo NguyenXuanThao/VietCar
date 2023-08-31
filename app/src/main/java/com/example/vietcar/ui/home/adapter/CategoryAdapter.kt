@@ -63,7 +63,7 @@ class CategoryAdapter(private val itemCategoryClick: ItemCategoryClick) :
             }
 
             itemView.setOnClickListener {
-                itemCategoryClick.onItemClick(adapterPosition)
+                itemCategoryClick.onClickCategoryItem(adapterPosition)
             }
         }
     }

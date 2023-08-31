@@ -59,7 +59,7 @@ class ProductAdapter (private val itemShoppingCartClick: ItemShoppingCartClick) 
                 .into(binding.imgProduct)
 
             binding.imgShopping.setOnClickListener {
-                itemShoppingCartClick.onItemClick(product)
+                itemShoppingCartClick.onClickShoppingCartItem(product)
             }
 
             itemView.setOnClickListener { mView ->

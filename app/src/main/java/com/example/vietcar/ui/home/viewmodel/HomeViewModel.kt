@@ -27,9 +27,9 @@ class HomeViewModel @Inject constructor(
     val listProductGroupResponse
         get() = _listProductGroupResponse
 
-    private val _productResponse: MutableLiveData<ProductToCart> = MutableLiveData()
-    val productResponse
-        get() = _productResponse
+    private val _productToCartResponse: MutableLiveData<ProductToCart> = MutableLiveData()
+    val productToCartResponse
+        get() = _productToCartResponse
 
 
     fun getCategory() {
@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
 
     fun addProductToCart(body: ProductBody) {
         viewModelScope.launch {
-            _productResponse.value = carRepository.addProductToCart(body)
+            _productToCartResponse.value = carRepository.addProductToCart(body)
         }
     }
 }

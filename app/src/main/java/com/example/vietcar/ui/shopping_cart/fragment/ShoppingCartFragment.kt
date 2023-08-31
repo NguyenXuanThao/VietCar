@@ -63,6 +63,12 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
         }
     }
 
+    override fun initData() {
+        super.initData()
+
+        shoppingCartViewModel.getProductShoppingCart()
+    }
+
     private fun totalMoney(listProduct: ArrayList<Product>) {
         for (product in listProduct) {
             val netPrice = product.net_price!! * product.quantity_buy!!
@@ -72,12 +78,6 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
         val convertTotalMoney = totalMoney.let { String.format("%,d đ", it.toLong()) }
 
         binding.tvTotal.text = convertTotalMoney
-    }
-
-    override fun initData() {
-        super.initData()
-
-        shoppingCartViewModel.getProductShoppingCart()
     }
 
     override fun increase(product: Product) {

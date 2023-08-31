@@ -81,6 +81,9 @@
         <action
             android:id="@+id/action_categoryFragment_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailProductFragment"
@@ -92,6 +95,9 @@
             android:defaultValue="@null"
             app:argType="com.example.vietcar.data.model.product.Product"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_detailProductFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/productGroupFragment"
@@ -107,6 +113,9 @@
         <action
             android:id="@+id/action_productGroupFragment_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
+        <action
+            android:id="@+id/action_productGroupFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/shoppingCartFragment"

@@ -27,20 +27,18 @@ class ConfirmDialog(
         val btnNegative = findViewById<TextView>(R.id.tvCancel)
         btnNegative.text = negativeButtonTitle
         btnNegative.setOnClickListener {
-            callback?.negativeAction()
             dismiss()
         }
 
         val btnPositive = findViewById<TextView>(R.id.tvOk)
         btnPositive.text = positiveButtonTitle
         btnPositive.setOnClickListener {
-            callback?.positiveAction()
+            callback?.confirmTranSitToLoginScreen()
             dismiss()
         }
     }
 
     interface ConfirmCallback {
-        fun negativeAction()
-        fun positiveAction()
+        fun confirmTranSitToLoginScreen()
     }
 }

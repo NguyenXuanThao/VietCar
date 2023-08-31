@@ -1,6 +1,8 @@
 package com.example.vietcar.base
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +18,20 @@ abstract class BaseFragment<VB : ViewBinding>(
     val binding
         get() = _binding as VB
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        Log.d("BaseFragment", "onAttach")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = bindingInflater.invoke(inflater)
+
+        Log.d("BaseFragment", "onCreateView")
 
         if (_binding == null)
             throw IllegalArgumentException("Binding can not be null")
@@ -31,6 +41,8 @@ abstract class BaseFragment<VB : ViewBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("BaseFragment", "onViewCreated")
+
         checkLogin()
         obServerLivedata()
         initData()
@@ -38,7 +50,9 @@ abstract class BaseFragment<VB : ViewBinding>(
         evenClick()
     }
 
-    open fun checkLogin() {}
+    open fun checkLogin() {
+
+    }
 
     open fun obServerLivedata() {}
 

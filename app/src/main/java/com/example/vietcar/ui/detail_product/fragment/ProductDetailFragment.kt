@@ -1,11 +1,16 @@
 package com.example.vietcar.ui.detail_product.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,9 +19,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.base.dialogs.AddProductDialog
+import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.common.Utils
+import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
+import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductDetailBinding
+import com.example.vietcar.ui.category.fragment.CategoryFragmentDirections
 import com.example.vietcar.ui.detail_product.viewmodel.ProductDetailViewModel
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,7 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     FragmentProductDetailBinding::inflate
-), ItemShoppingCartClick {
+), ItemShoppingCartClick, ConfirmDialog.ConfirmCallback, AddProductDialog.AddProductCallBack {
 
     private var product: Product? = null
 
@@ -38,17 +49,35 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
+    private var status = 1
+
+    private var productId = 0
+
+    private var isClickAddProduct = false
+
     override fun onDestroy() {
         super.onDestroy()
+        bottomNavigationView.visibility = View.VISIBLE
+    }
 
-//        findNavController().addOnDestinationChangedListener {_, destination, _ ->
-//            if (destination.id == R.id.detailProductFragment) {
+    override fun checkLogin() {
+        super.checkLogin()
 
-//                if (findNavController().previousBackStackEntry?.destination?.id == R.id.bottomNavHome) {
-                    bottomNavigationView.visibility = View.VISIBLE
-//                }
-//            }
-//        }
+        Log.d("HomeFragment", "checkLogin")
+
+        parentFragmentManager.setFragmentResultListener(
+            "loginResult",
+            viewLifecycleOwner
+        ) { _, result ->
+            val loginData = result.getParcelable<LoginResponse>("loginData")
+
+            status = loginData!!.status!!
+            saveData(loginData.status!!)
+
+            Log.d("HomeFragment", loginData.status.toString())
+        }
+
+        retrieveData()
     }
 
     override fun obServerLivedata() {
@@ -60,6 +89,13 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
             binding.rvRelatedProducts.adapter = productAdapter
             binding.rvRelatedProducts.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        }
+
+        productDetailViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
+            if (isClickAddProduct) {
+                Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
+                isClickAddProduct = false
+            }
         }
     }
 
@@ -83,6 +119,50 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
 
     }
 
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.btnAddProduct.setOnClickListener {
+            if (status == 0) {
+                showDialogProductInfo(product!!)
+            } else {
+                Utils.showDialogConfirm(requireContext(), this)
+            }
+        }
+    }
+
+    /**
+     * translation screen
+     */
+    private fun transitToLoginScreen() {
+        val action = ProductDetailFragmentDirections.actionDetailProductFragmentToLoginFragment()
+        findNavController().navigate(action)
+    }
+
+    /**
+     * save data
+     */
+    private fun saveData(status: Int) {
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putInt("status_key", status)
+
+        editor.apply()
+    }
+
+    private fun retrieveData() {
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+        val retrievedStatus = sharedPreferences.getInt("status_key", 1)
+
+        status = retrievedStatus
+    }
+
+
+
     private fun setUpView() {
 
         bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
@@ -98,6 +178,11 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
             .into(binding.imgProduct)
     }
 
+
+    /**
+     * show Info product to web view
+     */
+    @SuppressLint("SetJavaScriptEnabled")
     private fun webViewDetail() {
         binding.webViewDetail.webViewClient = object : WebViewClient() {
 
@@ -142,6 +227,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun webViewSortDetail() {
         binding.webViewSortDetail.webViewClient = object : WebViewClient() {
 
@@ -185,7 +271,51 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
         }
     }
 
-    override fun onItemClick(product: Product) {
 
+    /**
+     * onItemClick listener
+     */
+    override fun onClickShoppingCartItem(product: Product) {
+        if (status == 0) {
+            showDialogProductInfo(product)
+        } else {
+            Utils.showDialogConfirm(requireContext(), this)
+        }
+    }
+
+    /**
+     * Confirm dialog
+     */
+    override fun confirmTranSitToLoginScreen() {
+        transitToLoginScreen()
+    }
+
+    /**
+     * Add Product Dialog
+     */
+    private fun showDialogProductInfo(product: Product) {
+        productId = product.id!!
+        val addProductDialog = AddProductDialog(
+            requireContext(),
+            this,
+            product.name,
+            product.net_price.toString(),
+            product.avatar,
+            "Thêm vào giỏ"
+        )
+        addProductDialog.show()
+        addProductDialog.window?.setGravity(Gravity.CENTER)
+        addProductDialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+    override fun clickAddProduct(number: Int) {
+        isClickAddProduct = true
+        Log.d("CategoryFragment", "number $number; product id $productId")
+
+        val body = ProductBody(productId, number)
+        productDetailViewModel.addProductToCart(body)
     }
 }

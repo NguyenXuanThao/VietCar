@@ -17,6 +17,7 @@ import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemCategoryClick
 import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
@@ -55,11 +56,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         ) { _, result ->
             val loginData = result.getParcelable<LoginResponse>("loginData")
 
-            binding.btnHomeLogin.visibility = View.GONE
-            binding.btnVerify.visibility = View.VISIBLE
-            binding.tvPhoneNumber.visibility = View.VISIBLE
-            binding.tvPhoneNumber.text = loginData!!.data!!.phone.toString()
-            binding.imgWarning.visibility = View.VISIBLE
+            updateInfo(loginData!!.data!!.phone.toString())
 
             status = loginData.status!!
             saveData(loginData.status, loginData.data!!.phone.toString())
@@ -74,9 +71,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     override fun obServerLivedata() {
 
         homeViewModel.categoryResponse.observe(viewLifecycleOwner) { listCategory ->
-
             categories = listCategory
-
             categoryAdapter.differ.submitList(listCategory.data)
             binding.rvCategory.adapter = categoryAdapter
             binding.rvCategory.layoutManager =
@@ -84,13 +79,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         }
 
         homeViewModel.listProductGroupResponse.observe(viewLifecycleOwner) { products ->
-
             listProductAdapter.differ.submitList(products.data)
             binding.rvListProduct.adapter = listProductAdapter
             binding.rvListProduct.layoutManager = LinearLayoutManager(requireContext())
         }
 
-        homeViewModel.productResponse.observe(viewLifecycleOwner) { productToCart ->
+        homeViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
             if (isClickAddProduct) {
                 Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
                 isClickAddProduct = false
@@ -114,29 +108,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         binding.imgShopping.setOnClickListener {
             if (status == 0) {
 
-                val action = HomeFragmentDirections.actionBottomNavHomeToShoppingCartFragment()
-                findNavController().navigate(action)
+                transitToShoppingCartScreen()
             } else {
-                showDialogConfirm()
+                Utils.showDialogConfirm(requireContext(), this)
             }
         }
     }
 
-    private fun showDialogConfirm() {
+    /**
+     * translation screen
+     */
 
-        val confirmDialog = ConfirmDialog(
-            requireContext(),
-            this,
-            "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
-            "Đồng ý",
-            "Hủy"
-        )
-        confirmDialog.show()
-        confirmDialog.window?.setGravity(Gravity.CENTER)
-        confirmDialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+    private fun transitToShoppingCartScreen() {
+        val action = HomeFragmentDirections.actionBottomNavHomeToShoppingCartFragment()
+        findNavController().navigate(action)
     }
 
     private fun transitToLoginScreen() {
@@ -144,6 +129,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         findNavController().navigate(action)
     }
 
+    /**
+     * save data
+     */
     private fun saveData(status: Int, phoneNumber: String) {
         val sharedPreferences =
             requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
@@ -167,29 +155,49 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         if (retrievedPhone != "" && retrievedStatus != 1) {
             Log.d("ThaoNX", "retrieveData: $retrievedPhone & $retrievedStatus")
 
-            binding.btnHomeLogin.visibility = View.GONE
-            binding.btnVerify.visibility = View.VISIBLE
-            binding.tvPhoneNumber.visibility = View.VISIBLE
-            binding.tvPhoneNumber.text = retrievedPhone.toString()
-            binding.imgWarning.visibility = View.VISIBLE
+            updateInfo(retrievedPhone!!)
         }
     }
 
-    override fun onItemClick(position: Int) {
+    private fun updateInfo(retrievedPhone: String) {
+        binding.btnHomeLogin.visibility = View.GONE
+        binding.btnVerify.visibility = View.VISIBLE
+        binding.tvPhoneNumber.visibility = View.VISIBLE
+        binding.tvPhoneNumber.text = retrievedPhone
+        binding.imgWarning.visibility = View.VISIBLE
+    }
+
+    /**
+     * onItemClick listener
+     */
+
+    override fun onClickCategoryItem(position: Int) {
         val action =
             HomeFragmentDirections.actionBottomNavHomeToCategoryFragment(position, categories)
         findNavController().navigate(action)
     }
 
-    override fun negativeAction() {
-        Log.d("HomeFragment", "Hủy bỏ")
+    override fun onClickShoppingCartItem(product: Product) {
+
+        if (status == 0) {
+            showDialogProductInfo(product)
+        } else {
+            Utils.showDialogConfirm(requireContext(), this)
+        }
     }
 
-    override fun positiveAction() {
+    /**
+     * Confirm dialog
+     */
+    override fun confirmTranSitToLoginScreen() {
         transitToLoginScreen()
     }
 
-    override fun onItemClick(product: Product) {
+    /**
+     * Add Product Dialog
+     */
+
+    private fun showDialogProductInfo(product: Product) {
         productId = product.id!!
         val addProductDialog = AddProductDialog(
             requireContext(),

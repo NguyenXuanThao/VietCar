@@ -32,7 +32,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
         productViewModel.getAllProduct()
     }
 
-    override fun onItemClick(product: Product) {
+    override fun onClickShoppingCartItem(product: Product) {
         TODO("Not yet implemented")
     }
 
