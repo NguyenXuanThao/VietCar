@@ -32,7 +32,14 @@
         android:id="@+id/bottomNavProduct"
         android:name="com.example.vietcar.ui.product.fragment.ProductFragment"
         android:label="fragment_product"
-        tools:layout="@layout/fragment_product" />
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/action_bottomNavProduct_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
+        <action
+            android:id="@+id/action_bottomNavProduct_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/bottomNavAccount"
         android:name="com.example.vietcar.ui.account.fragment.AccountFragment"
@@ -98,6 +105,12 @@
         <action
             android:id="@+id/action_detailProductFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_detailProductFragment_self"
+            app:destination="@id/detailProductFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/main_nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/productGroupFragment"

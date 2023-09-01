@@ -40,7 +40,6 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     FragmentCategoryBinding::inflate
 ), ItemShoppingCartClick, ConfirmDialog.ConfirmCallback, AddProductDialog.AddProductCallBack {
     private val categoryViewModel: CategoryViewModel by viewModels()
-    private var productAdapter = ProductAdapter(this)
     private val args: CategoryFragmentArgs by navArgs()
     private var position: Int? = null
     private var categories: ListCategory? = null
@@ -50,6 +49,10 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     private var productId = 0
 
     private var isClickAddProduct = false
+
+    private var menuIndex = -2
+
+    private var productAdapter = ProductAdapter(this)
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
@@ -71,8 +74,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
         Log.d("HomeFragment", "checkLogin")
 
         parentFragmentManager.setFragmentResultListener(
-            "loginResult",
-            viewLifecycleOwner
+            "loginResult", viewLifecycleOwner
         ) { _, result ->
             val loginData = result.getParcelable<LoginResponse>("loginData")
 
@@ -111,8 +113,14 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
 
     override fun initData() {
 
-        categories!!.data[position!!].id?.toString()
-            ?.let { categoryViewModel.getListProductCategory(it) }
+        if (menuIndex == -2) {
+
+            categories!!.data[position!!].id?.toString()
+                ?.let { categoryViewModel.getListProductCategory(it) }
+        } else {
+            categories!!.data[menuIndex].id?.toString()
+                ?.let { categoryViewModel.getListProductCategory(it) }
+        }
     }
 
     override fun initView() {
@@ -193,11 +201,9 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
             val uriScreen = "https://vietcargroup.com/avatar/1669603516.png"
 
             if (menuItemObject.avatar != DataLocal.EMPTY) {
-                Glide.with(requireContext()).load(uriImage)
-                    .into(iconImageView!!)
+                Glide.with(requireContext()).load(uriImage).into(iconImageView!!)
             } else {
-                Glide.with(requireContext()).load(uriScreen)
-                    .into(iconImageView!!)
+                Glide.with(requireContext()).load(uriScreen).into(iconImageView!!)
             }
 
             textTextView?.text = menuItemObject.name
@@ -210,6 +216,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
                 val selectedItemIndex = view?.tag as? Int
 
                 if (selectedItemIndex != null) {
+                    menuIndex = selectedItemIndex
                     categories!!.data[selectedItemIndex].id?.toString()
                         ?.let { categoryViewModel.getListProductCategory(it) }
                     binding.tvTitle.text = categories!!.data[selectedItemIndex].name
@@ -254,8 +261,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
         addProductDialog.show()
         addProductDialog.window?.setGravity(Gravity.CENTER)
         addProductDialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
 

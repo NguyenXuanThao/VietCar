@@ -113,6 +113,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 Utils.showDialogConfirm(requireContext(), this)
             }
         }
+
+        binding.imgNotify.setOnClickListener {
+            if (status == 0) {
+
+                Log.d("HomeFragment", "tran sit to Notify screen")
+            } else {
+                Utils.showDialogConfirm(requireContext(), this)
+            }
+        }
     }
 
     /**

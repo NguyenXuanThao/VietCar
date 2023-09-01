@@ -12,7 +12,9 @@ import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.ItemProductBinding
 import com.example.vietcar.ui.category.fragment.CategoryFragmentDirections
+import com.example.vietcar.ui.detail_product.fragment.ProductDetailFragmentDirections
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
+import com.example.vietcar.ui.product.fragment.ProductFragmentDirections
 import com.example.vietcar.ui.product_group.fragment.ProductGroupFragmentDirections
 
 class ProductAdapter (private val itemShoppingCartClick: ItemShoppingCartClick) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
@@ -75,15 +77,35 @@ class ProductAdapter (private val itemShoppingCartClick: ItemShoppingCartClick) 
                         product
                     )
 
+                val action4 =
+                    ProductFragmentDirections.actionBottomNavProductToDetailProductFragment(
+                        product
+                    )
+
+                val action5 =
+                    ProductDetailFragmentDirections.actionDetailProductFragmentSelf(
+                        product
+                    )
+
                 when (mView.findNavController().currentDestination?.id) {
                     R.id.categoryFragment -> {
                         mView.findNavController().navigate(action1)
                     }
+
                     R.id.bottomNavHome -> {
                         mView.findNavController().navigate(action3)
                     }
-                    else -> {
+
+                    R.id.bottomNavProduct -> {
+                        mView.findNavController().navigate(action4)
+                    }
+
+                    R.id.productGroupFragment -> {
                         mView.findNavController().navigate(action2)
+                    }
+
+                    R.id.detailProductFragment -> {
+                        mView.findNavController().navigate(action5)
                     }
                 }
             }
