@@ -121,8 +121,8 @@
             android:name="groupId"
             app:argType="string" />
         <argument
-            android:name="position"
-            app:argType="integer" />
+            android:name="groupTitle"
+            app:argType="string" />
         <action
             android:id="@+id/action_productGroupFragment_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
@@ -134,6 +134,15 @@
         android:id="@+id/shoppingCartFragment"
         android:name="com.example.vietcar.ui.shopping_cart.fragment.ShoppingCartFragment"
         android:label="fragment_shopping_cart"
-        tools:layout="@layout/fragment_shopping_cart" />
+        tools:layout="@layout/fragment_shopping_cart" >
+        <action
+            android:id="@+id/action_shoppingCartFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.vietcar.ui.payment.fragment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" />
 
 </navigation>

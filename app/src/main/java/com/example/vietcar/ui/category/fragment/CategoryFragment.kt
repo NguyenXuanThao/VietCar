@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -56,6 +57,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
+    private lateinit var frameLayout: FrameLayout
+
     override fun onResume() {
         super.onResume()
 
@@ -90,6 +93,9 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     @SuppressLint("SuspiciousIndentation")
     override fun obServerLivedata() {
 
+        frameLayout =  requireActivity().findViewById(R.id.frameLayout)
+        frameLayout.visibility = View.VISIBLE
+
         position = args.position
         categories = args.listCategory
 
@@ -101,6 +107,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
             productAdapter.differ.submitList(products.data)
             binding.rvCategoryFragment.adapter = productAdapter
             binding.rvCategoryFragment.layoutManager = GridLayoutManager(requireContext(), 2)
+
+            frameLayout.visibility = View.GONE
         }
 
         categoryViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
@@ -108,6 +116,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
                 Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
                 isClickAddProduct = false
             }
+
+            frameLayout.visibility = View.GONE
         }
     }
 

@@ -64,7 +64,7 @@ class ListProductAdapter (private val itemShoppingCartClick: ItemShoppingCartCli
 
             binding.tvShowAll.setOnClickListener {mView ->
 
-                val action = HomeFragmentDirections.actionBottomNavHomeToProductGroupFragment(productGroup.id.toString(), adapterPosition)
+                val action = HomeFragmentDirections.actionBottomNavHomeToProductGroupFragment(productGroup.id.toString(), productGroup.name.toString())
                 mView.findNavController().navigate(action)
             }
         }

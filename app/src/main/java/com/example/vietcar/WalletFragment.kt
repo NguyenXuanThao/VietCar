@@ -9,7 +9,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding>(
     FragmentWalletBinding::inflate
 ) {
 
-    val tabs = arrayListOf("Ví điểm", "Ví hoa hồng")
+    private val tabs = arrayListOf("Ví điểm", "Ví hoa hồng")
 
     override fun initView() {
         super.initView()

@@ -3,8 +3,8 @@ package com.example.vietcar.ui.home.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.vietcar.common.Resource
 import com.example.vietcar.data.model.category.ListCategory
-import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.data.model.product_group.ListProductGroup
 import com.example.vietcar.data.model.product_to_cart.ProductToCart
@@ -19,34 +19,51 @@ class HomeViewModel @Inject constructor(
     private val carRepository: ICarRepository
 ) : ViewModel() {
 
-    private val _categoryResponse: MutableLiveData<ListCategory> = MutableLiveData()
+    private val _categoryResponse: MutableLiveData<Resource<ListCategory>> = MutableLiveData()
     val categoryResponse
         get() = _categoryResponse
 
-    private val _listProductGroupResponse: MutableLiveData<ListProductGroup> = MutableLiveData()
+    private val _listProductGroupResponse: MutableLiveData<Resource<ListProductGroup>> =
+        MutableLiveData()
     val listProductGroupResponse
         get() = _listProductGroupResponse
 
-    private val _productToCartResponse: MutableLiveData<ProductToCart> = MutableLiveData()
+    private val _productToCartResponse: MutableLiveData<Resource<ProductToCart>> = MutableLiveData()
     val productToCartResponse
         get() = _productToCartResponse
 
 
     fun getCategory() {
         viewModelScope.launch {
-            _categoryResponse.value = carRepository.getCategory()
+            try {
+                val categoryData = carRepository.getCategory()
+                _categoryResponse.postValue(Resource.Success(categoryData))
+            } catch (exception: Exception) {
+                _categoryResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
+            }
         }
     }
 
     fun getProductGroup() {
         viewModelScope.launch {
-            _listProductGroupResponse.value = carRepository.getProductGroup()
+            try {
+                val listProductGroup = carRepository.getProductGroup()
+                _listProductGroupResponse.postValue(Resource.Success(listProductGroup))
+            } catch (exception: Exception) {
+                _listProductGroupResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
+            }
         }
     }
 
     fun addProductToCart(body: ProductBody) {
         viewModelScope.launch {
-            _productToCartResponse.value = carRepository.addProductToCart(body)
+
+            try {
+                val productToCart = carRepository.addProductToCart(body)
+                _productToCartResponse.postValue(Resource.Success(productToCart))
+            } catch (exception: Exception) {
+                _productToCartResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
+            }
         }
     }
 }

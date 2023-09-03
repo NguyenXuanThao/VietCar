@@ -2,7 +2,10 @@ package com.example.vietcar.ui.shopping_cart.fragment
 
 import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
@@ -30,6 +33,8 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
 
     private var listProduct: ArrayList<Product>? = ArrayList()
 
+    private lateinit var frameLayout: FrameLayout
+
     override fun onResume() {
         super.onResume()
 
@@ -45,6 +50,9 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
     override fun obServerLivedata() {
         super.obServerLivedata()
 
+        frameLayout =  requireActivity().findViewById(R.id.frameLayout)
+        frameLayout.visibility = View.VISIBLE
+
         shoppingCartViewModel.productResponse.observe(viewLifecycleOwner) { products ->
 
             listProduct = products.data as ArrayList<Product>
@@ -55,10 +63,13 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
             binding.rvProductFragment.layoutManager = LinearLayoutManager(requireContext())
 
             totalMoney(products.data)
+
+            frameLayout.visibility = View.GONE
         }
 
         shoppingCartViewModel.productOfCartResponse.observe(viewLifecycleOwner) { productToCart ->
 
+            Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
 
         }
     }
@@ -67,6 +78,15 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
         super.initData()
 
         shoppingCartViewModel.getProductShoppingCart()
+    }
+
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.btnPayment.setOnClickListener {
+            val action = ShoppingCartFragmentDirections.actionShoppingCartFragmentToPaymentFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun totalMoney(listProduct: ArrayList<Product>) {

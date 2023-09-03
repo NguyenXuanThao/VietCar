@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -34,7 +35,7 @@ class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
 
     private var groupId: String? = null
 
-    private var groupPosition: Int? = null
+    private var groupTitle: String? = null
 
     private val productGroupViewModel: ProductGroupViewModel by viewModels()
 
@@ -47,6 +48,8 @@ class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
     private var productId = 0
 
     private var isClickAddProduct = false
+
+    private lateinit var frameLayout: FrameLayout
 
     override fun onResume() {
         super.onResume()
@@ -83,18 +86,22 @@ class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
     override fun obServerLivedata() {
         super.obServerLivedata()
 
+        frameLayout =  requireActivity().findViewById(R.id.frameLayout)
+        frameLayout.visibility = View.VISIBLE
+
         groupId = args.groupId
 
-        groupPosition = args.position
+        groupTitle = args.groupTitle
 
         productGroupViewModel.productResponse.observe(viewLifecycleOwner) { products ->
 
-            binding.tvTitle.text = products.data[groupPosition!!].name
+            binding.tvTitle.text = groupTitle
 
             productAdapter.differ.submitList(products.data)
             binding.rvProductGroupFragment.adapter = productAdapter
             binding.rvProductGroupFragment.layoutManager = GridLayoutManager(requireContext(), 2)
 
+            frameLayout.visibility = View.GONE
         }
 
         productGroupViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
@@ -102,6 +109,8 @@ class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
                 Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
                 isClickAddProduct = false
             }
+
+            frameLayout.visibility = View.GONE
         }
     }
 

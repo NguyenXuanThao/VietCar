@@ -1,29 +1,33 @@
 package com.example.vietcar.ui.home.fragment
 
+import com.example.vietcar.R
 import android.content.Context
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.vietcar.ui.home.adapter.CategoryAdapter
-import com.example.vietcar.ui.home.adapter.ListProductAdapter
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemCategoryClick
 import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentHomeBinding
+import com.example.vietcar.ui.home.adapter.CategoryAdapter
+import com.example.vietcar.ui.home.adapter.ListProductAdapter
 import com.example.vietcar.ui.home.viewmodel.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -45,6 +49,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     private var status = 1
 
     private var categories: ListCategory? = null
+
+    private lateinit var frameLayout: FrameLayout
 
     override fun checkLogin() {
         super.checkLogin()
@@ -70,24 +76,73 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     override fun obServerLivedata() {
 
-        homeViewModel.categoryResponse.observe(viewLifecycleOwner) { listCategory ->
-            categories = listCategory
-            categoryAdapter.differ.submitList(listCategory.data)
-            binding.rvCategory.adapter = categoryAdapter
-            binding.rvCategory.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        frameLayout = requireActivity().findViewById(R.id.frameLayout)
+        frameLayout.visibility = View.VISIBLE
+
+        homeViewModel.categoryResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    categories = resource.data
+                    categoryAdapter.differ.submitList(resource.data?.data)
+                    binding.rvCategory.adapter = categoryAdapter
+                    binding.rvCategory.layoutManager =
+                        LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
         }
 
-        homeViewModel.listProductGroupResponse.observe(viewLifecycleOwner) { products ->
-            listProductAdapter.differ.submitList(products.data)
-            binding.rvListProduct.adapter = listProductAdapter
-            binding.rvListProduct.layoutManager = LinearLayoutManager(requireContext())
+        homeViewModel.listProductGroupResponse.observe(viewLifecycleOwner) { resource ->
+
+            when (resource) {
+                is Resource.Success -> {
+                    listProductAdapter.differ.submitList(resource.data?.data)
+                    binding.rvListProduct.adapter = listProductAdapter
+                    binding.rvListProduct.layoutManager = LinearLayoutManager(requireContext())
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
+
         }
 
-        homeViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
-            if (isClickAddProduct) {
-                Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
-                isClickAddProduct = false
+        homeViewModel.productToCartResponse.observe(viewLifecycleOwner) { resource ->
+
+            when (resource) {
+                is Resource.Success -> {
+                    if (isClickAddProduct) {
+                        Toast.makeText(requireContext(), resource.data?.message, Toast.LENGTH_SHORT)
+                            .show()
+                        isClickAddProduct = false
+                    }
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
             }
         }
     }

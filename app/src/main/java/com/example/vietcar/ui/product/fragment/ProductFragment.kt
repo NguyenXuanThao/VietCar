@@ -3,11 +3,14 @@ package com.example.vietcar.ui.product.fragment
 import android.content.Context
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
@@ -35,6 +38,8 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
 
     private var isClickAddProduct = false
 
+    private lateinit var frameLayout: FrameLayout
+
     override fun checkLogin() {
         super.checkLogin()
 
@@ -55,10 +60,15 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
     }
 
     override fun obServerLivedata() {
+
+        frameLayout =  requireActivity().findViewById(R.id.frameLayout)
+        frameLayout.visibility = View.VISIBLE
+
         productViewModel.productResponse.observe(viewLifecycleOwner) { products ->
             productAdapter.differ.submitList(products.data)
             binding.rvProductFragment.adapter = productAdapter
             binding.rvProductFragment.layoutManager = GridLayoutManager(requireContext(), 2)
+            frameLayout.visibility = View.GONE
         }
 
         productViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
@@ -66,6 +76,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
                 Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
                 isClickAddProduct = false
             }
+            frameLayout.visibility = View.GONE
         }
     }
 

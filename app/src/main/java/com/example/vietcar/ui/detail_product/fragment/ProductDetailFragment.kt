@@ -10,6 +10,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -55,6 +56,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
 
     private var isClickAddProduct = false
 
+    private lateinit var frameLayout: FrameLayout
+
     override fun onDestroy() {
         super.onDestroy()
         bottomNavigationView.visibility = View.VISIBLE
@@ -83,12 +86,17 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     override fun obServerLivedata() {
         super.obServerLivedata()
 
+        frameLayout =  requireActivity().findViewById(R.id.frameLayout)
+        frameLayout.visibility = View.VISIBLE
+
         productDetailViewModel.relatedProductResponse.observe(viewLifecycleOwner) { products ->
 
             productAdapter.differ.submitList(products.data)
             binding.rvRelatedProducts.adapter = productAdapter
             binding.rvRelatedProducts.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+
+            frameLayout.visibility = View.GONE
         }
 
         productDetailViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
@@ -96,6 +104,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
                 Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
                 isClickAddProduct = false
             }
+
+            frameLayout.visibility = View.GONE
         }
     }
 
