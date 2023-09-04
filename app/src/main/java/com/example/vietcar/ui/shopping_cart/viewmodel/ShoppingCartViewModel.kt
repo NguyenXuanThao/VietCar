@@ -3,6 +3,7 @@ package com.example.vietcar.ui.shopping_cart.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.vietcar.common.Resource
 import com.example.vietcar.data.model.product.ListProduct
 import com.example.vietcar.data.model.product.ProductOfCartBody
 import com.example.vietcar.data.model.product_to_cart.ProductToCart
@@ -17,29 +18,47 @@ class ShoppingCartViewModel @Inject constructor(
     private val carRepository: CarRepository
 ) : ViewModel() {
 
-    private val _productResponse: MutableLiveData<ListProduct> = MutableLiveData()
+    private val _productResponse: MutableLiveData<Resource<ListProduct>> = MutableLiveData()
     val productResponse
         get() = _productResponse
 
-    private val _productOfCartResponse: MutableLiveData<ProductToCart> = MutableLiveData()
+    private val _productOfCartResponse: MutableLiveData<Resource<ProductToCart>> = MutableLiveData()
     val productOfCartResponse
         get() = _productOfCartResponse
 
     fun getProductShoppingCart() {
         viewModelScope.launch {
-            _productResponse.value = carRepository.getProductShoppingCart()
+
+            try {
+                val productData = carRepository.getProductShoppingCart()
+                _productResponse.postValue(Resource.Success(productData))
+            } catch (exception: Exception) {
+                _productResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
+            }
         }
     }
 
     fun updateQuantity(body: ProductOfCartBody) {
         viewModelScope.launch {
-            _productOfCartResponse.value = carRepository.updateQuantity(body)
+
+            try {
+                val productOfCartData = carRepository.updateQuantity(body)
+                _productOfCartResponse.postValue(Resource.Success(productOfCartData))
+            } catch (exception: Exception) {
+                _productOfCartResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
+            }
         }
     }
 
-    fun deleteProductOfCart(cartId : Int) {
+    fun deleteProductOfCart(cartId: Int) {
         viewModelScope.launch {
-            _productOfCartResponse.value = carRepository.deleteProductOfCart(cartId)
+
+            try {
+                val productOfCartData = carRepository.deleteProductOfCart(cartId)
+                _productOfCartResponse.postValue(Resource.Success(productOfCartData))
+            } catch (exception: Exception) {
+                _productOfCartResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
+            }
         }
     }
 }

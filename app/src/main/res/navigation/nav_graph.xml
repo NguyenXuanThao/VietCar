@@ -143,6 +143,39 @@
         android:id="@+id/paymentFragment"
         android:name="com.example.vietcar.ui.payment.fragment.PaymentFragment"
         android:label="fragment_payment"
-        tools:layout="@layout/fragment_payment" />
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_deliveryMethodFragment"
+            app:destination="@id/deliveryMethodFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_discountCodeFragment"
+            app:destination="@id/discountCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deliveryMethodFragment"
+        android:name="com.example.vietcar.ui.delivery_method.fragment.DeliveryMethodFragment"
+        android:label="fragment_delivery_method"
+        tools:layout="@layout/fragment_delivery_method" />
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.example.vietcar.ui.address.fragment.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" />
+    <fragment
+        android:id="@+id/paymentMethodFragment"
+        android:name="com.example.vietcar.ui.payment_method.fragment.PaymentMethodFragment"
+        android:label="fragment_payment_method"
+        tools:layout="@layout/fragment_payment_method" />
+    <fragment
+        android:id="@+id/discountCodeFragment"
+        android:name="com.example.vietcar.ui.discount_code.fragment.DiscountCodeFragment"
+        android:label="fragment_discount_code"
+        tools:layout="@layout/fragment_discount_code" />
 
 </navigation>

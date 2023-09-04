@@ -6,6 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".ui.payment.fragment.PaymentFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thanh toán"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/viewUnderTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="@drawable/background_under_tab_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="84dp" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -13,7 +52,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnOrder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/viewUnderTabLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,7 +76,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/rvPayment" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ctShipping"
+                android:id="@+id/ctDeliveryMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -48,7 +87,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/view1">
 
                 <TextView
-                    android:id="@+id/tvTitle"
+                    android:id="@+id/tvTitleShipping"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Phương thức vận chuyển"
@@ -61,21 +100,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_next"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTitleShipping"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvTitle"
+                    app:layout_constraintTop_toTopOf="@+id/tvTitleShipping"
                     app:tint="@color/black" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tvShipping"
+                android:id="@+id/tvDeliveryMethod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Giao tận nơi"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/ctShipping"
-                app:layout_constraintTop_toBottomOf="@+id/ctShipping" />
+                app:layout_constraintStart_toStartOf="@+id/ctDeliveryMethod"
+                app:layout_constraintTop_toBottomOf="@+id/ctDeliveryMethod" />
 
             <View
                 android:id="@+id/view2"
@@ -87,7 +126,7 @@
                 android:background="@color/hint_text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvShipping" />
+                app:layout_constraintTop_toBottomOf="@+id/tvDeliveryMethod" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctAddress"
@@ -143,7 +182,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ctPayment"
+                android:id="@+id/ctPaymentMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -174,14 +213,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tvPayment"
+                android:id="@+id/tvPaymentMethod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="chọn phương thức thanh toán"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/ctPayment"
-                app:layout_constraintTop_toBottomOf="@+id/ctPayment" />
+                app:layout_constraintStart_toStartOf="@+id/ctPaymentMethod"
+                app:layout_constraintTop_toBottomOf="@+id/ctPaymentMethod" />
 
             <View
                 android:id="@+id/view4"
@@ -193,7 +232,7 @@
                 android:background="@color/hint_text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPayment" />
+                app:layout_constraintTop_toBottomOf="@+id/tvPaymentMethod" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctDiscount"

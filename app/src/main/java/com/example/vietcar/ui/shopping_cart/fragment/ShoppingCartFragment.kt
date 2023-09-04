@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.click.ItemProductOfCartClick
+import com.example.vietcar.common.Resource
+import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductOfCartBody
 import com.example.vietcar.databinding.FragmentShoppingCartBinding
@@ -50,27 +52,53 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
     override fun obServerLivedata() {
         super.obServerLivedata()
 
-        frameLayout =  requireActivity().findViewById(R.id.frameLayout)
+        frameLayout = requireActivity().findViewById(R.id.frameLayout)
         frameLayout.visibility = View.VISIBLE
 
-        shoppingCartViewModel.productResponse.observe(viewLifecycleOwner) { products ->
+        shoppingCartViewModel.productResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    listProduct = resource.data?.data as ArrayList<Product>
 
-            listProduct = products.data as ArrayList<Product>
+                    shoppingCartAdapter.differ.submitList(resource.data.data)
 
-            shoppingCartAdapter.differ.submitList(products.data)
+                    binding.rvProductFragment.adapter = shoppingCartAdapter
+                    binding.rvProductFragment.layoutManager = LinearLayoutManager(requireContext())
 
-            binding.rvProductFragment.adapter = shoppingCartAdapter
-            binding.rvProductFragment.layoutManager = LinearLayoutManager(requireContext())
+                    totalMoney(resource.data.data as ArrayList<Product>)
 
-            totalMoney(products.data)
+                    frameLayout.visibility = View.GONE
+                }
 
-            frameLayout.visibility = View.GONE
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
         }
 
-        shoppingCartViewModel.productOfCartResponse.observe(viewLifecycleOwner) { productToCart ->
+        shoppingCartViewModel.productOfCartResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    Toast.makeText(requireContext(), resource.data?.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
 
-            Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
 
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
@@ -84,7 +112,8 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
         super.evenClick()
 
         binding.btnPayment.setOnClickListener {
-            val action = ShoppingCartFragmentDirections.actionShoppingCartFragmentToPaymentFragment()
+            val action =
+                ShoppingCartFragmentDirections.actionShoppingCartFragmentToPaymentFragment()
             findNavController().navigate(action)
         }
     }

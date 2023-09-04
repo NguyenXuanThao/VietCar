@@ -23,12 +23,12 @@ import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductDetailBinding
-import com.example.vietcar.ui.category.fragment.CategoryFragmentDirections
 import com.example.vietcar.ui.detail_product.viewmodel.ProductDetailViewModel
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -86,26 +86,55 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     override fun obServerLivedata() {
         super.obServerLivedata()
 
-        frameLayout =  requireActivity().findViewById(R.id.frameLayout)
+        frameLayout = requireActivity().findViewById(R.id.frameLayout)
         frameLayout.visibility = View.VISIBLE
 
-        productDetailViewModel.relatedProductResponse.observe(viewLifecycleOwner) { products ->
+        productDetailViewModel.relatedProductResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    productAdapter.differ.submitList(resource.data?.data)
+                    binding.rvRelatedProducts.adapter = productAdapter
+                    binding.rvRelatedProducts.layoutManager =
+                        LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
 
-            productAdapter.differ.submitList(products.data)
-            binding.rvRelatedProducts.adapter = productAdapter
-            binding.rvRelatedProducts.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                    frameLayout.visibility = View.GONE
+                }
 
-            frameLayout.visibility = View.GONE
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
         }
 
-        productDetailViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
-            if (isClickAddProduct) {
-                Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
-                isClickAddProduct = false
-            }
 
-            frameLayout.visibility = View.GONE
+        productDetailViewModel.productToCartResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    if (isClickAddProduct) {
+                        Toast.makeText(requireContext(), resource.data?.message, Toast.LENGTH_SHORT)
+                            .show()
+                        isClickAddProduct = false
+                    }
+
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
@@ -170,7 +199,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
 
         status = retrievedStatus
     }
-
 
 
     private fun setUpView() {

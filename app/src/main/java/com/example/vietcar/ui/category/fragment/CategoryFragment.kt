@@ -24,6 +24,7 @@ import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.common.DataLocal
+import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginResponse
@@ -93,7 +94,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     @SuppressLint("SuspiciousIndentation")
     override fun obServerLivedata() {
 
-        frameLayout =  requireActivity().findViewById(R.id.frameLayout)
+        frameLayout = requireActivity().findViewById(R.id.frameLayout)
         frameLayout.visibility = View.VISIBLE
 
         position = args.position
@@ -103,22 +104,53 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
             binding.tvTitle.text = categories!!.data[position!!].name
         }
 
-        categoryViewModel.productResponse.observe(viewLifecycleOwner) { products ->
-            productAdapter.differ.submitList(products.data)
-            binding.rvCategoryFragment.adapter = productAdapter
-            binding.rvCategoryFragment.layoutManager = GridLayoutManager(requireContext(), 2)
+        categoryViewModel.productResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    productAdapter.differ.submitList(resource.data?.data)
+                    binding.rvCategoryFragment.adapter = productAdapter
+                    binding.rvCategoryFragment.layoutManager =
+                        GridLayoutManager(requireContext(), 2)
 
-            frameLayout.visibility = View.GONE
-        }
+                    frameLayout.visibility = View.GONE
+                }
 
-        categoryViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
-            if (isClickAddProduct) {
-                Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
-                isClickAddProduct = false
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
             }
-
-            frameLayout.visibility = View.GONE
         }
+
+        categoryViewModel.productToCartResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    if (isClickAddProduct) {
+                        Toast.makeText(requireContext(), resource.data?.message, Toast.LENGTH_SHORT)
+                            .show()
+                        isClickAddProduct = false
+                    }
+
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
+        }
+
     }
 
     override fun initData() {

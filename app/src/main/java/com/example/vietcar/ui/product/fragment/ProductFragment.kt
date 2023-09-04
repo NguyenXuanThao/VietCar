@@ -10,11 +10,14 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
@@ -61,22 +64,51 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
 
     override fun obServerLivedata() {
 
-        frameLayout =  requireActivity().findViewById(R.id.frameLayout)
+        frameLayout = requireActivity().findViewById(R.id.frameLayout)
         frameLayout.visibility = View.VISIBLE
 
-        productViewModel.productResponse.observe(viewLifecycleOwner) { products ->
-            productAdapter.differ.submitList(products.data)
-            binding.rvProductFragment.adapter = productAdapter
-            binding.rvProductFragment.layoutManager = GridLayoutManager(requireContext(), 2)
-            frameLayout.visibility = View.GONE
+        productViewModel.productResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    productAdapter.differ.submitList(resource.data?.data)
+                    binding.rvProductFragment.adapter = productAdapter
+                    binding.rvProductFragment.layoutManager = GridLayoutManager(requireContext(), 2)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
         }
 
-        productViewModel.productToCartResponse.observe(viewLifecycleOwner) { productToCart ->
-            if (isClickAddProduct) {
-                Toast.makeText(requireContext(), productToCart.message, Toast.LENGTH_SHORT).show()
-                isClickAddProduct = false
+        productViewModel.productToCartResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    if (isClickAddProduct) {
+                        Toast.makeText(requireContext(), resource.data?.message, Toast.LENGTH_SHORT)
+                            .show()
+                        isClickAddProduct = false
+                    }
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
             }
-            frameLayout.visibility = View.GONE
         }
     }
 
