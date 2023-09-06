@@ -1,6 +1,7 @@
 package com.example.vietcar.data.api
 
 import com.example.vietcar.common.DataLocal
+import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
@@ -106,8 +107,14 @@ interface CarApi {
     suspend fun deleteProductOfCart(
         @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
-        @Query("cart_id") cartId : Int
+        @Query("cart_id") cartId: Int
     ): ProductToCart
+
+    @GET("api/auth/bill/listDeliveryAddress")
+    suspend fun getAddress(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV
+    ): ListAddress
 
 
 }

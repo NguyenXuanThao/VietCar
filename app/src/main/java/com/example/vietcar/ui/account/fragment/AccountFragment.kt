@@ -17,7 +17,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
         AccountScreenCategory(0, R.drawable.ic_account, "Thông tin cá nhân"),
         AccountScreenCategory(1, R.drawable.ic_qr_code, "Mã giới thiệu"),
         AccountScreenCategory(2, R.drawable.ic_order_history, "Lịch sử đơn hàng"),
-        AccountScreenCategory(3, R.drawable.ic_address, "Sổ địa chỉ"),
+        AccountScreenCategory(3, R.drawable.ic_address2, "Sổ địa chỉ"),
         AccountScreenCategory(4, R.drawable.ic_qr_code, "Cây giới thiệu"),
         AccountScreenCategory(5, R.drawable.ic_introduce, "Giới thiệu ứng dụng"),
         AccountScreenCategory(6, R.drawable.ic_policy, "Chính sách và điều khoản"),

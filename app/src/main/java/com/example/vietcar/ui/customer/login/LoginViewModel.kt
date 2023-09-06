@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
-import com.example.vietcar.di.repository.CarRepository
+import com.example.vietcar.di.repository.ICarRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val carRepository: CarRepository
+    private val carRepository: ICarRepository
 ) : ViewModel() {
 
     private val _loginResponse: MutableLiveData<LoginResponse> = MutableLiveData()

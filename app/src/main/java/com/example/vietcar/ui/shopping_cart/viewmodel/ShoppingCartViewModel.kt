@@ -7,7 +7,7 @@ import com.example.vietcar.common.Resource
 import com.example.vietcar.data.model.product.ListProduct
 import com.example.vietcar.data.model.product.ProductOfCartBody
 import com.example.vietcar.data.model.product_to_cart.ProductToCart
-import com.example.vietcar.di.repository.CarRepository
+import com.example.vietcar.di.repository.ICarRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ShoppingCartViewModel @Inject constructor(
-    private val carRepository: CarRepository
+    private val carRepository: ICarRepository
 ) : ViewModel() {
 
     private val _productResponse: MutableLiveData<Resource<ListProduct>> = MutableLiveData()

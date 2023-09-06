@@ -166,7 +166,11 @@
         android:id="@+id/addressFragment"
         android:name="com.example.vietcar.ui.address.fragment.AddressFragment"
         android:label="fragment_address"
-        tools:layout="@layout/fragment_address" />
+        tools:layout="@layout/fragment_address" >
+        <action
+            android:id="@+id/action_addressFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/paymentMethodFragment"
         android:name="com.example.vietcar.ui.payment_method.fragment.PaymentMethodFragment"
@@ -177,5 +181,43 @@
         android:name="com.example.vietcar.ui.discount_code.fragment.DiscountCodeFragment"
         android:label="fragment_discount_code"
         tools:layout="@layout/fragment_discount_code" />
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.example.vietcar.ui.location.fragment.LocationFragment"
+        android:label="fragment_location"
+        tools:layout="@layout/fragment_location" >
+        <action
+            android:id="@+id/action_locationFragment_to_cityFragment"
+            app:destination="@id/cityFragment" />
+        <action
+            android:id="@+id/action_locationFragment_to_districtFragment"
+            app:destination="@id/districtFragment" />
+        <action
+            android:id="@+id/action_locationFragment_to_wardsFragment"
+            app:destination="@id/wardsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cityFragment"
+        android:name="com.example.vietcar.ui.city.fragment.CityFragment"
+        android:label="fragment_city"
+        tools:layout="@layout/fragment_city" />
+    <fragment
+        android:id="@+id/districtFragment"
+        android:name="com.example.vietcar.ui.district.fragment.DistrictFragment"
+        android:label="fragment_district"
+        tools:layout="@layout/fragment_district" >
+        <argument
+            android:name="provinceCode"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/wardsFragment"
+        android:name="com.example.vietcar.ui.wards.fragment.WardsFragment"
+        android:label="fragment_wards"
+        tools:layout="@layout/fragment_wards" >
+        <argument
+            android:name="districtCode"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

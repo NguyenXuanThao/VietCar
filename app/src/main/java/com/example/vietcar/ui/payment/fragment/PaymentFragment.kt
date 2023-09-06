@@ -62,6 +62,14 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
         paymentViewModel.getProductShoppingCart()
     }
 
+    override fun initView() {
+        super.initView()
+
+        checkDeliveryMethod()
+
+        checkPaymentMethod()
+    }
+
     override fun evenClick() {
         super.evenClick()
 
@@ -85,5 +93,51 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
             findNavController().navigate(action)
         }
 
+    }
+
+    private fun checkPaymentMethod() {
+
+        parentFragmentManager.setFragmentResultListener(
+            "paymentMethodResult",
+            viewLifecycleOwner
+        ) { _, result ->
+
+            val paymentMethod = result.getInt("paymentMethod")
+
+            when (paymentMethod) {
+                0 -> {
+                    binding.tvPaymentMethod.text = "Tiền mặt"
+                }
+
+                1 -> {
+                    binding.tvPaymentMethod.text = "Chuyển khoản"
+                }
+
+                else -> {
+                    binding.tvPaymentMethod.text = "Ví điểm"
+                }
+            }
+        }
+    }
+
+    private fun checkDeliveryMethod() {
+
+        parentFragmentManager.setFragmentResultListener(
+            "deliveryMethodResult",
+            viewLifecycleOwner
+        ) { _, result ->
+
+            val paymentMethod = result.getInt("deliveryMethod")
+
+            when (paymentMethod) {
+                0 -> {
+                    binding.tvDeliveryMethod.text = "Giao hàng tận nơi"
+                }
+
+                else -> {
+                    binding.tvDeliveryMethod.text = "Nhận tại cửa hàng"
+                }
+            }
+        }
     }
 }

@@ -2,7 +2,12 @@ package com.example.vietcar.di.repository
 
 import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.api.CarApi
+import com.example.vietcar.data.api.LocationApi
+import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.category.ListCategory
+import com.example.vietcar.data.model.location.city.ListCity
+import com.example.vietcar.data.model.location.wards.ListWards
+import com.example.vietcar.data.model.location.district.ListDistrict
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.ListProduct
@@ -17,7 +22,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CarRepository @Inject constructor(
-    private val carApi: CarApi
+    private val carApi: CarApi,
+    private val locationApi: LocationApi
 ) : ICarRepository {
 
     override suspend fun getCategory(): ListCategory {
@@ -89,6 +95,30 @@ class CarRepository @Inject constructor(
     override suspend fun deleteProductOfCart(cartId: Int): ProductToCart {
         return withContext(Dispatchers.IO) {
             carApi.deleteProductOfCart(DataLocal.BEARER_TOKEN, cartId = cartId)
+        }
+    }
+
+    override suspend fun getAddress(): ListAddress {
+        return withContext(Dispatchers.IO) {
+            carApi.getAddress(DataLocal.BEARER_TOKEN)
+        }
+    }
+
+    override suspend fun getCity(): ListCity {
+        return withContext(Dispatchers.IO) {
+            locationApi.getCity()
+        }
+    }
+
+    override suspend fun getDistrict(provinceCode: String): ListDistrict {
+        return withContext(Dispatchers.IO) {
+            locationApi.getDistrict(provinceCode)
+        }
+    }
+
+    override suspend fun getWards(districtCode: String): ListWards {
+        return withContext(Dispatchers.IO) {
+            locationApi.getWards(districtCode)
         }
     }
 

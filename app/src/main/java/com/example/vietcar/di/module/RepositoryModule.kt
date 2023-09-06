@@ -1,6 +1,7 @@
 package com.example.vietcar.di.module
 
 import com.example.vietcar.data.api.CarApi
+import com.example.vietcar.data.api.LocationApi
 import com.example.vietcar.di.repository.CarRepository
 import com.example.vietcar.di.repository.ICarRepository
 import dagger.Module
@@ -17,8 +18,9 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideRepository(
-        carApi: CarApi
+        carApi: CarApi,
+        locationApi: LocationApi
     ): ICarRepository {
-        return CarRepository(carApi)
+        return CarRepository(carApi, locationApi)
     }
 }

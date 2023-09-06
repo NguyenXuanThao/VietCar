@@ -2,6 +2,7 @@ package com.example.vietcar.di.module
 
 import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.api.CarApi
+import com.example.vietcar.data.api.LocationApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,5 +55,23 @@ class NetworkModule {
     @Provides
     fun provideCarApi(@Named("viet_car") retrofit: Retrofit): CarApi {
         return retrofit.create(CarApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    @Named("location")
+    fun provideLocationRetrofit(
+        converterFactory: GsonConverterFactory,
+        okHttpClient: OkHttpClient,
+    ): Retrofit =
+        Retrofit.Builder()
+            .baseUrl("https://vn-public-apis.fpo.vn/")
+            .addConverterFactory(converterFactory)
+            .client(okHttpClient)
+            .build()
+
+    @Provides
+    fun provideLocationApi(@Named("location") retrofit: Retrofit): LocationApi {
+        return retrofit.create(LocationApi::class.java)
     }
 }
