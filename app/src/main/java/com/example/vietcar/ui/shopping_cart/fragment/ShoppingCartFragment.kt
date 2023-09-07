@@ -119,6 +119,7 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
     }
 
     private fun totalMoney(listProduct: ArrayList<Product>) {
+        totalMoney = 0
         for (product in listProduct) {
             val netPrice = product.net_price!! * product.quantity_buy!!
             totalMoney += netPrice

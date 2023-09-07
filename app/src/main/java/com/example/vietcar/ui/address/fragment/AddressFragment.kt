@@ -1,16 +1,22 @@
 package com.example.vietcar.ui.address.fragment
 
 
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.click.ItemAddressClick
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
+import com.example.vietcar.data.model.address.Address
+import com.example.vietcar.data.model.location.district.District
 import com.example.vietcar.databinding.FragmentAddressBinding
 import com.example.vietcar.ui.address.adapter.AddressAdapter
 import com.example.vietcar.ui.address.viewmodel.AddressViewModel
@@ -20,9 +26,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AddressFragment : BaseFragment<FragmentAddressBinding>(
     FragmentAddressBinding::inflate
-) {
+), ItemAddressClick {
 
-    private val addressAdapter = AddressAdapter()
+    private val addressAdapter = AddressAdapter(this)
 
     private val addressViewModel: AddressViewModel by viewModels()
 
@@ -37,9 +43,11 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(
             when (resource) {
                 is Resource.Success -> {
                     addressAdapter.differ.submitList(resource.data?.data)
+
+                    Log.d("obServerLivedata", resource.data?.data.toString())
                     binding.rvAddress.adapter = addressAdapter
                     binding.rvAddress.layoutManager =
-                        LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                        LinearLayoutManager(requireContext())
                     frameLayout.visibility = View.GONE
                 }
 
@@ -70,6 +78,19 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(
             findNavController().navigate(action)
         }
 
+    }
+
+    override fun onClickAddressItem(address: Address) {
+        backToPaymentScreen(address)
+    }
+
+    private fun backToPaymentScreen(address: Address) {
+
+        val args = bundleOf("addressData" to address)
+
+        setFragmentResult("addressResult", args)
+
+        findNavController().popBackStack()
     }
 
 }

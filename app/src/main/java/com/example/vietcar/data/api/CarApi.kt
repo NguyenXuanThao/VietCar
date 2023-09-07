@@ -1,6 +1,8 @@
 package com.example.vietcar.data.api
 
 import com.example.vietcar.common.DataLocal
+import com.example.vietcar.data.model.address.AddressBody
+import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
@@ -115,6 +117,13 @@ interface CarApi {
         @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV
     ): ListAddress
+
+    @POST("api/auth/bill/createDeliveryAddress")
+    suspend fun addAddress(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Body body: AddressBody
+    ): AddressResult
 
 
 }

@@ -1,5 +1,7 @@
 package com.example.vietcar.di.repository
 
+import com.example.vietcar.data.model.address.AddressBody
+import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.location.city.ListCity
@@ -41,6 +43,7 @@ interface ICarRepository {
     suspend fun deleteProductOfCart(cartId: Int): ProductToCart
 
     suspend fun getAddress(): ListAddress
+    suspend fun addAddress(body: AddressBody): AddressResult
 
     suspend fun getCity(): ListCity
     suspend fun getDistrict(provinceCode: String): ListDistrict

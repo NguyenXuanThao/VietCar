@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.vietcar.click.ItemAddressClick
 import com.example.vietcar.data.model.address.Address
 import com.example.vietcar.databinding.ItemAddressLayoutBinding
 
-class AddressAdapter : RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
+class AddressAdapter (private val itemAddressClick: ItemAddressClick) : RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
 
     private var binding: ItemAddressLayoutBinding? = null
 
@@ -52,6 +53,10 @@ class AddressAdapter : RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() 
             binding.tvName.text = address.customer_name
             binding.tvPhone.text = address.customer_phone
             binding.tvAddress.text = address.address
+
+            itemView.setOnClickListener {
+                itemAddressClick.onClickAddressItem(address)
+            }
         }
     }
 

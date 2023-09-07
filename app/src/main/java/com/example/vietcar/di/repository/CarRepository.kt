@@ -3,6 +3,8 @@ package com.example.vietcar.di.repository
 import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.api.CarApi
 import com.example.vietcar.data.api.LocationApi
+import com.example.vietcar.data.model.address.AddressBody
+import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.location.city.ListCity
@@ -101,6 +103,12 @@ class CarRepository @Inject constructor(
     override suspend fun getAddress(): ListAddress {
         return withContext(Dispatchers.IO) {
             carApi.getAddress(DataLocal.BEARER_TOKEN)
+        }
+    }
+
+    override suspend fun addAddress(body: AddressBody): AddressResult {
+        return withContext(Dispatchers.IO) {
+            carApi.addAddress(DataLocal.BEARER_TOKEN, body = body)
         }
     }
 

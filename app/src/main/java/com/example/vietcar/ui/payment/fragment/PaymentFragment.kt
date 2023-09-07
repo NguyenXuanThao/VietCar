@@ -5,11 +5,11 @@ import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
+import com.example.vietcar.data.model.address.Address
 import com.example.vietcar.databinding.FragmentPaymentBinding
 import com.example.vietcar.ui.payment.adapter.PaymentAdapter
 import com.example.vietcar.ui.payment.viewmodel.PaymentViewModel
@@ -26,6 +26,13 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
     private val paymentAdapter = PaymentAdapter()
 
     private lateinit var frameLayout: FrameLayout
+
+    private var hasAddressData = false
+
+    private var addressData: Address? = null
+
+    private var deliveryMethod: Int? = null
+    private var paymentMethod: Int? = null
 
     override fun obServerLivedata() {
         super.obServerLivedata()
@@ -54,12 +61,45 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
                 }
             }
         }
+
+        paymentViewModel.addressResponse.observe(viewLifecycleOwner) { resource ->
+            if (!hasAddressData) {
+                when (resource) {
+                    is Resource.Success -> {
+                        if (resource.data?.data!!.isNotEmpty()) {
+                            binding.tvAddress.visibility = View.GONE
+                            binding.tvName.visibility = View.VISIBLE
+                            binding.tvPhone.visibility = View.VISIBLE
+                            binding.tvAddressDefault.visibility = View.VISIBLE
+
+                            val lastAddress = resource.data.data.last()
+
+                            binding.tvName.text = lastAddress.customer_name
+                            binding.tvPhone.text = "SĐT ${lastAddress?.customer_phone}"
+                            binding.tvAddressDefault.text = lastAddress.address
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        val errorMessage = resource.message ?: "Có lỗi mạng"
+                        Utils.showDialogError(requireContext(), errorMessage)
+                        frameLayout.visibility = View.GONE
+                    }
+
+                    is Resource.Loading -> {
+                        frameLayout.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
     }
 
     override fun initData() {
         super.initData()
 
         paymentViewModel.getProductShoppingCart()
+
+        paymentViewModel.getAddress()
     }
 
     override fun initView() {
@@ -68,6 +108,8 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
         checkDeliveryMethod()
 
         checkPaymentMethod()
+
+        checkAddressResult()
     }
 
     override fun evenClick() {
@@ -102,22 +144,12 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
             viewLifecycleOwner
         ) { _, result ->
 
-            val paymentMethod = result.getInt("paymentMethod")
+            paymentMethod = result.getInt("paymentMethod")
 
-            when (paymentMethod) {
-                0 -> {
-                    binding.tvPaymentMethod.text = "Tiền mặt"
-                }
-
-                1 -> {
-                    binding.tvPaymentMethod.text = "Chuyển khoản"
-                }
-
-                else -> {
-                    binding.tvPaymentMethod.text = "Ví điểm"
-                }
-            }
+            savePaymentMethod()
         }
+
+        savePaymentMethod()
     }
 
     private fun checkDeliveryMethod() {
@@ -127,17 +159,80 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
             viewLifecycleOwner
         ) { _, result ->
 
-            val paymentMethod = result.getInt("deliveryMethod")
+            deliveryMethod = result.getInt("deliveryMethod")
 
-            when (paymentMethod) {
-                0 -> {
-                    binding.tvDeliveryMethod.text = "Giao hàng tận nơi"
-                }
+            showHideAddress()
+        }
 
-                else -> {
-                    binding.tvDeliveryMethod.text = "Nhận tại cửa hàng"
-                }
+        showHideAddress()
+    }
+
+    private fun checkAddressResult() {
+        parentFragmentManager.setFragmentResultListener(
+            "addressResult",
+            viewLifecycleOwner
+        ) { _, result ->
+            addressData = result.getParcelable("addressData")
+
+            showHideAddressDefault()
+
+        }
+
+        if (addressData != null) {
+
+            showHideAddressDefault()
+        }
+    }
+
+    private fun showHideAddressDefault() {
+        binding.tvAddress.visibility = View.GONE
+        binding.tvName.visibility = View.VISIBLE
+        binding.tvPhone.visibility = View.VISIBLE
+        binding.tvAddressDefault.visibility = View.VISIBLE
+
+        binding.tvName.text = addressData?.customer_name
+        binding.tvPhone.text = "SĐT ${addressData?.customer_phone}"
+        binding.tvAddressDefault.text = addressData?.address
+
+        hasAddressData = true
+    }
+
+    private fun showHideAddress() {
+
+        when (deliveryMethod) {
+            0 -> {
+                binding.tvDeliveryMethod.text = "Giao hàng tận nơi"
+                binding.ctAddress.visibility = View.VISIBLE
+                binding.ctAddressDefault.visibility = View.VISIBLE
+                binding.view3.visibility = View.VISIBLE
             }
+
+            1 -> {
+                binding.tvDeliveryMethod.text = "Nhận tại cửa hàng"
+                binding.ctAddress.visibility = View.GONE
+                binding.ctAddressDefault.visibility = View.GONE
+                binding.view3.visibility = View.GONE
+            }
+
+            else -> binding.tvDeliveryMethod.text = "Giao hàng tận nơi"
+        }
+    }
+
+    private fun savePaymentMethod() {
+        when (paymentMethod) {
+            0 -> {
+                binding.tvPaymentMethod.text = "Tiền mặt"
+            }
+
+            1 -> {
+                binding.tvPaymentMethod.text = "Chuyển khoản"
+            }
+
+            2 -> {
+                binding.tvPaymentMethod.text = "Ví điểm"
+            }
+
+            else -> binding.tvPaymentMethod.text = "Tiền mặt"
         }
     }
 }

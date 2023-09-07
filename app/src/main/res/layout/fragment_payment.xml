@@ -112,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Giao tận nơi"
+                android:textColor="#424141"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/ctDeliveryMethod"
                 app:layout_constraintTop_toBottomOf="@+id/ctDeliveryMethod" />
@@ -159,15 +160,58 @@
                     app:tint="@color/black" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tvAddress"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctAddressDefault"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="chọn địa chỉ nhận hàng"
-                android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/ctAddress"
                 app:layout_constraintStart_toStartOf="@+id/ctAddress"
-                app:layout_constraintTop_toBottomOf="@+id/ctAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/ctAddress">
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="chọn địa chỉ nhận hàng"
+                    android:textColor="#424141"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#424141"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SĐT 0349398702"
+                    android:textColor="#424141"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@+id/tvName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+                <TextView
+                    android:id="@+id/tvAddressDefault"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30 Phạm Văn Đồng"
+                    android:textColor="#424141"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:id="@+id/view3"
@@ -179,7 +223,7 @@
                 android:background="@color/hint_text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/ctAddressDefault" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctPaymentMethod"
@@ -218,6 +262,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="chọn phương thức thanh toán"
+                android:textColor="#424141"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/ctPaymentMethod"
                 app:layout_constraintTop_toBottomOf="@+id/ctPaymentMethod" />
@@ -271,6 +316,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="chọn mã giảm giá"
+                android:textColor="#424141"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/ctDiscount"
                 app:layout_constraintTop_toBottomOf="@+id/ctDiscount" />
