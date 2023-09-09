@@ -12,6 +12,7 @@ import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.click.ItemProductOfCartClick
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
+import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductOfCartBody
 import com.example.vietcar.databinding.FragmentShoppingCartBinding
@@ -30,6 +31,8 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
     private val shoppingCartViewModel: ShoppingCartViewModel by viewModels()
 
     private var shoppingCartAdapter = ShoppingCartAdapter(this)
+
+    private var listCartId = arrayListOf<Int>()
 
     private var totalMoney = 0
 
@@ -59,6 +62,10 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
             when (resource) {
                 is Resource.Success -> {
                     listProduct = resource.data?.data as ArrayList<Product>
+
+                    for (product in listProduct!!) {
+                        listCartId.add(product.cart_id!!)
+                    }
 
                     shoppingCartAdapter.differ.submitList(resource.data.data)
 
@@ -100,6 +107,24 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
                 }
             }
         }
+
+        shoppingCartViewModel.billResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    Log.d("ShoppingCartFragment", resource.data?.status.toString())
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     override fun initData() {
@@ -112,6 +137,11 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
         super.evenClick()
 
         binding.btnPayment.setOnClickListener {
+
+            val body = BillBody(listCartId)
+
+            shoppingCartViewModel.createDraftBill(body)
+
             val action =
                 ShoppingCartFragmentDirections.actionShoppingCartFragmentToPaymentFragment()
             findNavController().navigate(action)

@@ -27,7 +27,6 @@ import com.example.vietcar.common.DataLocal
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.category.ListCategory
-import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentCategoryBinding
@@ -70,25 +69,6 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     override fun onDestroy() {
         super.onDestroy()
         bottomNavigationView.visibility = View.VISIBLE
-    }
-
-    override fun checkLogin() {
-        super.checkLogin()
-
-        Log.d("HomeFragment", "checkLogin")
-
-        parentFragmentManager.setFragmentResultListener(
-            "loginResult", viewLifecycleOwner
-        ) { _, result ->
-            val loginData = result.getParcelable<LoginResponse>("loginData")
-
-            status = loginData!!.status!!
-            saveData(loginData.status!!)
-
-            Log.d("HomeFragment", loginData.status.toString())
-        }
-
-        retrieveData()
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -155,6 +135,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
 
     override fun initData() {
 
+        retrieveData()
+
         if (menuIndex == -2) {
 
             categories!!.data[position!!].id?.toString()
@@ -168,7 +150,6 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     override fun initView() {
         super.initView()
 
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
         bottomNavigationView.visibility = View.GONE
 
         setUpNavigationView()
@@ -186,17 +167,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
 
 
     /**
-     * save data
+     * check log in
      */
-    private fun saveData(status: Int) {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        editor.putInt("status_key", status)
-
-        editor.apply()
-    }
 
     private fun retrieveData() {
         val sharedPreferences =

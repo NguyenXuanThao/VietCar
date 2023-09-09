@@ -3,9 +3,14 @@ package com.example.vietcar.di.repository
 import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.api.CarApi
 import com.example.vietcar.data.api.LocationApi
+import com.example.vietcar.data.model.account.AccountInformation
 import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
+import com.example.vietcar.data.model.bill.BillBody
+import com.example.vietcar.data.model.bill.BillResponse
+import com.example.vietcar.data.model.bill.ListBill
+import com.example.vietcar.data.model.bill_detail.BillDetail
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.location.city.ListCity
 import com.example.vietcar.data.model.location.wards.ListWards
@@ -70,6 +75,12 @@ class CarRepository @Inject constructor(
         }
     }
 
+    override suspend fun getAccountInformation(): AccountInformation {
+        return withContext(Dispatchers.IO) {
+            carApi.getAccountInformation(token = DataLocal.BEARER_TOKEN)
+        }
+    }
+
     override suspend fun getRelatedProducts(productId: String): ListProduct {
         return withContext(Dispatchers.IO) {
             carApi.getRelatedProducts(token = DataLocal.BEARER_TOKEN, productId = productId)
@@ -79,6 +90,24 @@ class CarRepository @Inject constructor(
     override suspend fun getProductShoppingCart(): ListProduct {
         return withContext(Dispatchers.IO) {
             carApi.getProductShoppingCart(DataLocal.BEARER_TOKEN)
+        }
+    }
+
+    override suspend fun createDraftBill(body: BillBody): BillResponse {
+        return withContext(Dispatchers.IO) {
+            carApi.createDraftBill(token = DataLocal.BEARER_TOKEN, body = body)
+        }
+    }
+
+    override suspend fun getListBill(): ListBill {
+        return withContext(Dispatchers.IO) {
+            carApi.getListBill(token = DataLocal.BEARER_TOKEN)
+        }
+    }
+
+    override suspend fun getBillDetail(id: Int): BillDetail {
+        return withContext(Dispatchers.IO) {
+            carApi.getBillDetail(token = DataLocal.BEARER_TOKEN, id = id)
         }
     }
 

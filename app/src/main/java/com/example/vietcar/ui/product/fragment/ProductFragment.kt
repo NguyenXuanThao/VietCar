@@ -43,25 +43,6 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
 
     private lateinit var frameLayout: FrameLayout
 
-    override fun checkLogin() {
-        super.checkLogin()
-
-        Log.d("ProductFragment", "checkLogin")
-
-        parentFragmentManager.setFragmentResultListener(
-            "loginResult", viewLifecycleOwner
-        ) { _, result ->
-            val loginData = result.getParcelable<LoginResponse>("loginData")
-
-            status = loginData!!.status!!
-            saveData(loginData.status!!)
-
-            Log.d("ProductFragment", loginData.status.toString())
-        }
-
-        retrieveData()
-    }
-
     override fun obServerLivedata() {
 
         frameLayout = requireActivity().findViewById(R.id.frameLayout)
@@ -113,6 +94,8 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
     }
 
     override fun initData() {
+        retrieveData()
+
         productViewModel.getAllProduct()
     }
 
@@ -125,17 +108,8 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
     }
 
     /**
-     * save data
+     * check log in
      */
-    private fun saveData(status: Int) {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        editor.putInt("status_key", status)
-
-        editor.apply()
-    }
 
     private fun retrieveData() {
         val sharedPreferences =

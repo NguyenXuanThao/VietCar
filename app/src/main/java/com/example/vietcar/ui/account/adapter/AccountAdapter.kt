@@ -2,22 +2,30 @@ package com.example.vietcar.ui.account.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.data.model.account.AccountScreenCategory
 import com.example.vietcar.databinding.ItemAccountScreenBinding
+import com.example.vietcar.ui.account.fragment.AccountFragmentDirections
 
-class AccountAdapter: RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
+class AccountAdapter : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
     private var binding: ItemAccountScreenBinding? = null
 
     private val diffUtil = object : DiffUtil.ItemCallback<AccountScreenCategory>() {
-        override fun areItemsTheSame(oldItem: AccountScreenCategory, newItem: AccountScreenCategory): Boolean {
+        override fun areItemsTheSame(
+            oldItem: AccountScreenCategory,
+            newItem: AccountScreenCategory
+        ): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: AccountScreenCategory, newItem: AccountScreenCategory): Boolean {
+        override fun areContentsTheSame(
+            oldItem: AccountScreenCategory,
+            newItem: AccountScreenCategory
+        ): Boolean {
             return oldItem == newItem
         }
 
@@ -46,6 +54,16 @@ class AccountAdapter: RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
             binding.tvTitle.text = accountScreenCategory.title
             binding.imgIcon.setImageResource(accountScreenCategory.image!!)
+
+            itemView.setOnClickListener { view ->
+                val action = when (adapterPosition) {
+                    2 -> AccountFragmentDirections.actionBottomNavAccountToOrderHistoryFragment()
+
+                    else -> AccountFragmentDirections.actionBottomNavAccountToOrderHistoryFragment()
+                }
+
+                view.findNavController().navigate(action)
+            }
         }
     }
 }

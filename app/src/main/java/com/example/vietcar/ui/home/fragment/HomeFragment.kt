@@ -20,14 +20,12 @@ import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.category.ListCategory
-import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentHomeBinding
 import com.example.vietcar.ui.home.adapter.CategoryAdapter
 import com.example.vietcar.ui.home.adapter.ListProductAdapter
 import com.example.vietcar.ui.home.viewmodel.HomeViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -51,28 +49,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     private var categories: ListCategory? = null
 
     private lateinit var frameLayout: FrameLayout
-
-    override fun checkLogin() {
-        super.checkLogin()
-        Log.d("HomeFragment", "checkLogin")
-
-        parentFragmentManager.setFragmentResultListener(
-            "loginResult",
-            viewLifecycleOwner
-        ) { _, result ->
-            val loginData = result.getParcelable<LoginResponse>("loginData")
-
-            updateInfo(loginData!!.data!!.phone.toString())
-
-            status = loginData.status!!
-            saveData(loginData.status, loginData.data!!.phone.toString())
-
-            Log.d("HomeFragment", loginData.status.toString())
-        }
-
-        retrieveData()
-
-    }
 
     override fun obServerLivedata() {
 
@@ -145,12 +121,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
             }
         }
+
+        homeViewModel.accountInformationResponse.observe(viewLifecycleOwner) { resource ->
+
+            when (resource) {
+                is Resource.Success -> {
+                    binding.tvName.text = resource.data?.data?.name
+                    binding.tvPhoneNumber.text = resource.data?.data?.phone
+
+//                    val uriImage = "https://vietcargroup.com/${resource.data?.data?.image}"
+//
+//                    Glide.with(requireContext()).load(uriImage)
+//                        .into(binding.imgAvatar)
+
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
+
+        }
     }
 
     override fun initData() {
         super.initData()
+
+        retrieveData()
+
+        homeViewModel.getAccountInformation()
         homeViewModel.getCategory()
         homeViewModel.getProductGroup()
+
     }
 
     override fun evenClick() {
@@ -194,40 +201,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     }
 
     /**
-     * save data
+     * check login
      */
-    private fun saveData(status: Int, phoneNumber: String) {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        editor.putInt("status_key", status)
-        editor.putString("number_key", phoneNumber)
-
-        editor.apply()
-    }
 
     private fun retrieveData() {
         val sharedPreferences =
             requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-        val retrievedPhone = sharedPreferences.getString("number_key", "")
         val retrievedStatus = sharedPreferences.getInt("status_key", 1)
 
         status = retrievedStatus
 
-        if (retrievedPhone != "" && retrievedStatus != 1) {
-            Log.d("ThaoNX", "retrieveData: $retrievedPhone & $retrievedStatus")
+        if (retrievedStatus == 0) {
 
-            updateInfo(retrievedPhone!!)
+            updateView()
         }
     }
 
-    private fun updateInfo(retrievedPhone: String) {
+    private fun updateView() {
         binding.btnHomeLogin.visibility = View.GONE
+        binding.imgAvatar.setImageResource(R.drawable.ic_avatar)
         binding.btnVerify.visibility = View.VISIBLE
         binding.tvPhoneNumber.visibility = View.VISIBLE
-        binding.tvPhoneNumber.text = retrievedPhone
         binding.imgWarning.visibility = View.VISIBLE
     }
 

@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vietcar.common.Resource
+import com.example.vietcar.data.model.bill.BillBody
+import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.product.ListProduct
 import com.example.vietcar.data.model.product.ProductOfCartBody
 import com.example.vietcar.data.model.product_to_cart.ProductToCart
@@ -25,6 +27,10 @@ class ShoppingCartViewModel @Inject constructor(
     private val _productOfCartResponse: MutableLiveData<Resource<ProductToCart>> = MutableLiveData()
     val productOfCartResponse
         get() = _productOfCartResponse
+
+    private val _billResponse: MutableLiveData<Resource<BillResponse>> = MutableLiveData()
+    val billResponse
+        get() = _billResponse
 
     fun getProductShoppingCart() {
         viewModelScope.launch {
@@ -58,6 +64,18 @@ class ShoppingCartViewModel @Inject constructor(
                 _productOfCartResponse.postValue(Resource.Success(productOfCartData))
             } catch (exception: Exception) {
                 _productOfCartResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
+            }
+        }
+    }
+
+    fun createDraftBill(body: BillBody) {
+        viewModelScope.launch {
+
+            try {
+                val billData = carRepository.createDraftBill(body)
+                _billResponse.postValue(Resource.Success(billData))
+            } catch (exception: Exception) {
+                _billResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
             }
         }
     }

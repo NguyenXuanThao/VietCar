@@ -63,26 +63,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
         bottomNavigationView.visibility = View.VISIBLE
     }
 
-    override fun checkLogin() {
-        super.checkLogin()
-
-        Log.d("HomeFragment", "checkLogin")
-
-        parentFragmentManager.setFragmentResultListener(
-            "loginResult",
-            viewLifecycleOwner
-        ) { _, result ->
-            val loginData = result.getParcelable<LoginResponse>("loginData")
-
-            status = loginData!!.status!!
-            saveData(loginData.status!!)
-
-            Log.d("HomeFragment", loginData.status.toString())
-        }
-
-        retrieveData()
-    }
-
     override fun obServerLivedata() {
         super.obServerLivedata()
 
@@ -141,6 +121,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     override fun initData() {
         super.initData()
 
+        retrieveData()
+
         product = args.product
 
         productDetailViewModel.getRelatedProducts(product!!.id.toString())
@@ -179,17 +161,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     }
 
     /**
-     * save data
+     * check login
      */
-    private fun saveData(status: Int) {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        editor.putInt("status_key", status)
-
-        editor.apply()
-    }
 
     private fun retrieveData() {
         val sharedPreferences =

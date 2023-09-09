@@ -46,6 +46,12 @@
         android:label="fragment_account"
         tools:layout="@layout/fragment_account">
 
+        <action
+            android:id="@+id/action_bottomNavAccount_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_bottomNavAccount_to_orderHistoryFragment"
+            app:destination="@id/orderHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavStore"
@@ -219,5 +225,28 @@
             android:name="districtCode"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/orderHistoryFragment"
+        android:name="com.example.vietcar.ui.order_history.fragment.OrderHistoryFragment"
+        android:label="fragment_order_history"
+        tools:layout="@layout/fragment_order_history" >
+        <action
+            android:id="@+id/action_orderHistoryFragment_to_billDetailFragment"
+            app:destination="@id/billDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/billDetailFragment"
+        android:name="com.example.vietcar.ui.bill_detail.fragment.BillDetailFragment"
+        android:label="fragment_bill_detail"
+        tools:layout="@layout/fragment_bill_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderConfirmFragment"
+        android:name="com.example.vietcar.ui.confirm_order.fragment.OrderConfirmFragment"
+        android:label="fragment_order_confirm"
+        tools:layout="@layout/fragment_order_confirm" />
 
 </navigation>

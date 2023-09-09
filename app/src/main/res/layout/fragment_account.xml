@@ -33,11 +33,12 @@
             android:id="@+id/imgWarning"
             android:layout_width="16dp"
             android:layout_height="16dp"
+            android:visibility="gone"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
-            app:tint="#D56A48"
             android:layout_marginBottom="12dp"
-            android:src="@drawable/warning" />
+            android:src="@drawable/warning"
+            app:tint="#D56A48" />
 
     </FrameLayout>
 
@@ -55,16 +56,42 @@
         app:layout_constraintStart_toStartOf="@+id/frameAvatar"
         app:layout_constraintTop_toBottomOf="@+id/frameAvatar" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnVerify"
+        android:layout_width="wrap_content"
+        android:layout_height="29dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:background="@drawable/bg_login_red"
+        android:padding="6dp"
+        android:text="Chưa xác thực"
+        android:textAllCaps="false"
+        android:textColor="#B2401C"
+        app:layout_constraintEnd_toEndOf="@+id/frameAvatar"
+        app:layout_constraintStart_toStartOf="@+id/frameAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/frameAvatar" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+
     <TextView
         android:id="@+id/tvPhoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="0349398702"
+        android:layout_marginTop="8dp"
         android:textColor="#F61414"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvEditFile"
@@ -72,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#F5F4F4"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPhoneNumber">
@@ -102,5 +130,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="132dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

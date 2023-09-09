@@ -1,5 +1,6 @@
 package com.example.vietcar.ui.customer.login
 
+import android.content.Context
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     private lateinit var bottomNavigationView: BottomNavigationView
     private val loginViewModel: LoginViewModel by viewModels()
 
-    private var loginData : LoginResponse? = null
+    private var loginData: LoginResponse? = null
 
     override fun obServerLivedata() {
         super.obServerLivedata()
@@ -35,6 +36,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
             if (loginResponse.status == 0) {
                 backToHomeFragment()
+
+                saveData(loginResponse.status)
             } else {
                 loginResponse.message?.let { showDialogError(it) }
             }
@@ -92,6 +95,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    private fun saveData(status: Int) {
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putInt("status_key", status)
+
+        editor.apply()
     }
 
 }

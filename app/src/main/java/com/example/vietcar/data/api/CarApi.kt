@@ -1,9 +1,14 @@
 package com.example.vietcar.data.api
 
 import com.example.vietcar.common.DataLocal
+import com.example.vietcar.data.model.account.AccountInformation
 import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
+import com.example.vietcar.data.model.bill.BillBody
+import com.example.vietcar.data.model.bill.BillResponse
+import com.example.vietcar.data.model.bill.ListBill
+import com.example.vietcar.data.model.bill_detail.BillDetail
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
@@ -20,6 +25,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CarApi {
@@ -37,6 +43,11 @@ interface CarApi {
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: RegisterBody
     ): RegisterResponse
+
+    @GET("api/auth/user-profile")
+    suspend fun getAccountInformation(
+        @Header("Authorization") token: String
+    ): AccountInformation
 
     @GET("api/noauth/getListCategory")
     suspend fun getCategory(
@@ -124,6 +135,27 @@ interface CarApi {
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: AddressBody
     ): AddressResult
+
+    @POST("api/auth/bill/createDraftBill")
+    suspend fun createDraftBill(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Body body: BillBody
+    ): BillResponse
+
+    @GET("api/auth/bill/listBillByType")
+    suspend fun getListBill(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Query("step") step: Int = 0
+    ): ListBill
+
+    @GET("/api/auth/bill/detail/{id}")
+    suspend fun getBillDetail(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Path("id") id: Int
+    ): BillDetail
 
 
 }
