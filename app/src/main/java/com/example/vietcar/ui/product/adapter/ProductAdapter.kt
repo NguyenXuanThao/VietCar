@@ -17,7 +17,8 @@ import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.fragment.ProductFragmentDirections
 import com.example.vietcar.ui.product_group.fragment.ProductGroupFragmentDirections
 
-class ProductAdapter (private val itemShoppingCartClick: ItemShoppingCartClick) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val itemShoppingCartClick: ItemShoppingCartClick) :
+    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     private var binding: ItemProductBinding? = null
 
@@ -58,6 +59,7 @@ class ProductAdapter (private val itemShoppingCartClick: ItemShoppingCartClick) 
 
             val uriImage = "https://vietcargroup.com${product.avatar}"
             Glide.with(itemView.context).load(uriImage)
+                .placeholder(R.drawable.img_default)
                 .into(binding.imgProduct)
 
             binding.imgShopping.setOnClickListener {

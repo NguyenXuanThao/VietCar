@@ -3,7 +3,6 @@ package com.example.vietcar.ui.shopping_cart.fragment
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +12,7 @@ import com.example.vietcar.click.ItemProductOfCartClick
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.bill.BillBody
+import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductOfCartBody
 import com.example.vietcar.databinding.FragmentShoppingCartBinding
@@ -33,6 +33,8 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
     private var shoppingCartAdapter = ShoppingCartAdapter(this)
 
     private var listCartId = arrayListOf<Int>()
+
+    private var billResponse: BillResponse? = null
 
     private var totalMoney = 0
 
@@ -61,18 +63,27 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
         shoppingCartViewModel.productResponse.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    listProduct = resource.data?.data as ArrayList<Product>
 
-                    for (product in listProduct!!) {
-                        listCartId.add(product.cart_id!!)
+                    if (resource.data?.data != null) {
+                        listProduct = resource.data.data as ArrayList<Product>
+
+                        for (product in listProduct!!) {
+                            listCartId.add(product.cart_id!!)
+                        }
+
+                        shoppingCartAdapter.differ.submitList(resource.data.data)
+
+                        binding.rvProductFragment.adapter = shoppingCartAdapter
+                        binding.rvProductFragment.layoutManager =
+                            LinearLayoutManager(requireContext())
+
+                        totalMoney(resource.data.data)
+                        binding.ctPayment.visibility = View.VISIBLE
+                        binding.rvProductFragment.visibility = View.VISIBLE
+                    } else {
+                        binding.ctPayment.visibility = View.GONE
+                        binding.rvProductFragment.visibility = View.GONE
                     }
-
-                    shoppingCartAdapter.differ.submitList(resource.data.data)
-
-                    binding.rvProductFragment.adapter = shoppingCartAdapter
-                    binding.rvProductFragment.layoutManager = LinearLayoutManager(requireContext())
-
-                    totalMoney(resource.data.data as ArrayList<Product>)
 
                     frameLayout.visibility = View.GONE
                 }
@@ -92,26 +103,7 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
         shoppingCartViewModel.productOfCartResponse.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    Toast.makeText(requireContext(), resource.data?.message, Toast.LENGTH_SHORT)
-                        .show()
-                }
 
-                is Resource.Error -> {
-                    val errorMessage = resource.message ?: "Có lỗi mạng"
-                    Utils.showDialogError(requireContext(), errorMessage)
-                    frameLayout.visibility = View.GONE
-                }
-
-                is Resource.Loading -> {
-                    frameLayout.visibility = View.VISIBLE
-                }
-            }
-        }
-
-        shoppingCartViewModel.billResponse.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Success -> {
-                    Log.d("ShoppingCartFragment", resource.data?.status.toString())
                 }
 
                 is Resource.Error -> {
@@ -142,9 +134,7 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
 
             shoppingCartViewModel.createDraftBill(body)
 
-            val action =
-                ShoppingCartFragmentDirections.actionShoppingCartFragmentToPaymentFragment()
-            findNavController().navigate(action)
+            observerBillResponse()
         }
     }
 
@@ -207,11 +197,45 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
 
         listProduct!!.remove(product)
 
+        if (listProduct!!.isEmpty()) {
+            binding.ctPayment.visibility = View.GONE
+        }
+
         shoppingCartAdapter.differ.submitList(listProduct)
 
         binding.rvProductFragment.adapter = shoppingCartAdapter
         binding.rvProductFragment.layoutManager = LinearLayoutManager(requireContext())
 
+    }
+
+    private fun observerBillResponse() {
+        shoppingCartViewModel.billResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    Log.d("ShoppingCartFragment", resource.data?.toString()!!)
+
+                    billResponse = resource.data
+
+                    Log.d("ThaoNX6", billResponse?.data.toString())
+
+                    val action =
+                        ShoppingCartFragmentDirections.actionShoppingCartFragmentToPaymentFragment(
+                            billResponse
+                        )
+                    findNavController().navigate(action)
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
 }

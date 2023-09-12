@@ -9,6 +9,7 @@ import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
 import com.example.vietcar.data.model.bill_detail.BillDetail
+import com.example.vietcar.data.model.bill_detail.OrderBody
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
@@ -155,6 +156,13 @@ interface CarApi {
         @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Path("id") id: Int
+    ): BillDetail
+
+    @POST("api/auth/bill/order")
+    suspend fun orderProduct(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Body body: OrderBody
     ): BillDetail
 
 

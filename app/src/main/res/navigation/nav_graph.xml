@@ -27,12 +27,15 @@
         <action
             android:id="@+id/action_bottomNavHome_to_shoppingCartFragment"
             app:destination="@id/shoppingCartFragment" />
+        <action
+            android:id="@+id/action_bottomNavHome_to_orderHistoryFragment"
+            app:destination="@id/orderHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavProduct"
         android:name="com.example.vietcar.ui.product.fragment.ProductFragment"
         android:label="fragment_product"
-        tools:layout="@layout/fragment_product" >
+        tools:layout="@layout/fragment_product">
         <action
             android:id="@+id/action_bottomNavProduct_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
@@ -116,7 +119,7 @@
             app:destination="@id/detailProductFragment"
             app:launchSingleTop="true"
             app:popUpTo="@+id/main_nav_graph"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/productGroupFragment"
@@ -140,7 +143,7 @@
         android:id="@+id/shoppingCartFragment"
         android:name="com.example.vietcar.ui.shopping_cart.fragment.ShoppingCartFragment"
         android:label="fragment_shopping_cart"
-        tools:layout="@layout/fragment_shopping_cart" >
+        tools:layout="@layout/fragment_shopping_cart">
         <action
             android:id="@+id/action_shoppingCartFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
@@ -149,7 +152,7 @@
         android:id="@+id/paymentFragment"
         android:name="com.example.vietcar.ui.payment.fragment.PaymentFragment"
         android:label="fragment_payment"
-        tools:layout="@layout/fragment_payment" >
+        tools:layout="@layout/fragment_payment">
         <action
             android:id="@+id/action_paymentFragment_to_deliveryMethodFragment"
             app:destination="@id/deliveryMethodFragment" />
@@ -162,6 +165,20 @@
         <action
             android:id="@+id/action_paymentFragment_to_discountCodeFragment"
             app:destination="@id/discountCodeFragment" />
+        <argument
+            android:name="bill"
+            android:defaultValue="@null"
+            app:argType="com.example.vietcar.data.model.bill.BillResponse"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_paymentFragment_to_bankAccountFragment"
+            app:destination="@id/bankAccountFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_bottomNavHome"
+            app:destination="@id/bottomNavHome"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/bottomNavHome"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/deliveryMethodFragment"
@@ -172,7 +189,7 @@
         android:id="@+id/addressFragment"
         android:name="com.example.vietcar.ui.address.fragment.AddressFragment"
         android:label="fragment_address"
-        tools:layout="@layout/fragment_address" >
+        tools:layout="@layout/fragment_address">
         <action
             android:id="@+id/action_addressFragment_to_locationFragment"
             app:destination="@id/locationFragment" />
@@ -191,7 +208,7 @@
         android:id="@+id/locationFragment"
         android:name="com.example.vietcar.ui.location.fragment.LocationFragment"
         android:label="fragment_location"
-        tools:layout="@layout/fragment_location" >
+        tools:layout="@layout/fragment_location">
         <action
             android:id="@+id/action_locationFragment_to_cityFragment"
             app:destination="@id/cityFragment" />
@@ -211,7 +228,7 @@
         android:id="@+id/districtFragment"
         android:name="com.example.vietcar.ui.district.fragment.DistrictFragment"
         android:label="fragment_district"
-        tools:layout="@layout/fragment_district" >
+        tools:layout="@layout/fragment_district">
         <argument
             android:name="provinceCode"
             app:argType="string" />
@@ -220,7 +237,7 @@
         android:id="@+id/wardsFragment"
         android:name="com.example.vietcar.ui.wards.fragment.WardsFragment"
         android:label="fragment_wards"
-        tools:layout="@layout/fragment_wards" >
+        tools:layout="@layout/fragment_wards">
         <argument
             android:name="districtCode"
             app:argType="string" />
@@ -229,7 +246,7 @@
         android:id="@+id/orderHistoryFragment"
         android:name="com.example.vietcar.ui.order_history.fragment.OrderHistoryFragment"
         android:label="fragment_order_history"
-        tools:layout="@layout/fragment_order_history" >
+        tools:layout="@layout/fragment_order_history">
         <action
             android:id="@+id/action_orderHistoryFragment_to_billDetailFragment"
             app:destination="@id/billDetailFragment" />
@@ -238,7 +255,7 @@
         android:id="@+id/billDetailFragment"
         android:name="com.example.vietcar.ui.bill_detail.fragment.BillDetailFragment"
         android:label="fragment_bill_detail"
-        tools:layout="@layout/fragment_bill_detail" >
+        tools:layout="@layout/fragment_bill_detail">
         <argument
             android:name="id"
             app:argType="integer" />
@@ -248,5 +265,20 @@
         android:name="com.example.vietcar.ui.confirm_order.fragment.OrderConfirmFragment"
         android:label="fragment_order_confirm"
         tools:layout="@layout/fragment_order_confirm" />
+    <fragment
+        android:id="@+id/bankAccountFragment"
+        android:name="com.example.vietcar.ui.bank_account.fragment.BankAccountFragment"
+        android:label="fragment_bank_account"
+        tools:layout="@layout/fragment_bank_account">
+        <action
+            android:id="@+id/action_bankAccountFragment_to_bottomNavHome"
+            app:destination="@id/bottomNavHome"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/bottomNavHome"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="billCode"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

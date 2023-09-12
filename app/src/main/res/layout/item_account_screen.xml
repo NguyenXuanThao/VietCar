@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
     android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp">
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="4dp"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,8 +32,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                app:tint="@color/primaryDarkColor"
-                android:src="@drawable/ic_log_out" />
+                android:src="@drawable/ic_log_out"
+                app:tint="@color/primaryDarkColor" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -40,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:fontFamily="@font/app_font_regular"
             android:text="Thông tin cá nhân"
             android:textColor="@color/black"
             android:textSize="16sp"

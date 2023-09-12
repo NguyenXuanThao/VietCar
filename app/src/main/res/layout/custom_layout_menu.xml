@@ -33,6 +33,7 @@
         android:text="Gía đỡ, bảng số điện thoại - Tẩu sạc"
         android:textColor="@color/black"
         android:textSize="12sp"
+        android:fontFamily="@font/app_font_regular"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="@+id/cvAvatar"
         app:layout_constraintStart_toStartOf="@+id/cvAvatar"

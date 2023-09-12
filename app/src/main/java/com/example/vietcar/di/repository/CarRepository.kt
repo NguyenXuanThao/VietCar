@@ -11,6 +11,7 @@ import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
 import com.example.vietcar.data.model.bill_detail.BillDetail
+import com.example.vietcar.data.model.bill_detail.OrderBody
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.location.city.ListCity
 import com.example.vietcar.data.model.location.wards.ListWards
@@ -108,6 +109,12 @@ class CarRepository @Inject constructor(
     override suspend fun getBillDetail(id: Int): BillDetail {
         return withContext(Dispatchers.IO) {
             carApi.getBillDetail(token = DataLocal.BEARER_TOKEN, id = id)
+        }
+    }
+
+    override suspend fun orderProduct(body: OrderBody): BillDetail {
+        return withContext(Dispatchers.IO) {
+            carApi.orderProduct(token = DataLocal.BEARER_TOKEN, body = body)
         }
     }
 

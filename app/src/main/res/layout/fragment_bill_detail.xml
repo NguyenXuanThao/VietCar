@@ -21,7 +21,7 @@
             android:text="Đơn hàng"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
+            android:fontFamily="@font/app_font_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="Mã đơn hàng:"
+                android:fontFamily="@font/app_font_medium"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Ngày đặt hàng:"
+                android:fontFamily="@font/app_font_medium"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/tvTitleCode"
@@ -109,6 +111,7 @@
                 android:text="Đơn hàng:"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                android:fontFamily="@font/app_font_medium"
                 app:layout_constraintStart_toStartOf="@+id/tvTitleDate"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitleDate" />
 
@@ -157,6 +160,7 @@
                 android:text="Phương thức vận chuyển:"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                android:fontFamily="@font/app_font_medium"
                 app:layout_constraintStart_toStartOf="@+id/tvTitleBill"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
 
@@ -172,12 +176,12 @@
                 app:layout_constraintTop_toTopOf="@+id/tvDeliveryTitle" />
 
             <TextView
-                android:id="@+id/tvPhoneTitle"
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
-                android:text="SĐT"
+                android:text="Nguyễn Xuân Thao"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/tvDeliveryTitle"
@@ -188,11 +192,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                android:text="..."
+                android:text="SĐT 0349398702"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/tvPhoneTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvPhoneTitle" />
+                app:layout_constraintStart_toStartOf="@+id/tvName"
+                app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text="310 Cổ Nhuế, Nam từ liêm, Hà Nội"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/hint_text_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
 
             <TextView
                 android:id="@+id/tvPaymentTitle"
@@ -203,8 +227,9 @@
                 android:text="Phương thức thanh toán"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/tvPhone"
-                app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
+                android:fontFamily="@font/app_font_medium"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
 
             <TextView
                 android:id="@+id/tvPayment"
@@ -226,6 +251,7 @@
                 android:text="Ghi chú đơn hàng"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                android:fontFamily="@font/app_font_medium"
                 app:layout_constraintStart_toStartOf="@+id/tvPaymentTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvPaymentTitle" />
 
@@ -244,7 +270,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="20dp"
-                android:backgroundTint="@color/hint_text_color"
+                android:backgroundTint="#F0F1F3"
                 app:cardCornerRadius="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -264,6 +290,7 @@
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="12dp"
                         android:text="Tạm tính"
+                        android:fontFamily="@font/app_font_medium"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -289,6 +316,7 @@
                         android:text="Dịch vụ vận chuyển"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        android:fontFamily="@font/app_font_medium"
                         app:layout_constraintStart_toStartOf="@+id/tvEstimateTitle"
                         app:layout_constraintTop_toBottomOf="@+id/tvEstimateTitle" />
 
@@ -310,6 +338,7 @@
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="12dp"
                         android:text="Mã giảm giá"
+                        android:fontFamily="@font/app_font_medium"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/tvServiceTitle"
@@ -333,6 +362,7 @@
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="12dp"
                         android:text="Tổng giá tiền"
+                        android:fontFamily="@font/app_font_medium"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/tvDiscountCodeTitle"
@@ -366,6 +396,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="#D30404"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="Hủy đơn hàng"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

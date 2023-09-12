@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.example.vietcar.R
 
@@ -39,8 +40,7 @@ class AddProductDialog(
         productNumber.text = number.toString()
 
         val uriImage = "https://vietcargroup.com${avatar}"
-        Glide.with(context).load(uriImage)
-            .into(productImage)
+        Glide.with(context).load(uriImage).placeholder(R.drawable.img_default).into(productImage)
 
 
         val btnNegative = findViewById<CardView>(R.id.cvDeleteProduct)

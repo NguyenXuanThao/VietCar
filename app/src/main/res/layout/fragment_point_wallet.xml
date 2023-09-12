@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+               android:fontFamily="@font/app_font_bold" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -81,7 +81,11 @@ class BillDetailFragment : BaseFragment<FragmentBillDetailBinding>(
         } else {
             binding.tvDelivery.text = "Nhận tại cửa hàng"
         }
-        binding.tvPhone.text = billDetail.data.customer_phone
+        binding.tvName.text = billDetail.data.customer_name
+        binding.tvPhone.text = "SĐT ${billDetail.data.customer_phone}"
+        binding.tvAddress.text =
+            "${billDetail.data.address}, ${billDetail.data.ward_name}, ${billDetail.data.district_name}, ${billDetail.data.city_name}"
+        binding.tvNote.text = billDetail.data.note
 
         when (billDetail.data.payment_method) {
             0 -> {

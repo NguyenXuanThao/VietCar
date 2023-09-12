@@ -1,15 +1,38 @@
 package com.example.vietcar.ui.payment.fragment
 
+import android.annotation.SuppressLint
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.os.Build
+import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.RemoteViews
+import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
+import com.example.vietcar.activities.MainActivity
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.base.dialogs.AddProductDialog
+import com.example.vietcar.base.dialogs.SuccessDialog
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.address.Address
+import com.example.vietcar.data.model.bill.BillBody
+import com.example.vietcar.data.model.bill.BillResponse
+import com.example.vietcar.data.model.bill_detail.OrderBody
+import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.FragmentPaymentBinding
 import com.example.vietcar.ui.payment.adapter.PaymentAdapter
 import com.example.vietcar.ui.payment.viewmodel.PaymentViewModel
@@ -19,7 +42,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
     FragmentPaymentBinding::inflate
-) {
+), SuccessDialog.TransitToOtherScreen {
+
+    companion object {
+        const val CHANEL_ID = "OrderChannel"
+    }
+
 
     private val paymentViewModel: PaymentViewModel by viewModels()
 
@@ -29,10 +57,20 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
 
     private var hasAddressData = false
 
+    private var billId = -1
+    private var note: String? = null
+    private var addressId = -1
+
+    private var billResponse: BillResponse? = null
+
+    private val args: PaymentFragmentArgs by navArgs()
+
     private var addressData: Address? = null
 
     private var deliveryMethod: Int? = null
     private var paymentMethod: Int? = null
+
+    private var billCode: String? = null
 
     override fun obServerLivedata() {
         super.obServerLivedata()
@@ -92,6 +130,30 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
                 }
             }
         }
+
+        paymentViewModel.billResponse.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Success -> {
+
+                    if (resource.data?.status == 0) {
+
+                        sendNotification()
+
+                        showDialogSuccess()
+                    }
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                    frameLayout.visibility = View.GONE
+                }
+
+                is Resource.Loading -> {
+                    frameLayout.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     override fun initData() {
@@ -100,6 +162,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
         paymentViewModel.getProductShoppingCart()
 
         paymentViewModel.getAddress()
+
+        orderProduct()
+
     }
 
     override fun initView() {
@@ -114,6 +179,27 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
 
     override fun evenClick() {
         super.evenClick()
+
+        binding.btnOrder.setOnClickListener {
+
+            if (paymentMethod != 0 && paymentMethod != 1 && paymentMethod != 2) {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Vui lòng chọn phương thức thanh toán",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+
+                val body = OrderBody(billId, addressId, deliveryMethod, note, paymentMethod)
+
+                Log.d("ThaoNX6", body.toString())
+
+                paymentViewModel.orderProduct(body)
+            }
+        }
+
+
 
         binding.ctDeliveryMethod.setOnClickListener {
             val action = PaymentFragmentDirections.actionPaymentFragmentToDeliveryMethodFragment()
@@ -174,6 +260,10 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
         ) { _, result ->
             addressData = result.getParcelable("addressData")
 
+            Log.d("ThaoNX6", addressData.toString())
+
+            addressId = addressData?.id!!
+
             showHideAddressDefault()
 
         }
@@ -193,6 +283,8 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
         binding.tvName.text = addressData?.customer_name
         binding.tvPhone.text = "SĐT ${addressData?.customer_phone}"
         binding.tvAddressDefault.text = addressData?.address
+
+        addressId = addressData?.id!!
 
         hasAddressData = true
     }
@@ -232,7 +324,88 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
                 binding.tvPaymentMethod.text = "Ví điểm"
             }
 
-            else -> binding.tvPaymentMethod.text = "Tiền mặt"
+            else -> binding.tvPaymentMethod.text = "Chọn phương thức thanh toán"
         }
+    }
+
+    private fun orderProduct() {
+        billResponse = args.bill
+
+        billCode = billResponse?.data?.code
+
+        billId = billResponse?.data?.id!!
+        note = billResponse?.data?.note
+        addressId = billResponse?.data?.delivery_address_id!!
+        deliveryMethod = billResponse?.data?.delivery_method
+    }
+
+    @SuppressLint("RemoteViewLayout", "MissingPermission")
+    private fun sendNotification() {
+
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.action = "OPEN_FRAGMENT_HISTORY"
+
+        val pendingIntent =
+            PendingIntent.getActivity(
+                requireContext(),
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
+        val customLayout = RemoteViews(requireContext().packageName, R.layout.custom_notify)
+        customLayout.setTextViewText(R.id.tvNotificationName, "Thông báo đơn hàng")
+        customLayout.setTextViewText(R.id.tvNotificationContent, "Đơn hàng được đặt thành công")
+        customLayout.setImageViewResource(R.id.ivNotificationImage, R.drawable.ic_splash)
+
+        customLayout.setViewPadding(R.id.ivNotificationImage, 4, 4, 4, 4)
+        customLayout.setImageViewBitmap(
+            R.id.ivNotificationImage,
+            BitmapFactory.decodeResource(resources, R.drawable.ic_splash)
+        )
+
+        val notification = NotificationCompat.Builder(requireContext(), CHANEL_ID)
+            .setSmallIcon(R.drawable.ic_splash)
+            .setContent(customLayout)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
+
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+
+        notificationManager.notify(1, notification)
+    }
+
+    private fun showDialogSuccess() {
+        val successDialog = SuccessDialog(
+            this,
+            requireContext(),
+            "Đặt đơn hàng thành công"
+        )
+        successDialog.show()
+        successDialog.window?.setGravity(Gravity.CENTER)
+        successDialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+    override fun clickSwitchScreen() {
+
+        if (paymentMethod == 1) {
+            transitToBankAccountScreen()
+        } else {
+            transitToHomeScreen()
+        }
+    }
+
+    private fun transitToHomeScreen() {
+        val action = PaymentFragmentDirections.actionPaymentFragmentToBottomNavHome()
+        findNavController().navigate(action)
+    }
+
+    private fun transitToBankAccountScreen() {
+        val action =
+            PaymentFragmentDirections.actionPaymentFragmentToBankAccountFragment(billCode!!)
+        findNavController().navigate(action)
     }
 }

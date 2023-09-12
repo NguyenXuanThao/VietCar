@@ -7,6 +7,8 @@
     <color name="primaryLightColor">#99FFFFFF</color>
     <color name="primaryDarkColor">#c53a00</color>
 
+    <color name="PriceColor">#D50100</color>
+
     <color name="primaryTextColor">#2196F3</color>
     <color name="error_color">@android:color/holo_red_light</color>
     <color name="light_text_color">#FFFFFFFF</color>

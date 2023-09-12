@@ -8,6 +8,7 @@ import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
 import com.example.vietcar.data.model.bill_detail.BillDetail
+import com.example.vietcar.data.model.bill_detail.OrderBody
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.location.city.ListCity
 import com.example.vietcar.data.model.location.wards.ListWards
@@ -44,8 +45,12 @@ interface ICarRepository {
     suspend fun getProductShoppingCart(): ListProduct
 
     suspend fun createDraftBill(body : BillBody) : BillResponse
+
     suspend fun getListBill() : ListBill
+
     suspend fun getBillDetail(id: Int) : BillDetail
+
+    suspend fun orderProduct(body: OrderBody): BillDetail
 
     suspend fun addProductToCart(body: ProductBody): ProductToCart
 

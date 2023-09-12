@@ -33,11 +33,11 @@
             android:id="@+id/imgWarning"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:visibility="gone"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="12dp"
             android:src="@drawable/warning"
+            android:visibility="gone"
             app:tint="#D56A48" />
 
     </FrameLayout>
@@ -49,8 +49,10 @@
         android:layout_height="29dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_login_red"
+        android:foreground="?android:attr/selectableItemBackground"
         android:padding="6dp"
         android:text="Đăng nhập"
+        android:fontFamily="@font/app_font_medium"
         android:textColor="#B2401C"
         app:layout_constraintEnd_toEndOf="@+id/frameAvatar"
         app:layout_constraintStart_toStartOf="@+id/frameAvatar"
@@ -61,12 +63,12 @@
         android:layout_width="wrap_content"
         android:layout_height="29dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
         android:background="@drawable/bg_login_red"
         android:padding="6dp"
         android:text="Chưa xác thực"
         android:textAllCaps="false"
         android:textColor="#B2401C"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/frameAvatar"
         app:layout_constraintStart_toStartOf="@+id/frameAvatar"
         app:layout_constraintTop_toBottomOf="@+id/frameAvatar" />
@@ -75,9 +77,9 @@
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_marginTop="8dp"
         android:textColor="@color/black"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline4" />

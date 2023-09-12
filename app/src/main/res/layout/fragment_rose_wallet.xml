@@ -43,7 +43,7 @@
                 android:text="2.555.555 đ"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/app_font_bold" />
         </LinearLayout>
 
         <View
@@ -81,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Yêu cầu rút tiền"
+                android:fontFamily="@font/app_font_regular"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imgWithDraw"

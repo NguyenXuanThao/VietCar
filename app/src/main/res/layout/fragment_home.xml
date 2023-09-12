@@ -18,6 +18,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="124dp"
+        android:foreground="?android:attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -57,6 +58,7 @@
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_login"
             android:text="Đăng Nhập"
+            android:fontFamily="@font/app_font_medium"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:visibility="visible"

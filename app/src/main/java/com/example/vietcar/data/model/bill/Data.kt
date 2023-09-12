@@ -1,5 +1,9 @@
 package com.example.vietcar.data.model.bill
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Data(
     val address: String?,
     val city_id: Int?,
@@ -29,4 +33,4 @@ data class Data(
     val updated_at: String?,
     val ward_id: Int?,
     val ward_name: String?
-)
+): Parcelable

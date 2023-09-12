@@ -150,6 +150,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     override fun initView() {
         super.initView()
 
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
         bottomNavigationView.visibility = View.GONE
 
         setUpNavigationView()

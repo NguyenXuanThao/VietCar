@@ -25,7 +25,7 @@
                 android:layout_height="200dp"
                 android:layout_margin="8dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_launcher_background"
+                android:src="@drawable/img_default"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,10 +36,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/app_font_bold"
                 android:text="Gối massage hồng ngoại trên ô tô"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgProduct" />
 
@@ -48,10 +48,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/app_font_medium"
                 android:text="250.000 đ"
                 android:textColor="#C50000"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/tvNameProduct"
                 app:layout_constraintTop_toBottomOf="@+id/tvNameProduct" />
 
@@ -72,10 +72,10 @@
                         android:id="@+id/tvSortDescribe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/app_font_medium"
                         android:text="Mô tả ngắn"
                         android:textColor="@color/primaryDarkColor"
                         android:textSize="16sp"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -108,10 +108,10 @@
                         android:id="@+id/tvFeature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/app_font_medium"
                         android:text="Tính năng nổi bật"
                         android:textColor="@color/primaryDarkColor"
                         android:textSize="16sp"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,10 +141,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:fontFamily="@font/app_font_bold"
                 android:text="Sản phẩm liên quan"
                 android:textColor="#2B3141"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/view"
                 app:layout_constraintStart_toEndOf="@+id/view"
                 app:layout_constraintTop_toTopOf="@+id/view" />
@@ -171,10 +171,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/bg_add_product"
+        android:fontFamily="@font/app_font_bold"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="Thêm vào giỏ hàng"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

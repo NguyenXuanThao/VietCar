@@ -25,7 +25,6 @@ import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
-import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductDetailBinding
@@ -186,6 +185,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
 
         val uriImage = "https://vietcargroup.com${product!!.avatar}"
         Glide.with(requireContext()).load(uriImage)
+            .placeholder(R.drawable.img_default)
             .into(binding.imgProduct)
     }
 
