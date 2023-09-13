@@ -55,6 +55,12 @@
         <action
             android:id="@+id/action_bottomNavAccount_to_orderHistoryFragment"
             app:destination="@id/orderHistoryFragment" />
+        <action
+            android:id="@+id/action_bottomNavAccount_to_emptyFragment"
+            app:destination="@id/emptyFragment" />
+        <action
+            android:id="@+id/action_bottomNavAccount_to_addressAllFragment"
+            app:destination="@id/addressAllFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavStore"
@@ -279,6 +285,20 @@
         <argument
             android:name="billCode"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/emptyFragment"
+        android:name="com.example.vietcar.ui.EmptyFragment"
+        android:label="fragment_empty"
+        tools:layout="@layout/fragment_empty" />
+    <fragment
+        android:id="@+id/addressAllFragment"
+        android:name="com.example.vietcar.ui.update_address.fragment.AddressAllFragment"
+        android:label="fragment_address_all"
+        tools:layout="@layout/fragment_address_all" >
+        <action
+            android:id="@+id/action_addressAllFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
     </fragment>
 
 </navigation>

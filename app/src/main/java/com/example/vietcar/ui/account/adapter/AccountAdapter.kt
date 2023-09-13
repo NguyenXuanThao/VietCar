@@ -59,7 +59,9 @@ class AccountAdapter : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() 
                 val action = when (adapterPosition) {
                     2 -> AccountFragmentDirections.actionBottomNavAccountToOrderHistoryFragment()
 
-                    else -> AccountFragmentDirections.actionBottomNavAccountToOrderHistoryFragment()
+                    3 -> AccountFragmentDirections.actionBottomNavAccountToAddressAllFragment()
+
+                    else -> AccountFragmentDirections.actionBottomNavAccountToEmptyFragment()
                 }
 
                 view.findNavController().navigate(action)

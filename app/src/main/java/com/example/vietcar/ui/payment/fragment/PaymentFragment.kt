@@ -1,17 +1,11 @@
 package com.example.vietcar.ui.payment.fragment
 
 import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.os.Build
 import android.util.Log
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.RemoteViews
 import android.widget.Toast
@@ -24,15 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
 import com.example.vietcar.activities.MainActivity
 import com.example.vietcar.base.BaseFragment
-import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.SuccessDialog
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.address.Address
-import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill_detail.OrderBody
-import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.FragmentPaymentBinding
 import com.example.vietcar.ui.payment.adapter.PaymentAdapter
 import com.example.vietcar.ui.payment.viewmodel.PaymentViewModel
@@ -139,7 +130,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
 
                         sendNotification()
 
-                        showDialogSuccess()
+                        Utils.showDialogSuccess(requireContext(), this, "Đăt đơn hàng thành công")
                     }
                 }
 
@@ -374,19 +365,6 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
         val notificationManager = NotificationManagerCompat.from(requireContext())
 
         notificationManager.notify(1, notification)
-    }
-
-    private fun showDialogSuccess() {
-        val successDialog = SuccessDialog(
-            this,
-            requireContext(),
-            "Đặt đơn hàng thành công"
-        )
-        successDialog.show()
-        successDialog.window?.setGravity(Gravity.CENTER)
-        successDialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
     }
 
     override fun clickSwitchScreen() {

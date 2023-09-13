@@ -7,6 +7,7 @@ import com.example.vietcar.data.model.account.AccountInformation
 import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
+import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
@@ -145,6 +146,18 @@ class CarRepository @Inject constructor(
     override suspend fun addAddress(body: AddressBody): AddressResult {
         return withContext(Dispatchers.IO) {
             carApi.addAddress(DataLocal.BEARER_TOKEN, body = body)
+        }
+    }
+
+    override suspend fun deleteAddress(deliveryId: Int): AddressResult {
+        return withContext(Dispatchers.IO) {
+            carApi.deleteAddress(DataLocal.BEARER_TOKEN, deliveryId = deliveryId)
+        }
+    }
+
+    override suspend fun updateAddress(body: UpdateDeliveryAddressBody): AddressResult {
+        return withContext(Dispatchers.IO) {
+            carApi.updateAddress(DataLocal.BEARER_TOKEN, body = body)
         }
     }
 

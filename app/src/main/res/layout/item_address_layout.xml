@@ -63,4 +63,13 @@
         app:layout_constraintStart_toStartOf="@+id/tvAddress"
         app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgExpand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_more_vert_24"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvPhone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

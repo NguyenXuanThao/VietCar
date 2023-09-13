@@ -14,7 +14,7 @@ class ErrorDialog(
     private val textButton: String? = null
 ): Dialog(context) {
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

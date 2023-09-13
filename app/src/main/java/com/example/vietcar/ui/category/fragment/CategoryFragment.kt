@@ -2,6 +2,8 @@ package com.example.vietcar.ui.category.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -275,6 +277,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
         )
         addProductDialog.show()
         addProductDialog.window?.setGravity(Gravity.CENTER)
+        addProductDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         addProductDialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )

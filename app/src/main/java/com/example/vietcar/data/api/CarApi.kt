@@ -5,6 +5,7 @@ import com.example.vietcar.data.model.account.AccountInformation
 import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
+import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
@@ -137,6 +138,20 @@ interface CarApi {
         @Body body: AddressBody
     ): AddressResult
 
+    @DELETE("api/auth/bill/removeDeliveryAddress")
+    suspend fun deleteAddress(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Query("delivery_id") deliveryId: Int
+    ): AddressResult
+
+    @PUT("api/auth/bill/updateDeliveryAddress")
+    suspend fun updateAddress(
+        @Header("Authorization") token: String,
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Body body: UpdateDeliveryAddressBody
+    ): AddressResult
+
     @POST("api/auth/bill/createDraftBill")
     suspend fun createDraftBill(
         @Header("Authorization") token: String,
@@ -164,6 +179,8 @@ interface CarApi {
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: OrderBody
     ): BillDetail
+
+
 
 
 }

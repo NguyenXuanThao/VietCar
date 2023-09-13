@@ -2,6 +2,8 @@ package com.example.vietcar.ui.home.fragment
 
 import com.example.vietcar.R
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -263,6 +265,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         )
         addProductDialog.show()
         addProductDialog.window?.setGravity(Gravity.CENTER)
+        addProductDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         addProductDialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT

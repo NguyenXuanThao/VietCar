@@ -4,6 +4,7 @@ import com.example.vietcar.data.model.account.AccountInformation
 import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
+import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
@@ -60,6 +61,10 @@ interface ICarRepository {
 
     suspend fun getAddress(): ListAddress
     suspend fun addAddress(body: AddressBody): AddressResult
+
+    suspend fun deleteAddress(deliveryId: Int): AddressResult
+
+    suspend fun updateAddress(body: UpdateDeliveryAddressBody): AddressResult
 
     suspend fun getCity(): ListCity
     suspend fun getDistrict(provinceCode: String): ListDistrict

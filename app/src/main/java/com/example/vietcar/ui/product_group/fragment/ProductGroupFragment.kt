@@ -1,6 +1,8 @@
 package com.example.vietcar.ui.product_group.fragment
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -18,7 +20,6 @@ import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
-import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductGroupBinding
@@ -194,6 +195,7 @@ class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
         )
         addProductDialog.show()
         addProductDialog.window?.setGravity(Gravity.CENTER)
+        addProductDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         addProductDialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.base.dialogs.SuccessDialog
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.address.AddressBody
@@ -22,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LocationFragment : BaseFragment<FragmentLocationBinding>(
     FragmentLocationBinding::inflate
-) {
+), SuccessDialog.TransitToOtherScreen {
 
     private val locationViewModel: LocationViewModel by viewModels()
 
@@ -44,11 +45,11 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(
 
                     if (resource.data?.status == 0) {
 
-                        Toast.makeText(
+                        Utils.showDialogSuccess(
                             requireContext(),
-                            "cập nhật địa chỉ thành công",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            this,
+                            "Cập nhật địa chỉ thành công!"
+                        )
 
                         frameLayout.visibility = View.GONE
                     }
@@ -170,6 +171,10 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(
 
             Log.d("ThaoNX", "city: ${wardsData.name} code: ${wardsData.code}")
         }
+    }
+
+    override fun clickSwitchScreen() {
+        findNavController().popBackStack()
     }
 
 }
