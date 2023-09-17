@@ -8,6 +8,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
+import com.example.vietcar.base.dialogs.ConfirmDialog
+import com.example.vietcar.click.LogOutAccount
+import com.example.vietcar.common.DataLocal
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.account.AccountScreenCategory
@@ -20,16 +23,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AccountFragment : BaseFragment<FragmentAccountBinding>(
     FragmentAccountBinding::inflate
-) {
+), LogOutAccount, ConfirmDialog.ConfirmCallback {
 
-    private var accountAdapter = AccountAdapter()
+    private var accountAdapter = AccountAdapter(this)
     private var listCategory = arrayListOf(
         AccountScreenCategory(5, R.drawable.ic_introduce, "Giới thiệu ứng dụng"),
         AccountScreenCategory(6, R.drawable.ic_policy, "Chính sách và điều khoản"),
         AccountScreenCategory(8, R.drawable.ic_contact, "Liên hệ"),
     )
 
-    private val accountViewModel : AccountViewModel by viewModels()
+    private val accountViewModel: AccountViewModel by viewModels()
 
     private lateinit var frameLayout: FrameLayout
 
@@ -66,9 +69,12 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
     override fun initData() {
         super.initData()
 
-        accountViewModel.getAccountInformation()
+        if (DataLocal.STATUS == 0) {
 
-        retrieveData()
+            accountViewModel.getAccountInformation()
+
+            updateInfo()
+        }
 
     }
 
@@ -86,23 +92,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
         binding.btnLogin.setOnClickListener {
 
             transitToLoginScreen()
-        }
-    }
-
-    /**
-     * check log in
-     */
-
-    private fun retrieveData() {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-
-        val retrievedStatus = sharedPreferences.getInt("status_key", 1)
-
-
-        if (retrievedStatus == 0) {
-
-            updateInfo()
         }
     }
 
@@ -133,6 +122,28 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
 
     private fun transitToLoginScreen() {
         val action = AccountFragmentDirections.actionBottomNavAccountToLoginFragment()
+        findNavController().navigate(action)
+    }
+
+    override fun logOut() {
+
+        Utils.showDialogConfirm(requireContext(), "Bạn muốn đăng xuất!", this)
+    }
+
+    private fun saveData() {
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putInt("status_key", 1)
+
+        editor.apply()
+    }
+
+    override fun confirmTranSitToLoginScreen() {
+        saveData()
+
+        val action = AccountFragmentDirections.actionBottomNavAccountSelf()
         findNavController().navigate(action)
     }
 

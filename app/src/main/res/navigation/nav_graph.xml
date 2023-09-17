@@ -30,6 +30,12 @@
         <action
             android:id="@+id/action_bottomNavHome_to_orderHistoryFragment"
             app:destination="@id/orderHistoryFragment" />
+        <action
+            android:id="@+id/action_bottomNavHome_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_bottomNavHome_to_authenticationFragment"
+            app:destination="@id/authenticationFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavProduct"
@@ -42,6 +48,9 @@
         <action
             android:id="@+id/action_bottomNavProduct_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_bottomNavProduct_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavAccount"
@@ -61,6 +70,18 @@
         <action
             android:id="@+id/action_bottomNavAccount_to_addressAllFragment"
             app:destination="@id/addressAllFragment" />
+        <action
+            android:id="@+id/action_bottomNavAccount_self"
+            app:destination="@id/bottomNavAccount"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/main_nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_bottomNavAccount_to_personalInformationFragment"
+            app:destination="@id/personalInformationFragment" />
+        <action
+            android:id="@+id/action_bottomNavAccount_to_updatePasswordFragment"
+            app:destination="@id/updatePasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavStore"
@@ -106,6 +127,9 @@
         <action
             android:id="@+id/action_categoryFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailProductFragment"
@@ -144,6 +168,9 @@
         <action
             android:id="@+id/action_productGroupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_productGroupFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/shoppingCartFragment"
@@ -224,6 +251,11 @@
         <action
             android:id="@+id/action_locationFragment_to_wardsFragment"
             app:destination="@id/wardsFragment" />
+        <argument
+            android:name="address"
+            android:defaultValue="@null"
+            app:argType="com.example.vietcar.data.model.address.Address"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/cityFragment"
@@ -295,10 +327,46 @@
         android:id="@+id/addressAllFragment"
         android:name="com.example.vietcar.ui.update_address.fragment.AddressAllFragment"
         android:label="fragment_address_all"
-        tools:layout="@layout/fragment_address_all" >
+        tools:layout="@layout/fragment_address_all">
         <action
             android:id="@+id/action_addressAllFragment_to_locationFragment"
             app:destination="@id/locationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.vietcar.ui.search.fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailSearchFragment"
+            app:destination="@id/detailSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authenticationFragment"
+        android:name="com.example.vietcar.ui.customer.authentication.fragment.AuthenticationFragment"
+        android:label="fragment_authentication"
+        tools:layout="@layout/fragment_authentication" />
+    <fragment
+        android:id="@+id/detailSearchFragment"
+        android:name="com.example.vietcar.ui.detail_search.fragment.DetailSearchFragment"
+        android:label="fragment_detail_search"
+        tools:layout="@layout/fragment_detail_search" >
+        <argument
+            android:name="keySearch"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_detailSearchFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updatePasswordFragment"
+        android:name="com.example.vietcar.ui.change_password.fragment.UpdatePasswordFragment"
+        android:label="fragment_update_password"
+        tools:layout="@layout/fragment_update_password" />
+    <fragment
+        android:id="@+id/personalInformationFragment"
+        android:name="com.example.vietcar.ui.personal_information.fragment.PersonalInformationFragment"
+        android:label="fragment_personal_information"
+        tools:layout="@layout/fragment_personal_information" />
 
 </navigation>

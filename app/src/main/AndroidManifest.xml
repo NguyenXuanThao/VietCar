@@ -6,6 +6,8 @@
 
     <uses-permission android:name="android.permission.CLIPBOARD_WRITE" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".CarApplication"
         android:allowBackup="true"
@@ -31,6 +33,16 @@
         <activity
             android:name=".activities.MainActivity"
             android:exported="true" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="your.package.name.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

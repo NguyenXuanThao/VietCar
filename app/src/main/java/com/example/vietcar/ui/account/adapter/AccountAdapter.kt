@@ -1,16 +1,21 @@
 package com.example.vietcar.ui.account.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.vietcar.click.LogOutAccount
 import com.example.vietcar.data.model.account.AccountScreenCategory
 import com.example.vietcar.databinding.ItemAccountScreenBinding
 import com.example.vietcar.ui.account.fragment.AccountFragmentDirections
 
-class AccountAdapter : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
+class AccountAdapter(private val logOutAccount: LogOutAccount) :
+    RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
     private var binding: ItemAccountScreenBinding? = null
 
@@ -56,16 +61,53 @@ class AccountAdapter : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() 
             binding.imgIcon.setImageResource(accountScreenCategory.image!!)
 
             itemView.setOnClickListener { view ->
-                val action = when (adapterPosition) {
-                    2 -> AccountFragmentDirections.actionBottomNavAccountToOrderHistoryFragment()
+                when (adapterPosition) {
+                    0 -> switchScreen(
+                        AccountFragmentDirections.actionBottomNavAccountToPersonalInformationFragment(),
+                        view
+                    )
 
-                    3 -> AccountFragmentDirections.actionBottomNavAccountToAddressAllFragment()
+                    2 -> switchScreen(
+                        AccountFragmentDirections.actionBottomNavAccountToOrderHistoryFragment(),
+                        view
+                    )
 
-                    else -> AccountFragmentDirections.actionBottomNavAccountToEmptyFragment()
+                    3 -> switchScreen(
+                        AccountFragmentDirections.actionBottomNavAccountToAddressAllFragment(),
+                        view
+                    )
+
+                    7 -> switchScreen(
+                        AccountFragmentDirections.actionBottomNavAccountToUpdatePasswordFragment(),
+                        view
+                    )
+
+                    9 -> logOutAccount.logOut()
+
+                    10 -> logOutAccount.logOut()
+
+                    else -> {
+
+                        Toast.makeText(
+                            itemView.context,
+                            adapterPosition.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        switchScreen(
+                            AccountFragmentDirections.actionBottomNavAccountToEmptyFragment(),
+                            view
+                        )
+                    }
                 }
 
-                view.findNavController().navigate(action)
             }
+
+
+        }
+
+        private fun switchScreen(action: NavDirections, view: View) {
+
+            view.findNavController().navigate(action)
         }
     }
 }

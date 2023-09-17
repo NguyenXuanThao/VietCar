@@ -1,7 +1,6 @@
 package com.example.vietcar.ui.detail_product.fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
@@ -25,6 +24,7 @@ import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.common.DataLocal
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.product.Product
@@ -50,8 +50,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
 
     private lateinit var bottomNavigationView: BottomNavigationView
-
-    private var status = 1
 
     private var productId = 0
 
@@ -122,7 +120,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     override fun initData() {
         super.initData()
 
-        retrieveData()
+//        retrieveData()
 
         product = args.product
 
@@ -145,10 +143,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
         super.evenClick()
 
         binding.btnAddProduct.setOnClickListener {
-            if (status == 0) {
+            if (DataLocal.STATUS == 0) {
                 showDialogProductInfo(product!!)
             } else {
-                Utils.showDialogConfirm(requireContext(), this)
+                Utils.showDialogConfirm(requireContext(),"Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?", this)
             }
         }
     }
@@ -161,18 +159,18 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
         findNavController().navigate(action)
     }
 
-    /**
-     * check login
-     */
-
-    private fun retrieveData() {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-
-        val retrievedStatus = sharedPreferences.getInt("status_key", 1)
-
-        status = retrievedStatus
-    }
+//    /**
+//     * check login
+//     */
+//
+//    private fun retrieveData() {
+//        val sharedPreferences =
+//            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+//
+//        val retrievedStatus = sharedPreferences.getInt("status_key", 1)
+//
+//        status = retrievedStatus
+//    }
 
 
     private fun setUpView() {
@@ -289,10 +287,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
      * onItemClick listener
      */
     override fun onClickShoppingCartItem(product: Product) {
-        if (status == 0) {
+        if (DataLocal.STATUS == 0) {
             showDialogProductInfo(product)
         } else {
-            Utils.showDialogConfirm(requireContext(), this)
+            Utils.showDialogConfirm(requireContext(),"Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?", this)
         }
     }
 
@@ -316,6 +314,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
             product.avatar,
             "Thêm vào giỏ"
         )
+
+        addProductDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         addProductDialog.show()
         addProductDialog.window?.setGravity(Gravity.CENTER)
         addProductDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

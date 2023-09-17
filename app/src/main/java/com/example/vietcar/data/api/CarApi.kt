@@ -6,6 +6,8 @@ import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
+import com.example.vietcar.data.model.authentication.AuthenticationBody
+import com.example.vietcar.data.model.authentication.AuthenticationResponse
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
@@ -14,6 +16,7 @@ import com.example.vietcar.data.model.bill_detail.OrderBody
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
+import com.example.vietcar.data.model.password.PasswordBody
 import com.example.vietcar.data.model.product.ListProduct
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.data.model.product.ProductOfCartBody
@@ -34,26 +37,29 @@ interface CarApi {
 
     @POST("api/noauth/login")
     suspend fun login(
-        @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: LoginBody
     ): LoginResponse
 
     @POST("api/noauth/register")
     suspend fun register(
-        @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: RegisterBody
     ): RegisterResponse
 
+    @POST("api/auth/authentication")
+    suspend fun authentication(
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
+        @Body body: AuthenticationBody
+    ): AuthenticationResponse
+
     @GET("api/auth/user-profile")
     suspend fun getAccountInformation(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN
     ): AccountInformation
 
     @GET("api/noauth/getListCategory")
     suspend fun getCategory(
-        @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("pageIndex") pageIndex: String = "0",
         @Query("pageSize") pageSize: String = "10"
@@ -62,7 +68,6 @@ interface CarApi {
 
     @GET("api/noauth/getListGroup")
     suspend fun getProductGroup(
-        @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("pageIndex") pageIndex: String = "0",
         @Query("pageSize") pageSize: String = "10"
@@ -70,7 +75,6 @@ interface CarApi {
 
     @GET("api/noauth/getListProduct")
     suspend fun getListProductCategory(
-        @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("pageIndex") pageIndex: String = "0",
         @Query("category_id") categoryId: String?,
@@ -78,7 +82,6 @@ interface CarApi {
 
     @GET("api/noauth/getListProduct")
     suspend fun getListProductGroup(
-        @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("pageIndex") pageIndex: String = "0",
         @Query("group_id") groupId: String?,
@@ -86,101 +89,103 @@ interface CarApi {
 
     @GET("api/noauth/getListProduct")
     suspend fun getAllProduct(
-        @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("pageIndex") pageIndex: String = "0",
+        @Query("keyword_search") keySearch: String = ""
     ): ListProduct
 
     @GET("api/noauth/getListProductRelation")
     suspend fun getRelatedProducts(
-        @Header("Authorization") token: String,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("product_id") productId: String
     ): ListProduct
 
     @GET("api/auth/cart/listProduct")
     suspend fun getProductShoppingCart(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
     ): ListProduct
 
     @POST("api/auth/cart/addProductToCart")
     suspend fun addProductToCart(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: ProductBody
     ): ProductToCart
 
     @PUT("api/auth/cart/changeQuantityProductOfCart")
     suspend fun updateQuantity(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: ProductOfCartBody
     ): ProductToCart
 
     @DELETE("api/auth/cart/deleteProductOfCart")
     suspend fun deleteProductOfCart(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("cart_id") cartId: Int
     ): ProductToCart
 
     @GET("api/auth/bill/listDeliveryAddress")
     suspend fun getAddress(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV
     ): ListAddress
 
     @POST("api/auth/bill/createDeliveryAddress")
     suspend fun addAddress(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: AddressBody
     ): AddressResult
 
     @DELETE("api/auth/bill/removeDeliveryAddress")
     suspend fun deleteAddress(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("delivery_id") deliveryId: Int
     ): AddressResult
 
     @PUT("api/auth/bill/updateDeliveryAddress")
     suspend fun updateAddress(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: UpdateDeliveryAddressBody
     ): AddressResult
 
     @POST("api/auth/bill/createDraftBill")
     suspend fun createDraftBill(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: BillBody
     ): BillResponse
 
     @GET("api/auth/bill/listBillByType")
     suspend fun getListBill(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Query("step") step: Int = 0
     ): ListBill
 
     @GET("/api/auth/bill/detail/{id}")
     suspend fun getBillDetail(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Path("id") id: Int
     ): BillDetail
 
     @POST("api/auth/bill/order")
     suspend fun orderProduct(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: OrderBody
     ): BillDetail
 
-
-
+    @POST("api/auth/changepassword")
+    suspend fun changePassword(
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
+        @Body body: PasswordBody
+    ): AccountInformation
 
 }

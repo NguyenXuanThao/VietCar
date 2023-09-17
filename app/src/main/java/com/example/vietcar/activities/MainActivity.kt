@@ -2,6 +2,7 @@ package com.example.vietcar.activities
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.vietcar.R
+import com.example.vietcar.common.DataLocal
 import com.example.vietcar.databinding.ActivityMainBinding
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.payment.fragment.PaymentFragment
@@ -28,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//        checkLogin()
+
         setupBottomBar()
 
         createNotifyChanel()
@@ -35,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val action = intent.action
 
         if (action == "OPEN_FRAGMENT_HISTORY") {
-           val action = HomeFragmentDirections.actionBottomNavHomeToOrderHistoryFragment()
+            val action = HomeFragmentDirections.actionBottomNavHomeToOrderHistoryFragment()
             navController.navigate(action)
         }
 
@@ -71,4 +75,13 @@ class MainActivity : AppCompatActivity() {
             manager.createNotificationChannel(chanel)
         }
     }
+
+//    private fun checkLogin() {
+//        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+//        val token = sharedPreferences.getString("token_customer", "")
+//
+//        DataLocal.STATUS = sharedPreferences.getInt("status_key", 1)
+//
+//        DataLocal.BEARER_TOKEN = "Bearer $token"
+//    }
 }

@@ -7,12 +7,15 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.SuccessDialog
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
+import com.example.vietcar.data.model.address.Address
 import com.example.vietcar.data.model.address.AddressBody
+import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
 import com.example.vietcar.data.model.location.city.City
 import com.example.vietcar.data.model.location.district.District
 import com.example.vietcar.data.model.location.wards.Wards
@@ -33,6 +36,10 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(
 
 
     private lateinit var frameLayout: FrameLayout
+
+    private val args: LocationFragmentArgs by navArgs()
+
+    private var addressResult: Address? = null
 
     override fun obServerLivedata() {
         super.obServerLivedata()
@@ -71,10 +78,27 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(
     override fun initData() {
         super.initData()
 
+        addressResult = args.address
+
+        Log.d("ThaoNX9", addressResult.toString())
+
     }
 
     override fun initView() {
         super.initView()
+
+        if (addressResult != null) {
+            provinceCode = addressResult?.city_id.toString()
+            districtCode = addressResult?.district_id.toString()
+            wardsCode = addressResult?.ward_id.toString()
+
+            binding.edtName.setText(addressResult?.customer_name)
+            binding.edtPhone.setText(addressResult?.customer_phone)
+            binding.textInputCity.editText!!.setText(addressResult?.city_name)
+            binding.textInputDistrict.editText!!.setText(addressResult?.district_name)
+            binding.edtWards.setText(addressResult?.ward_name)
+            binding.edtAddress.setText(addressResult?.address)
+        }
 
         checkCityResult()
 
@@ -114,12 +138,37 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>(
                     .show()
             } else {
 
-                val body =
-                    AddressBody(address, provinceCode, name, phone, districtCode, "0", wardsCode)
+                if (addressResult != null) {
 
-                Log.d("LocationFragment", body.toString())
+                    val bodyUpdate = UpdateDeliveryAddressBody(
+                        address,
+                        provinceCode,
+                        name,
+                        phone,
+                        addressResult?.id.toString(),
+                        districtCode,
+                        addressResult?.is_default.toString(),
+                        wardsCode
+                    )
 
-                locationViewModel.addAddress(body)
+                    Log.d("LocationFragment", bodyUpdate.toString())
+
+                    locationViewModel.updateAddress(bodyUpdate)
+                } else {
+                    val body =
+                        AddressBody(
+                            address,
+                            provinceCode,
+                            name,
+                            phone,
+                            districtCode,
+                            "0",
+                            wardsCode
+                        )
+
+                    Log.d("LocationFragment", body.toString())
+                    locationViewModel.addAddress(body)
+                }
             }
 
         }

@@ -1,7 +1,6 @@
 package com.example.vietcar.ui.home.fragment
 
 import com.example.vietcar.R
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
@@ -19,6 +18,7 @@ import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemCategoryClick
 import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.common.DataLocal
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.category.ListCategory
@@ -45,8 +45,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     private var listProductAdapter = ListProductAdapter(this)
 
     private var isClickAddProduct = false
-
-    private var status = 1
 
     private var categories: ListCategory? = null
 
@@ -149,36 +147,58 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     override fun initData() {
         super.initData()
 
-        retrieveData()
-
-        homeViewModel.getAccountInformation()
         homeViewModel.getCategory()
         homeViewModel.getProductGroup()
+
+        if (DataLocal.STATUS == 0) {
+
+            homeViewModel.getAccountInformation()
+
+            updateView()
+        }
 
     }
 
     override fun evenClick() {
         super.evenClick()
 
+        binding.btnVerify.setOnClickListener {
+            val action = HomeFragmentDirections.actionBottomNavHomeToAuthenticationFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.imgSearch.setOnClickListener {
+            val action = HomeFragmentDirections.actionBottomNavHomeToSearchFragment()
+            findNavController().navigate(action)
+        }
+
         binding.btnHomeLogin.setOnClickListener {
             transitToLoginScreen()
         }
 
         binding.imgShopping.setOnClickListener {
-            if (status == 0) {
+            if (DataLocal.STATUS == 0) {
 
                 transitToShoppingCartScreen()
             } else {
-                Utils.showDialogConfirm(requireContext(), this)
+                Utils.showDialogConfirm(
+                    requireContext(),
+                    "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
+                    this
+                )
             }
         }
 
         binding.imgNotify.setOnClickListener {
-            if (status == 0) {
+            if (DataLocal.STATUS == 0) {
 
                 Log.d("HomeFragment", "tran sit to Notify screen")
             } else {
-                Utils.showDialogConfirm(requireContext(), this)
+                Utils.showDialogConfirm(
+                    requireContext(),
+                    "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
+                    this
+                )
             }
         }
     }
@@ -195,24 +215,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     private fun transitToLoginScreen() {
         val action = HomeFragmentDirections.actionBottomNavHomeToLoginFragment()
         findNavController().navigate(action)
-    }
-
-    /**
-     * check login
-     */
-
-    private fun retrieveData() {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-
-        val retrievedStatus = sharedPreferences.getInt("status_key", 1)
-
-        status = retrievedStatus
-
-        if (retrievedStatus == 0) {
-
-            updateView()
-        }
     }
 
     private fun updateView() {
@@ -235,10 +237,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     override fun onClickShoppingCartItem(product: Product) {
 
-        if (status == 0) {
+        if (DataLocal.STATUS == 0) {
             showDialogProductInfo(product)
         } else {
-            Utils.showDialogConfirm(requireContext(), this)
+            Utils.showDialogConfirm(
+                requireContext(),
+                "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
+                this
+            )
         }
     }
 
@@ -263,7 +269,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             product.avatar,
             "Thêm vào giỏ"
         )
+        addProductDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         addProductDialog.show()
+
+
         addProductDialog.window?.setGravity(Gravity.CENTER)
         addProductDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         addProductDialog.window?.setLayout(

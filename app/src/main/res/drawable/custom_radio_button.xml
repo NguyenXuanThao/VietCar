@@ -1,0 +1,5 @@
+<!-- res/drawable/custom_radio_button.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/baseline_radio_button_unchecked_36" android:state_checked="false" />
+    <item android:drawable="@drawable/baseline_radio_button_checked_36" android:state_checked="true" />
+</selector>

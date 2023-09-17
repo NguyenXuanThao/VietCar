@@ -21,10 +21,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:fontFamily="@font/app_font_bold"
         android:text="Đăng Ký"
         android:textColor="@color/black"
         android:textSize="24sp"
-       android:fontFamily="@font/app_font_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgLogin" />
@@ -32,9 +32,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textIPPhone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle">
@@ -49,11 +51,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textCode"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textIPPhone"
+        app:layout_constraintStart_toStartOf="@+id/textIPPhone"
         app:layout_constraintTop_toBottomOf="@+id/textIPPhone">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -65,11 +67,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textIPPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textIPPhone"
+        app:layout_constraintStart_toStartOf="@+id/textIPPhone"
         app:layout_constraintTop_toBottomOf="@+id/textCode">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -82,11 +84,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textIPConfirmPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textIPPhone"
+        app:layout_constraintStart_toStartOf="@+id/textIPPhone"
         app:layout_constraintTop_toBottomOf="@+id/textIPPassword">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -98,13 +100,13 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRegister"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="#D50100"
+        android:background="@drawable/bg_add_product"
+        android:fontFamily="@font/app_font_bold"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="Đăng kÝ"
-        android:fontFamily="@font/app_font_bold"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/textIPConfirmPassword"
         app:layout_constraintStart_toStartOf="@+id/textIPConfirmPassword"
@@ -114,9 +116,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
+        android:fontFamily="@font/app_font_medium"
         android:text="Đã có tài khoản? Đăng nhập"
         android:textColor="@color/black"
-        android:fontFamily="@font/app_font_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btnRegister"
         app:layout_constraintStart_toStartOf="@+id/btnRegister" />

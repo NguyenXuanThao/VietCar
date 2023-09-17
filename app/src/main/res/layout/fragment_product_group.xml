@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxLines="1"
-            android:text="Gía đỡ, số điện thoại-Tẩu"
             android:textColor="#3F3F3F"
             android:textSize="20sp"
             android:fontFamily="@font/app_font_bold"

@@ -13,6 +13,8 @@ import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.ItemProductBinding
 import com.example.vietcar.ui.category.fragment.CategoryFragmentDirections
 import com.example.vietcar.ui.detail_product.fragment.ProductDetailFragmentDirections
+import com.example.vietcar.ui.detail_search.fragment.DetailSearchFragmentArgs
+import com.example.vietcar.ui.detail_search.fragment.DetailSearchFragmentDirections
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.fragment.ProductFragmentDirections
 import com.example.vietcar.ui.product_group.fragment.ProductGroupFragmentDirections
@@ -89,6 +91,12 @@ class ProductAdapter(private val itemShoppingCartClick: ItemShoppingCartClick) :
                         product
                     )
 
+                val action6 =
+                    DetailSearchFragmentDirections.actionDetailSearchFragmentToDetailProductFragment(
+                        product
+                    )
+
+
                 when (mView.findNavController().currentDestination?.id) {
                     R.id.categoryFragment -> {
                         mView.findNavController().navigate(action1)
@@ -108,6 +116,10 @@ class ProductAdapter(private val itemShoppingCartClick: ItemShoppingCartClick) :
 
                     R.id.detailProductFragment -> {
                         mView.findNavController().navigate(action5)
+                    }
+
+                    R.id.detailSearchFragment -> {
+                        mView.findNavController().navigate(action6)
                     }
                 }
             }

@@ -395,7 +395,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="#D30404"
+        android:background="@drawable/bg_add_product"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="Hủy đơn hàng"
         android:textColor="@color/white"

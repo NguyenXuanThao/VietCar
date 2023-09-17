@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.ErrorDialog
+import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.model.login.LoginBody
 import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.databinding.FragmentLoginBinding
@@ -37,7 +38,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             if (loginResponse.status == 0) {
                 backToHomeFragment()
 
-                saveData(loginResponse.status)
+                saveData(loginResponse.status, loginResponse.token!!)
+
+
             } else {
                 loginResponse.message?.let { showDialogError(it) }
             }
@@ -97,14 +100,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
         )
     }
 
-    private fun saveData(status: Int) {
+    private fun saveData(status: Int, token: String) {
         val sharedPreferences =
             requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
         editor.putInt("status_key", status)
+        editor.putString("token_customer", token)
 
         editor.apply()
     }
-
 }

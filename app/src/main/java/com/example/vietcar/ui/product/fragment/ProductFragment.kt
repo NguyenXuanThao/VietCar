@@ -1,6 +1,5 @@
 package com.example.vietcar.ui.product.fragment
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
@@ -12,19 +11,18 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
 import com.example.vietcar.click.ItemShoppingCartClick
+import com.example.vietcar.common.DataLocal
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
-import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductBinding
+import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.example.vietcar.ui.product.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,8 +34,6 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
 
     private val productViewModel: ProductViewModel by viewModels()
     private var productAdapter = ProductAdapter(this)
-
-    private var status = 1
 
     private var productId = 0
 
@@ -96,9 +92,17 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
     }
 
     override fun initData() {
-        retrieveData()
 
         productViewModel.getAllProduct()
+    }
+
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.imgSearchProduct.setOnClickListener {
+            val action = ProductFragmentDirections.actionBottomNavProductToSearchFragment()
+            findNavController().navigate(action)
+        }
     }
 
     /**
@@ -110,26 +114,17 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
     }
 
     /**
-     * check log in
-     */
-
-    private fun retrieveData() {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-
-        val retrievedStatus = sharedPreferences.getInt("status_key", 1)
-
-        status = retrievedStatus
-    }
-
-    /**
      * onItemClick listener
      */
     override fun onClickShoppingCartItem(product: Product) {
-        if (status == 0) {
+        if (DataLocal.STATUS == 0) {
             showDialogProductInfo(product)
         } else {
-            Utils.showDialogConfirm(requireContext(), this)
+            Utils.showDialogConfirm(
+                requireContext(),
+                "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
+                this
+            )
         }
     }
 
@@ -153,6 +148,8 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
             product.avatar,
             "Thêm vào giỏ"
         )
+
+        addProductDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         addProductDialog.show()
         addProductDialog.window?.setGravity(Gravity.CENTER)
         addProductDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

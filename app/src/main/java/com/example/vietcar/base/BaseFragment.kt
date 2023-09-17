@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.example.vietcar.common.DataLocal
 
 abstract class BaseFragment<VB : ViewBinding>(
     private val bindingInflater: (inflater: LayoutInflater) -> VB,
@@ -51,7 +52,13 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     open fun checkLogin() {
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("token_customer", "")
 
+        DataLocal.STATUS = sharedPreferences.getInt("status_key", 1)
+
+        DataLocal.BEARER_TOKEN = "Bearer $token"
     }
 
     open fun obServerLivedata() {}

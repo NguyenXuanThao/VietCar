@@ -11,12 +11,16 @@ import com.example.vietcar.base.dialogs.SuccessDialog
 
 object Utils {
 
-    fun showDialogConfirm(context: Context, callBack: ConfirmDialog.ConfirmCallback) {
+    fun showDialogConfirm(
+        context: Context,
+        content: String,
+        callBack: ConfirmDialog.ConfirmCallback
+    ) {
 
         val confirmDialog = ConfirmDialog(
             context,
             callBack,
-            "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
+            content,
             "Đồng ý",
             "Hủy"
         )
@@ -40,7 +44,11 @@ object Utils {
         )
     }
 
-    fun showDialogSuccess(context: Context, callBack: SuccessDialog.TransitToOtherScreen, content: String) {
+    fun showDialogSuccess(
+        context: Context,
+        callBack: SuccessDialog.TransitToOtherScreen,
+        content: String
+    ) {
         val successDialog = SuccessDialog(
             callBack,
             context,

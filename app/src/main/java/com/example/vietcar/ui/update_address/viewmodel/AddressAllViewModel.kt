@@ -49,15 +49,4 @@ class AddressAllViewModel @Inject constructor(
         }
     }
 
-    fun updateAddress(body: UpdateDeliveryAddressBody) {
-        viewModelScope.launch {
-            try {
-                val addressData = carRepository.updateAddress(body)
-                _addressResult.postValue(Resource.Success(addressData))
-            } catch (exception: Exception) {
-                _addressResult.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
-            }
-        }
-    }
-
 }

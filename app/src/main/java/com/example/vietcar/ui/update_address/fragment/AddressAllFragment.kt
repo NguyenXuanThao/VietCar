@@ -135,7 +135,8 @@ class AddressAllFragment : BaseFragment<FragmentAddressAllBinding>(
         popupMenu.setOnMenuItemClickListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.action_update -> {
-                    Toast.makeText(requireContext(), "update", Toast.LENGTH_SHORT).show()
+                    val action = AddressAllFragmentDirections.actionAddressAllFragmentToLocationFragment(address)
+                    findNavController().navigate(action)
                     true
                 }
 
