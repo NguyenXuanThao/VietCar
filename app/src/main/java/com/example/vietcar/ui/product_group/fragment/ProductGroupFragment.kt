@@ -23,7 +23,6 @@ import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductGroupBinding
-import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.example.vietcar.ui.product_group.viewmodel.ProductGroupViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -141,6 +140,10 @@ class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
     override fun evenClick() {
         super.evenClick()
 
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.imgSearchProduct.setOnClickListener {
             val action = ProductGroupFragmentDirections.actionProductGroupFragmentToSearchFragment()
             findNavController().navigate(action)
@@ -169,7 +172,7 @@ class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
     /**
      * confirm dialog
      */
-    override fun confirmTranSitToLoginScreen() {
+    override fun onClickConfirm() {
         transitToLoginScreen()
     }
 

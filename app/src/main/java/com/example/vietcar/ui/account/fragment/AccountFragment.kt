@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.ConfirmDialog
@@ -46,10 +47,13 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
 
             when (resource) {
                 is Resource.Success -> {
-                    binding.tvName.text = resource.data?.data?.name
-                    binding.tvPhoneNumber.text = resource.data?.data?.phone
+                    val accountInformation = resource.data?.data
 
-                    frameLayout.visibility = View.GONE
+                    binding.tvName.text = accountInformation?.name
+                    binding.tvPhoneNumber.text = accountInformation?.phone
+                    val uriImage = "https://vietcargroup.com${accountInformation?.image}"
+                    Glide.with(requireContext()).load(uriImage)
+                        .into(binding.imgAvatar)
 
                 }
 
@@ -76,6 +80,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
             updateInfo()
         }
 
+        frameLayout.visibility = View.GONE
+
     }
 
     override fun initView() {
@@ -97,10 +103,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
 
     private fun updateInfo() {
         binding.btnLogin.visibility = View.GONE
-        binding.btnVerify.visibility = View.VISIBLE
+        binding.tvName.visibility = View.VISIBLE
         binding.tvPhoneNumber.visibility = View.VISIBLE
         binding.cvEditFile.visibility = View.VISIBLE
-        binding.imgWarning.visibility = View.VISIBLE
 
         listCategory.clear()
         listCategory.addAll(
@@ -140,7 +145,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
         editor.apply()
     }
 
-    override fun confirmTranSitToLoginScreen() {
+    override fun onClickConfirm() {
         saveData()
 
         val action = AccountFragmentDirections.actionBottomNavAccountSelf()

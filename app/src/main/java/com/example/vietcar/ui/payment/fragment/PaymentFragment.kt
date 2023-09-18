@@ -171,6 +171,10 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
     override fun evenClick() {
         super.evenClick()
 
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.btnOrder.setOnClickListener {
 
             if (paymentMethod != 0 && paymentMethod != 1 && paymentMethod != 2) {

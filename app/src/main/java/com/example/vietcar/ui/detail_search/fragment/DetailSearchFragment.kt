@@ -105,6 +105,14 @@ class DetailSearchFragment : BaseFragment<FragmentDetailSearchBinding>(
         detailSearchViewModel.getAllProduct(keySearch)
     }
 
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
     /**
      * translation screen
      */
@@ -131,7 +139,7 @@ class DetailSearchFragment : BaseFragment<FragmentDetailSearchBinding>(
     /**
      * Confirm dialog
      */
-    override fun confirmTranSitToLoginScreen() {
+    override fun onClickConfirm() {
         transitToLoginScreen()
     }
 

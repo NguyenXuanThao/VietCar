@@ -4,6 +4,7 @@ package com.example.vietcar.ui.bill_detail.fragment
 import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
@@ -65,6 +66,14 @@ class BillDetailFragment : BaseFragment<FragmentBillDetailBinding>(
         val billId = args.id
 
         billDetailViewModel.getBillDetail(billId)
+    }
+
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun updateView(billDetail: BillDetail) {

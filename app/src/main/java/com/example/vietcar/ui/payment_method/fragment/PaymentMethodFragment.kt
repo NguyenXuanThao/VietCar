@@ -15,6 +15,10 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(
     override fun evenClick() {
         super.evenClick()
 
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.tvCash.setOnClickListener {
             backToPaymentScreen(0)
         }

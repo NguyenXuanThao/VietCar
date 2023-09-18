@@ -64,6 +64,10 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
     override fun evenClick() {
         super.evenClick()
 
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.btnUpdate.setOnClickListener {
 
             val oldPassword = binding.textIPCurrentPass.editText!!.text.toString()

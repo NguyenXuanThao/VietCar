@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F5F4F4"
+        android:background="#F0F0F6"
         android:padding="8dp">
 
         <androidx.cardview.widget.CardView

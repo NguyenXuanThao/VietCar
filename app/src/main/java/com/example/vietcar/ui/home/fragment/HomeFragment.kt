@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.AddProductDialog
 import com.example.vietcar.base.dialogs.ConfirmDialog
@@ -126,8 +127,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
             when (resource) {
                 is Resource.Success -> {
-                    binding.tvName.text = resource.data?.data?.name
-                    binding.tvPhoneNumber.text = resource.data?.data?.phone
+                    val accountInformation = resource.data?.data
+                    binding.tvName.text = accountInformation?.name
+                    binding.tvPhoneNumber.text = accountInformation?.phone
+
+                    val uriImage = "https://vietcargroup.com${accountInformation?.image}"
+                    Glide.with(requireContext()).load(uriImage)
+                        .into(binding.imgAvatar)
 
                 }
 
@@ -150,6 +156,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         homeViewModel.getCategory()
         homeViewModel.getProductGroup()
 
+        Log.d("BaseFragment", DataLocal.STATUS.toString())
+
         if (DataLocal.STATUS == 0) {
 
             homeViewModel.getAccountInformation()
@@ -161,11 +169,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     override fun evenClick() {
         super.evenClick()
-
-        binding.btnVerify.setOnClickListener {
-            val action = HomeFragmentDirections.actionBottomNavHomeToAuthenticationFragment()
-            findNavController().navigate(action)
-        }
 
         binding.imgSearch.setOnClickListener {
             val action = HomeFragmentDirections.actionBottomNavHomeToSearchFragment()
@@ -218,11 +221,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     }
 
     private fun updateView() {
+        binding.imgAvatar.visibility = View.VISIBLE
+        binding.imgAvatarFake.visibility = View.GONE
         binding.btnHomeLogin.visibility = View.GONE
-        binding.imgAvatar.setImageResource(R.drawable.ic_avatar)
-        binding.btnVerify.visibility = View.VISIBLE
+        binding.tvHello.visibility = View.VISIBLE
+        binding.tvName.visibility = View.VISIBLE
         binding.tvPhoneNumber.visibility = View.VISIBLE
-        binding.imgWarning.visibility = View.VISIBLE
     }
 
     /**
@@ -251,7 +255,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     /**
      * Confirm dialog
      */
-    override fun confirmTranSitToLoginScreen() {
+    override fun onClickConfirm() {
         transitToLoginScreen()
     }
 

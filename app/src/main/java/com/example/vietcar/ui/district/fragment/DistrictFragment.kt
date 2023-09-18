@@ -86,6 +86,14 @@ class DistrictFragment : BaseFragment<FragmentDistrictBinding>(
         }
     }
 
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
     override fun onItemDistrictClick(district: District) {
         backToLocationScreen(district)
     }

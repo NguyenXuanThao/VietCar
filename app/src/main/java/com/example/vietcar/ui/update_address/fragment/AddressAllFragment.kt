@@ -117,6 +117,10 @@ class AddressAllFragment : BaseFragment<FragmentAddressAllBinding>(
     override fun evenClick() {
         super.evenClick()
 
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.btnAddAddress.setOnClickListener {
             val action = AddressAllFragmentDirections.actionAddressAllFragmentToLocationFragment()
             findNavController().navigate(action)

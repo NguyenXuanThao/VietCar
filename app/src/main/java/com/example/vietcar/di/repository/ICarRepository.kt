@@ -5,8 +5,6 @@ import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
-import com.example.vietcar.data.model.authentication.AuthenticationBody
-import com.example.vietcar.data.model.authentication.AuthenticationResponse
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
@@ -45,8 +43,6 @@ interface ICarRepository {
     suspend fun login(loginBody: LoginBody): LoginResponse
 
     suspend fun register(registerBody: RegisterBody): RegisterResponse
-
-    suspend fun authentication(body: AuthenticationBody): AuthenticationResponse
 
     suspend fun getAccountInformation(): AccountInformation
 

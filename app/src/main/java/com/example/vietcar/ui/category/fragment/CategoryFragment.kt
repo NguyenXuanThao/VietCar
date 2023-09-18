@@ -32,7 +32,6 @@ import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentCategoryBinding
 import com.example.vietcar.ui.category.viewmodel.CategoryViewModel
-import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -159,6 +158,10 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     override fun evenClick() {
         super.evenClick()
 
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.imgSearchProduct.setOnClickListener {
             val action = CategoryFragmentDirections.actionCategoryFragmentToSearchFragment()
             findNavController().navigate(action)
@@ -249,7 +252,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
     /**
      * Confirm dialog
      */
-    override fun confirmTranSitToLoginScreen() {
+    override fun onClickConfirm() {
         transitToLoginScreen()
     }
 

@@ -9,14 +9,12 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.click.ItemAddressClick
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.address.Address
-import com.example.vietcar.data.model.location.district.District
 import com.example.vietcar.databinding.FragmentAddressBinding
 import com.example.vietcar.ui.address.adapter.AddressAdapter
 import com.example.vietcar.ui.address.viewmodel.AddressViewModel
@@ -72,6 +70,10 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(
 
     override fun evenClick() {
         super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.btnAddAddress.setOnClickListener {
             val action = AddressFragmentDirections.actionAddressFragmentToLocationFragment()

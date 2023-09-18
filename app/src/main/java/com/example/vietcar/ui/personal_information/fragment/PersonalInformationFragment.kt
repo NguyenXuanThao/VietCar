@@ -3,6 +3,7 @@ package com.example.vietcar.ui.personal_information.fragment
 import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
@@ -61,6 +62,14 @@ class PersonalInformationFragment : BaseFragment<FragmentPersonalInformationBind
                     frameLayout.visibility = View.VISIBLE
                 }
             }
+        }
+    }
+
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

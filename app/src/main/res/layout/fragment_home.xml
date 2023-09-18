@@ -23,33 +23,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:id="@+id/frameAvatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginStart="20dp"
+            android:src="@drawable/ic_avatar"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgAvatar"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_avatar" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatarFake"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_avatar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgWarning"
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/warning"
-                android:visibility="gone"
-                app:tint="#D56A48" />
-
-        </FrameLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnHomeLogin"
@@ -57,22 +51,22 @@
             android:layout_height="32dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_login"
-            android:text="Đăng Nhập"
             android:fontFamily="@font/app_font_medium"
+            android:text="Đăng Nhập"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/frameAvatar"
-            app:layout_constraintStart_toEndOf="@+id/frameAvatar"
-            app:layout_constraintTop_toTopOf="@+id/frameAvatar" />
+            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+            app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+            app:layout_constraintTop_toTopOf="@+id/imgAvatar" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/frameAvatar"
-            app:layout_constraintTop_toTopOf="@+id/frameAvatar">
+            app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+            app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar">
 
             <TextView
                 android:id="@+id/tvHello"
@@ -81,38 +75,25 @@
                 android:text="Xin chào !"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:visibility="gone" />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nguyễn Xuân Thao"
-                android:textColor="@color/white"
                 android:layout_marginTop="2dp"
+                android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tvPhoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:layout_marginTop="2dp"
-                android:visibility="gone" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnVerify"
-                android:layout_width="92dp"
-                android:layout_height="28dp"
-                android:background="@drawable/bg_login"
-                android:text="Chưa xác thực"
-                android:textAllCaps="false"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:visibility="gone" />
+                android:visibility="invisible" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView

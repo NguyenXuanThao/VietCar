@@ -33,9 +33,6 @@
         <action
             android:id="@+id/action_bottomNavHome_to_searchFragment"
             app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_bottomNavHome_to_authenticationFragment"
-            app:destination="@id/authenticationFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavProduct"
@@ -82,6 +79,9 @@
         <action
             android:id="@+id/action_bottomNavAccount_to_updatePasswordFragment"
             app:destination="@id/updatePasswordFragment" />
+        <action
+            android:id="@+id/action_bottomNavAccount_to_contactFragment"
+            app:destination="@id/contactFragment" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavStore"
@@ -336,21 +336,17 @@
         android:id="@+id/searchFragment"
         android:name="com.example.vietcar.ui.search.fragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_detailSearchFragment"
             app:destination="@id/detailSearchFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/authenticationFragment"
-        android:name="com.example.vietcar.ui.customer.authentication.fragment.AuthenticationFragment"
-        android:label="fragment_authentication"
-        tools:layout="@layout/fragment_authentication" />
+
     <fragment
         android:id="@+id/detailSearchFragment"
         android:name="com.example.vietcar.ui.detail_search.fragment.DetailSearchFragment"
         android:label="fragment_detail_search"
-        tools:layout="@layout/fragment_detail_search" >
+        tools:layout="@layout/fragment_detail_search">
         <argument
             android:name="keySearch"
             app:argType="string" />
@@ -368,5 +364,10 @@
         android:name="com.example.vietcar.ui.personal_information.fragment.PersonalInformationFragment"
         android:label="fragment_personal_information"
         tools:layout="@layout/fragment_personal_information" />
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="com.example.vietcar.ui.contact.ContactFragment"
+        android:label="fragment_contact"
+        tools:layout="@layout/fragment_contact" />
 
 </navigation>

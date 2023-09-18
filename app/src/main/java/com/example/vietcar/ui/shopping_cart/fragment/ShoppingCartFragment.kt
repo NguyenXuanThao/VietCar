@@ -128,6 +128,10 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(
     override fun evenClick() {
         super.evenClick()
 
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.btnPayment.setOnClickListener {
 
             val body = BillBody(listCartId)

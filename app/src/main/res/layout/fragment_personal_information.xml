@@ -10,6 +10,7 @@
         android:id="@+id/ctTabLayout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="#FAFAFA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,6 +27,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            app:cardCornerRadius="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_back" />
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -45,21 +64,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="84dp" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvAvatar"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgAvatar"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:cardCornerRadius="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewUnderTabLayout">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgAvatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_avatar" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@+id/viewUnderTabLayout" />
 
     <TextView
         android:id="@+id/tvNameTitle"
@@ -73,7 +86,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/tvName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvAvatar" />
+        app:layout_constraintTop_toBottomOf="@+id/imgAvatar" />
 
     <TextView
         android:id="@+id/tvName"

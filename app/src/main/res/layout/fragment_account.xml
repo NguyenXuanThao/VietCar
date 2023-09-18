@@ -15,33 +15,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/frameAvatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline2">
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgAvatar"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:src="@drawable/ic_avatar" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgWarning"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/warning"
-            android:visibility="gone"
-            app:tint="#D56A48" />
-
-    </FrameLayout>
-
+            android:src="@drawable/ic_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline2"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
@@ -54,24 +35,9 @@
         android:text="Đăng nhập"
         android:fontFamily="@font/app_font_medium"
         android:textColor="#B2401C"
-        app:layout_constraintEnd_toEndOf="@+id/frameAvatar"
-        app:layout_constraintStart_toStartOf="@+id/frameAvatar"
-        app:layout_constraintTop_toBottomOf="@+id/frameAvatar" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnVerify"
-        android:layout_width="wrap_content"
-        android:layout_height="29dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bg_login_red"
-        android:padding="6dp"
-        android:text="Chưa xác thực"
-        android:textAllCaps="false"
-        android:textColor="#B2401C"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/frameAvatar"
-        app:layout_constraintStart_toStartOf="@+id/frameAvatar"
-        app:layout_constraintTop_toBottomOf="@+id/frameAvatar" />
+        app:layout_constraintEnd_toEndOf="@+id/imgAvatar"
+        app:layout_constraintStart_toStartOf="@+id/imgAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/imgAvatar" />
 
     <TextView
         android:id="@+id/tvName"
@@ -79,10 +45,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/black"
-        android:visibility="invisible"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:fontFamily="@font/app_font_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <TextView
         android:id="@+id/tvPhoneNumber"
@@ -90,7 +58,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="#F61414"
-        android:visibility="invisible"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:fontFamily="@font/app_font_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
@@ -100,7 +70,7 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="#F5F4F4"
+        android:backgroundTint="#F0F0F6"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,12 +102,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="132dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.38" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

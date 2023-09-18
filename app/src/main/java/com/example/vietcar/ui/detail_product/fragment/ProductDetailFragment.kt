@@ -120,8 +120,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     override fun initData() {
         super.initData()
 
-//        retrieveData()
-
         product = args.product
 
         productDetailViewModel.getRelatedProducts(product!!.id.toString())
@@ -141,6 +139,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
 
     override fun evenClick() {
         super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.btnAddProduct.setOnClickListener {
             if (DataLocal.STATUS == 0) {
@@ -297,7 +299,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     /**
      * Confirm dialog
      */
-    override fun confirmTranSitToLoginScreen() {
+    override fun onClickConfirm() {
         transitToLoginScreen()
     }
 

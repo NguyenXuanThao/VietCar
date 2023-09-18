@@ -75,6 +75,14 @@ class CityFragment : BaseFragment<FragmentCityBinding>(
         cityViewModel.getCity()
     }
 
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
     override fun onClickCityItem(city: City) {
         backToLocationScreen(city)
     }

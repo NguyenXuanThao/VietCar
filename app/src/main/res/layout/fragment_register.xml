@@ -6,6 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".ui.customer.register.RegisterFragment">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvBack"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        app:cardCornerRadius="18dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_back" />
+
+    </androidx.cardview.widget.CardView>
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgLogin"
         android:layout_width="match_parent"

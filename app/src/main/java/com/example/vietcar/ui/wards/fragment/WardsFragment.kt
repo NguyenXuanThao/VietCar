@@ -16,7 +16,6 @@ import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.click.ItemWardsClick
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
-import com.example.vietcar.data.model.location.district.District
 import com.example.vietcar.data.model.location.wards.Wards
 import com.example.vietcar.databinding.FragmentWardsBinding
 import com.example.vietcar.ui.wards.adapter.WardsAdapter
@@ -86,6 +85,14 @@ class WardsFragment : BaseFragment<FragmentWardsBinding>(
             wardsViewModel.getWards(districtCode!!)
         } else {
             frameLayout.visibility = View.GONE
+        }
+    }
+
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.vietcar.ui.order_history.fragment
 
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.databinding.FragmentOrderHistoryBinding
@@ -36,6 +37,14 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding>(
         bottomNavigationView.visibility = View.GONE
 
         setupTabLayout()
+    }
+
+    override fun evenClick() {
+        super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupTabLayout() {

@@ -69,6 +69,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     override fun evenClick() {
         super.evenClick()
 
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.edtSearch.requestFocus()
+
         binding.edtSearch.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (binding.edtSearch.right - binding.edtSearch.compoundDrawables[2].bounds.width())) {

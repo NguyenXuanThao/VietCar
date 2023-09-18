@@ -61,7 +61,7 @@ class AccountAdapter(private val logOutAccount: LogOutAccount) :
             binding.imgIcon.setImageResource(accountScreenCategory.image!!)
 
             itemView.setOnClickListener { view ->
-                when (adapterPosition) {
+                when (accountScreenCategory.id) {
                     0 -> switchScreen(
                         AccountFragmentDirections.actionBottomNavAccountToPersonalInformationFragment(),
                         view
@@ -79,6 +79,11 @@ class AccountAdapter(private val logOutAccount: LogOutAccount) :
 
                     7 -> switchScreen(
                         AccountFragmentDirections.actionBottomNavAccountToUpdatePasswordFragment(),
+                        view
+                    )
+
+                    8 -> switchScreen(
+                        AccountFragmentDirections.actionBottomNavAccountToContactFragment(),
                         view
                     )
 

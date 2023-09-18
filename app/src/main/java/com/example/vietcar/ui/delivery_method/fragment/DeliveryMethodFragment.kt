@@ -15,6 +15,10 @@ class DeliveryMethodFragment : BaseFragment<FragmentDeliveryMethodBinding>(
     override fun evenClick() {
         super.evenClick()
 
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.tvDelivery.setOnClickListener {
             backToPaymentScreen(0)
         }

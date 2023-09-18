@@ -6,8 +6,6 @@ import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
-import com.example.vietcar.data.model.authentication.AuthenticationBody
-import com.example.vietcar.data.model.authentication.AuthenticationResponse
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
@@ -46,12 +44,6 @@ interface CarApi {
         @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
         @Body body: RegisterBody
     ): RegisterResponse
-
-    @POST("api/auth/authentication")
-    suspend fun authentication(
-        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
-        @Body body: AuthenticationBody
-    ): AuthenticationResponse
 
     @GET("api/auth/user-profile")
     suspend fun getAccountInformation(

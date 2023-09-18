@@ -51,7 +51,7 @@
             android:paddingEnd="4dp"
             android:textColor="@color/black"
             android:textColorHint="@color/inactive_text_color"
-            android:textCursorDrawable="@color/primaryTextColor" />
+            android:textCursorDrawable="@color/custom_icon_color" />
     </androidx.cardview.widget.CardView>
 
     <View

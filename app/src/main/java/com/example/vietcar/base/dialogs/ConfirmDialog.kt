@@ -33,12 +33,12 @@ class ConfirmDialog(
         val btnPositive = findViewById<TextView>(R.id.tvOk)
         btnPositive.text = positiveButtonTitle
         btnPositive.setOnClickListener {
-            callback?.confirmTranSitToLoginScreen()
+            callback?.onClickConfirm()
             dismiss()
         }
     }
 
     interface ConfirmCallback {
-        fun confirmTranSitToLoginScreen()
+        fun onClickConfirm()
     }
 }

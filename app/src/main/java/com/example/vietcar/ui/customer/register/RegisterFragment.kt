@@ -1,9 +1,10 @@
 package com.example.vietcar.ui.customer.register
 
-import android.util.Log
+import android.content.Context
 import android.view.Gravity
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.ErrorDialog
 import com.example.vietcar.data.model.register.RegisterBody
@@ -23,7 +24,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(
 
         registerViewModel.registerResponse.observe(this) { registerResponse ->
             if (registerResponse.status == 0) {
-                Log.d("ThaoNX", "Chuyển màn hình")
+                saveData(registerResponse.status, registerResponse.token!!)
+                findNavController().popBackStack()
             } else {
                 registerResponse.message?.let { showDialogError(it) }
             }
@@ -32,6 +34,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(
 
     override fun evenClick() {
         super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.btnRegister.setOnClickListener {
 
@@ -65,6 +71,17 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    private fun saveData(status: Int, token: String) {
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putInt("status_key", status)
+        editor.putString("token_customer", token)
+
+        editor.apply()
     }
 
 }

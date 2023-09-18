@@ -131,7 +131,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
     /**
      * Confirm dialog
      */
-    override fun confirmTranSitToLoginScreen() {
+    override fun onClickConfirm() {
         transitToLoginScreen()
     }
 

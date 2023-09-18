@@ -4,16 +4,12 @@ import android.content.Context
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.ErrorDialog
-import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.model.login.LoginBody
-import com.example.vietcar.data.model.login.LoginResponse
 import com.example.vietcar.databinding.FragmentLoginBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,34 +22,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     private lateinit var bottomNavigationView: BottomNavigationView
     private val loginViewModel: LoginViewModel by viewModels()
 
-    private var loginData: LoginResponse? = null
 
     override fun obServerLivedata() {
         super.obServerLivedata()
 
         loginViewModel.loginResponse.observe(this) { loginResponse ->
 
-            loginData = loginResponse
-
             if (loginResponse.status == 0) {
-                backToHomeFragment()
-
                 saveData(loginResponse.status, loginResponse.token!!)
-
+                findNavController().popBackStack()
 
             } else {
                 loginResponse.message?.let { showDialogError(it) }
             }
         }
-    }
-
-    private fun backToHomeFragment() {
-
-        val args = bundleOf("loginData" to loginData)
-
-        setFragmentResult("loginResult", args)
-
-        findNavController().popBackStack()
     }
 
     override fun initData() {
@@ -78,6 +60,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     override fun evenClick() {
         super.evenClick()
+
+        binding.cvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.tvTransitToRegister.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
