@@ -73,7 +73,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             findNavController().popBackStack()
         }
 
-        binding.edtSearch.requestFocus()
+        requireActivity().runOnUiThread {
+            binding.edtSearch.requestFocus()
+        }
 
         binding.edtSearch.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {

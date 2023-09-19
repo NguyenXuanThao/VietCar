@@ -37,13 +37,19 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
 
     private lateinit var frameLayout: FrameLayout
 
+    private fun setVisibility(isLoading: Boolean) {
+        frameLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
     override fun obServerLivedata() {
         super.obServerLivedata()
 
         frameLayout = requireActivity().findViewById(R.id.frameLayout)
-        frameLayout.visibility = View.VISIBLE
+//        frameLayout.visibility = View.VISIBLE
 
         accountViewModel.accountInformationResponse.observe(viewLifecycleOwner) { resource ->
+
+            setVisibility(resource is Resource.Loading)
 
             when (resource) {
                 is Resource.Success -> {
@@ -63,7 +69,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
                 }
 
                 is Resource.Loading -> {
-                    frameLayout.visibility = View.VISIBLE
+
                 }
             }
 
@@ -79,8 +85,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
 
             updateInfo()
         }
-
-        frameLayout.visibility = View.GONE
 
     }
 

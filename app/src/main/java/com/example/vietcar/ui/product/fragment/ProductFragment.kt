@@ -22,7 +22,6 @@ import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductBinding
-import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.example.vietcar.ui.product.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint

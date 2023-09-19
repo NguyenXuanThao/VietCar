@@ -5,6 +5,7 @@ import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
+import com.example.vietcar.data.model.banner.ListBanner
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
@@ -28,6 +29,8 @@ import com.example.vietcar.data.model.search_history.SearchHistoryEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ICarRepository {
+
+    suspend fun getBanner(): ListBanner
 
     suspend fun getCategory(): ListCategory
 

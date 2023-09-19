@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.click.ItemWardsClick
-import com.example.vietcar.data.model.location.city.City
 import com.example.vietcar.data.model.location.wards.Wards
 import com.example.vietcar.databinding.ItemLocationLayoutBinding
 

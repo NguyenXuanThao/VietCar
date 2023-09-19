@@ -1,4 +1,4 @@
-package com.example.vietcar.ui.detail_product.viewmodel
+package com.example.vietcar.ui.product_detail.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

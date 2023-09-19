@@ -1,4 +1,4 @@
-package com.example.vietcar.ui.detail_search.viewmodel
+package com.example.vietcar.ui.search_detail.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class DetailSearchViewModel @Inject constructor(
+class SearchDetailViewModel @Inject constructor(
     private val carRepository: ICarRepository
 ) : ViewModel() {
 

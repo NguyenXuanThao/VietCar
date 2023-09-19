@@ -1,4 +1,4 @@
-package com.example.vietcar.ui.detail_product.fragment
+package com.example.vietcar.ui.product_detail.fragment
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -30,7 +30,7 @@ import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductDetailBinding
-import com.example.vietcar.ui.detail_product.viewmodel.ProductDetailViewModel
+import com.example.vietcar.ui.product_detail.viewmodel.ProductDetailViewModel
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint

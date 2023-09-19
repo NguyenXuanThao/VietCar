@@ -51,12 +51,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     private lateinit var frameLayout: FrameLayout
 
+    private fun setVisibility(isLoading: Boolean) {
+        frameLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
     override fun obServerLivedata() {
 
         frameLayout = requireActivity().findViewById(R.id.frameLayout)
-        frameLayout.visibility = View.VISIBLE
+//        frameLayout.visibility = View.VISIBLE
+
+        homeViewModel.bannerResponse.observe(viewLifecycleOwner) { resource ->
+
+            setVisibility(resource is Resource.Loading)
+
+            when (resource) {
+                is Resource.Success -> {
+                    val banners = resource.data
+
+                    val uriImage = "https://vietcargroup.com${banners?.data!![0].url_image}"
+                    Glide.with(requireContext()).load(uriImage)
+                        .into(binding.imgPromote)
+                }
+
+                is Resource.Error -> {
+                    val errorMessage = resource.message ?: "Có lỗi mạng"
+                    Utils.showDialogError(requireContext(), errorMessage)
+                }
+
+                is Resource.Loading -> {
+
+                }
+            }
+        }
 
         homeViewModel.categoryResponse.observe(viewLifecycleOwner) { resource ->
+
+            setVisibility(resource is Resource.Loading)
+
             when (resource) {
                 is Resource.Success -> {
                     categories = resource.data
@@ -64,29 +95,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                     binding.rvCategory.adapter = categoryAdapter
                     binding.rvCategory.layoutManager =
                         LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-                    frameLayout.visibility = View.GONE
+//                    frameLayout.visibility = View.GONE
                 }
 
                 is Resource.Error -> {
                     val errorMessage = resource.message ?: "Có lỗi mạng"
                     Utils.showDialogError(requireContext(), errorMessage)
-                    frameLayout.visibility = View.GONE
+//                    frameLayout.visibility = View.GONE
                 }
 
                 is Resource.Loading -> {
-                    frameLayout.visibility = View.VISIBLE
+//                    frameLayout.visibility = View.VISIBLE
                 }
             }
         }
 
         homeViewModel.listProductGroupResponse.observe(viewLifecycleOwner) { resource ->
 
+            setVisibility(resource is Resource.Loading)
+
             when (resource) {
                 is Resource.Success -> {
                     listProductAdapter.differ.submitList(resource.data?.data)
                     binding.rvListProduct.adapter = listProductAdapter
                     binding.rvListProduct.layoutManager = LinearLayoutManager(requireContext())
-                    frameLayout.visibility = View.GONE
+//                    frameLayout.visibility = View.GONE
                 }
 
                 is Resource.Error -> {
@@ -95,13 +128,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
 
                 is Resource.Loading -> {
-                    frameLayout.visibility = View.VISIBLE
+//                    frameLayout.visibility = View.VISIBLE
                 }
             }
 
         }
 
         homeViewModel.productToCartResponse.observe(viewLifecycleOwner) { resource ->
+
+            setVisibility(resource is Resource.Loading)
 
             when (resource) {
                 is Resource.Success -> {
@@ -118,12 +153,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
 
                 is Resource.Loading -> {
-                    frameLayout.visibility = View.VISIBLE
+//                    frameLayout.visibility = View.VISIBLE
                 }
             }
         }
 
         homeViewModel.accountInformationResponse.observe(viewLifecycleOwner) { resource ->
+
+            setVisibility(resource is Resource.Loading)
 
             when (resource) {
                 is Resource.Success -> {
@@ -143,7 +180,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
 
                 is Resource.Loading -> {
-                    frameLayout.visibility = View.VISIBLE
+//                    frameLayout.visibility = View.VISIBLE
                 }
             }
 
@@ -153,6 +190,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     override fun initData() {
         super.initData()
 
+        homeViewModel.getBanner()
         homeViewModel.getCategory()
         homeViewModel.getProductGroup()
 

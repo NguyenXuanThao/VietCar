@@ -1,11 +1,8 @@
 package com.example.vietcar.ui.confirm_order.fragment
 
 
-import android.view.View
-import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
@@ -23,14 +20,9 @@ class OrderConfirmFragment : BaseFragment<FragmentOrderConfirmBinding>(
 
     private var orderConfirmAdapter = OrderConfirmAdapter()
 
-    private lateinit var frameLayout: FrameLayout
-
 
     override fun obServerLivedata() {
         super.obServerLivedata()
-
-        frameLayout = requireActivity().findViewById(R.id.frameLayout)
-        frameLayout.visibility = View.VISIBLE
 
         orderConfirmViewModel.billResponse.observe(viewLifecycleOwner) { resource ->
             when (resource) {
@@ -39,17 +31,14 @@ class OrderConfirmFragment : BaseFragment<FragmentOrderConfirmBinding>(
                     binding.rvOrderConfirm.adapter = orderConfirmAdapter
                     binding.rvOrderConfirm.layoutManager =
                         LinearLayoutManager(requireContext())
-                    frameLayout.visibility = View.GONE
                 }
 
                 is Resource.Error -> {
                     val errorMessage = resource.message ?: "Có lỗi mạng"
                     Utils.showDialogError(requireContext(), errorMessage)
-                    frameLayout.visibility = View.GONE
                 }
 
                 is Resource.Loading -> {
-                    frameLayout.visibility = View.VISIBLE
                 }
             }
         }

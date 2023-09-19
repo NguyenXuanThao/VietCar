@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vietcar.common.Resource
 import com.example.vietcar.data.model.account.AccountInformation
+import com.example.vietcar.data.model.banner.ListBanner
 import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.data.model.product_group.ListProductGroup
@@ -33,9 +34,14 @@ class HomeViewModel @Inject constructor(
     val productToCartResponse
         get() = _productToCartResponse
 
-    private val _accountInformationResponse: MutableLiveData<Resource<AccountInformation>> = MutableLiveData()
+    private val _accountInformationResponse: MutableLiveData<Resource<AccountInformation>> =
+        MutableLiveData()
     val accountInformationResponse
         get() = _accountInformationResponse
+
+    private val _bannerResponse: MutableLiveData<Resource<ListBanner>> = MutableLiveData()
+    val bannerResponse
+        get() = _bannerResponse
 
 
     fun getCategory() {
@@ -79,6 +85,17 @@ class HomeViewModel @Inject constructor(
                 _accountInformationResponse.postValue(Resource.Success(accountInformationData))
             } catch (exception: Exception) {
                 _accountInformationResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
+            }
+        }
+    }
+
+    fun getBanner() {
+        viewModelScope.launch {
+            try {
+                val banners = carRepository.getBanner()
+                _bannerResponse.postValue(Resource.Success(banners))
+            } catch (exception: Exception) {
+                _bannerResponse.postValue(Resource.Error("Lỗi mạng: ${exception.message}"))
             }
         }
     }

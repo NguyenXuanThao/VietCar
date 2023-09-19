@@ -12,12 +12,11 @@ import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.ItemProductBinding
 import com.example.vietcar.ui.category.fragment.CategoryFragmentDirections
-import com.example.vietcar.ui.detail_product.fragment.ProductDetailFragmentDirections
-import com.example.vietcar.ui.detail_search.fragment.DetailSearchFragmentArgs
-import com.example.vietcar.ui.detail_search.fragment.DetailSearchFragmentDirections
+import com.example.vietcar.ui.product_detail.fragment.ProductDetailFragmentDirections
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.fragment.ProductFragmentDirections
 import com.example.vietcar.ui.product_group.fragment.ProductGroupFragmentDirections
+import com.example.vietcar.ui.search_detail.fragment.SearchDetailFragmentDirections
 
 class ProductAdapter(private val itemShoppingCartClick: ItemShoppingCartClick) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
@@ -92,7 +91,7 @@ class ProductAdapter(private val itemShoppingCartClick: ItemShoppingCartClick) :
                     )
 
                 val action6 =
-                    DetailSearchFragmentDirections.actionDetailSearchFragmentToDetailProductFragment(
+                    SearchDetailFragmentDirections.actionDetailSearchFragmentToDetailProductFragment(
                         product
                     )
 
@@ -118,7 +117,7 @@ class ProductAdapter(private val itemShoppingCartClick: ItemShoppingCartClick) :
                         mView.findNavController().navigate(action5)
                     }
 
-                    R.id.detailSearchFragment -> {
+                    R.id.searchDetailFragment -> {
                         mView.findNavController().navigate(action6)
                     }
                 }

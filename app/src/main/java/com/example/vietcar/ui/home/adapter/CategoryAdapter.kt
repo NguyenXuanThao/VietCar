@@ -2,18 +2,14 @@ package com.example.vietcar.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.vietcar.R
 import com.example.vietcar.click.ItemCategoryClick
 import com.example.vietcar.common.DataLocal
 import com.example.vietcar.data.model.category.Category
-import com.example.vietcar.data.model.category.ListCategory
 import com.example.vietcar.databinding.ItemCategoryBinding
-import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 
 class CategoryAdapter(private val itemCategoryClick: ItemCategoryClick) :
     RecyclerView.Adapter<CategoryAdapter.ItemCategoryViewHolder>() {

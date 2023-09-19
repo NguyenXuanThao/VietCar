@@ -1,4 +1,4 @@
-package com.example.vietcar.ui.detail_search.fragment
+package com.example.vietcar.ui.search_detail.fragment
 
 
 import android.graphics.Color
@@ -23,18 +23,18 @@ import com.example.vietcar.common.Resource
 import com.example.vietcar.common.Utils
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
-import com.example.vietcar.databinding.FragmentDetailSearchBinding
-import com.example.vietcar.ui.detail_search.viewmodel.DetailSearchViewModel
+import com.example.vietcar.databinding.FragmentSearchDetailBinding
+import com.example.vietcar.ui.search_detail.viewmodel.SearchDetailViewModel
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.example.vietcar.ui.product.fragment.ProductFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailSearchFragment : BaseFragment<FragmentDetailSearchBinding>(
-    FragmentDetailSearchBinding::inflate
+class SearchDetailFragment : BaseFragment<FragmentSearchDetailBinding>(
+    FragmentSearchDetailBinding::inflate
 ), ItemShoppingCartClick, ConfirmDialog.ConfirmCallback, AddProductDialog.AddProductCallBack {
 
-    private val detailSearchViewModel: DetailSearchViewModel by viewModels()
+    private val searchDetailViewModel: SearchDetailViewModel by viewModels()
 
     private var productId = 0
 
@@ -44,7 +44,7 @@ class DetailSearchFragment : BaseFragment<FragmentDetailSearchBinding>(
 
     private var productAdapter = ProductAdapter(this)
 
-    private val args: DetailSearchFragmentArgs by navArgs()
+    private val args: SearchDetailFragmentArgs by navArgs()
 
     override fun obServerLivedata() {
         super.obServerLivedata()
@@ -52,7 +52,7 @@ class DetailSearchFragment : BaseFragment<FragmentDetailSearchBinding>(
         frameLayout = requireActivity().findViewById(R.id.frameLayout)
         frameLayout.visibility = View.VISIBLE
 
-        detailSearchViewModel.productResponse.observe(viewLifecycleOwner) { resource ->
+        searchDetailViewModel.productResponse.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Success -> {
                     productAdapter.differ.submitList(resource.data?.data)
@@ -73,7 +73,7 @@ class DetailSearchFragment : BaseFragment<FragmentDetailSearchBinding>(
             }
         }
 
-        detailSearchViewModel.productToCartResponse.observe(viewLifecycleOwner) { resource ->
+        searchDetailViewModel.productToCartResponse.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Success -> {
                     if (isClickAddProduct) {
@@ -102,7 +102,7 @@ class DetailSearchFragment : BaseFragment<FragmentDetailSearchBinding>(
 
         val keySearch = args.keySearch
 
-        detailSearchViewModel.getAllProduct(keySearch)
+        searchDetailViewModel.getAllProduct(keySearch)
     }
 
     override fun evenClick() {
@@ -171,7 +171,7 @@ class DetailSearchFragment : BaseFragment<FragmentDetailSearchBinding>(
         Log.d("CategoryFragment", "number $number; product id $productId")
 
         val body = ProductBody(productId, number)
-        detailSearchViewModel.addProductToCart(body)
+        searchDetailViewModel.addProductToCart(body)
     }
 
 }

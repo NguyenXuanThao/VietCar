@@ -6,9 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.vietcar.common.Resource
 import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
-import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
-import com.example.vietcar.data.model.location.city.ListCity
 import com.example.vietcar.di.repository.ICarRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

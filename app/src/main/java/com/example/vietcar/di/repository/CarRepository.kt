@@ -8,6 +8,7 @@ import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
+import com.example.vietcar.data.model.banner.ListBanner
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
 import com.example.vietcar.data.model.bill.ListBill
@@ -39,6 +40,11 @@ class CarRepository @Inject constructor(
     private val locationApi: LocationApi,
     private val carDao: CarDao
 ) : ICarRepository {
+    override suspend fun getBanner(): ListBanner {
+        return withContext(Dispatchers.IO) {
+            carApi.getBanner()
+        }
+    }
 
     override suspend fun getCategory(): ListCategory {
         return withContext(Dispatchers.IO) {
@@ -192,7 +198,7 @@ class CarRepository @Inject constructor(
 
     override suspend fun changePassword(body: PasswordBody): AccountInformation {
         return withContext(Dispatchers.IO) {
-            carApi.changePassword(body= body)
+            carApi.changePassword(body = body)
         }
     }
 
