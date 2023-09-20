@@ -2,18 +2,18 @@ package com.example.vietcar.activities
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.vietcar.R
-import com.example.vietcar.common.DataLocal
 import com.example.vietcar.databinding.ActivityMainBinding
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.payment.fragment.PaymentFragment
@@ -30,17 +30,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        checkLogin()
 
         setupBottomBar()
 
         createNotifyChanel()
 
-        val action = intent.action
+        val destination = intent.action
 
-        if (action == "OPEN_FRAGMENT_HISTORY") {
+        if (destination == "OPEN_FRAGMENT_HISTORY") {
             val action = HomeFragmentDirections.actionBottomNavHomeToOrderHistoryFragment()
             navController.navigate(action)
+            binding.frameLayout.visibility = View.GONE
         }
 
     }
@@ -75,13 +75,4 @@ class MainActivity : AppCompatActivity() {
             manager.createNotificationChannel(chanel)
         }
     }
-
-//    private fun checkLogin() {
-//        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-//        val token = sharedPreferences.getString("token_customer", "")
-//
-//        DataLocal.STATUS = sharedPreferences.getInt("status_key", 1)
-//
-//        DataLocal.BEARER_TOKEN = "Bearer $token"
-//    }
 }

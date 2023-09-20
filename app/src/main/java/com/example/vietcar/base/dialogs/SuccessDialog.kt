@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.Window
 import android.widget.TextView
 import com.example.vietcar.R
 
@@ -17,22 +16,18 @@ class SuccessDialog(
     @SuppressLint("MissingInflatedId", "InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.dialog_success)
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-
-        val rootView = layoutInflater.inflate(R.layout.dialog_success, null, false)
-
-        val tvContentSuccess = rootView.findViewById<TextView>(R.id.tvContentSuccess)
+        val tvContentSuccess = findViewById<TextView>(R.id.tvContentSuccess)
         tvContentSuccess.text = successContent
 
-        val btnOK = rootView.findViewById<TextView>(R.id.tvSuccess)
+        val btnOK = findViewById<TextView>(R.id.tvSuccess)
 
         btnOK.setOnClickListener {
             dismiss()
 
             callBack.clickSwitchScreen()
         }
-        setContentView(rootView)
     }
 
     interface TransitToOtherScreen {

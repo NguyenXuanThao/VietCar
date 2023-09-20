@@ -1,65 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="148dp"
-    android:layout_height="216dp"
-    android:layout_marginStart="20dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginBottom="4dp"
-    android:layout_weight="1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        android:layout_width="148dp"
+        android:layout_height="216dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgProduct"
-            android:layout_width="92dp"
-            android:layout_height="88dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/img_default"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgShopping"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_shopping"
-            app:layout_constraintStart_toEndOf="@+id/imgProduct"
-            app:layout_constraintTop_toTopOf="@+id/imgProduct"
-            app:tint="@color/primaryDarkColor" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgProduct"
+                android:layout_width="92dp"
+                android:layout_height="88dp"
+                android:layout_marginTop="12dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_default"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvNameProduct"
-            android:layout_width="132dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:maxLines="2"
-            android:text="Đầu Màn hình DVD theo xe Ford Fiesta"
-            android:textColor="#2B3141"
-            android:textSize="14sp"
-            android:fontFamily="@font/app_font_medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgProduct" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgShopping"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_shopping"
+                app:layout_constraintStart_toEndOf="@+id/imgProduct"
+                app:layout_constraintTop_toTopOf="@+id/imgProduct"
+                app:tint="@color/primaryDarkColor" />
 
-        <TextView
-            android:id="@+id/tvPriceProduct"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="1,380,000 đ"
-            android:fontFamily="@font/app_font_bold"
-            android:textColor="@color/primaryDarkColor"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/tvNameProduct"
-            app:layout_constraintStart_toStartOf="@+id/tvNameProduct"
-            app:layout_constraintTop_toBottomOf="@+id/tvNameProduct" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvNameProduct"
+                android:layout_width="132dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/app_font_medium"
+                android:maxLines="2"
+                android:text="Đầu Màn hình DVD theo xe Ford Fiesta"
+                android:textColor="#2B3141"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgProduct" />
 
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/tvPriceProduct"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/app_font_bold"
+                android:text="1,380,000 đ"
+                android:textColor="@color/primaryDarkColor"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvNameProduct"
+                app:layout_constraintStart_toStartOf="@+id/tvNameProduct"
+                app:layout_constraintTop_toBottomOf="@+id/tvNameProduct" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

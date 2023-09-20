@@ -58,7 +58,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     override fun obServerLivedata() {
 
         frameLayout = requireActivity().findViewById(R.id.frameLayout)
-//        frameLayout.visibility = View.VISIBLE
 
         homeViewModel.bannerResponse.observe(viewLifecycleOwner) { resource ->
 
@@ -95,17 +94,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                     binding.rvCategory.adapter = categoryAdapter
                     binding.rvCategory.layoutManager =
                         LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-//                    frameLayout.visibility = View.GONE
                 }
 
                 is Resource.Error -> {
                     val errorMessage = resource.message ?: "Có lỗi mạng"
                     Utils.showDialogError(requireContext(), errorMessage)
-//                    frameLayout.visibility = View.GONE
                 }
 
                 is Resource.Loading -> {
-//                    frameLayout.visibility = View.VISIBLE
                 }
             }
         }
@@ -119,7 +115,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                     listProductAdapter.differ.submitList(resource.data?.data)
                     binding.rvListProduct.adapter = listProductAdapter
                     binding.rvListProduct.layoutManager = LinearLayoutManager(requireContext())
-//                    frameLayout.visibility = View.GONE
                 }
 
                 is Resource.Error -> {
@@ -128,7 +123,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
 
                 is Resource.Loading -> {
-//                    frameLayout.visibility = View.VISIBLE
                 }
             }
 
@@ -153,7 +147,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
 
                 is Resource.Loading -> {
-//                    frameLayout.visibility = View.VISIBLE
                 }
             }
         }
@@ -180,7 +173,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
 
                 is Resource.Loading -> {
-//                    frameLayout.visibility = View.VISIBLE
                 }
             }
 
