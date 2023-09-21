@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.AddProductDialog
@@ -57,7 +58,8 @@ class SearchDetailFragment : BaseFragment<FragmentSearchDetailBinding>(
                 is Resource.Success -> {
                     productAdapter.differ.submitList(resource.data?.data)
                     binding.rvDetailSearch.adapter = productAdapter
-                    binding.rvDetailSearch.layoutManager = GridLayoutManager(requireContext(), 2)
+                    binding.rvDetailSearch.layoutManager =
+                        GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
                     frameLayout.visibility = View.GONE
                 }
 

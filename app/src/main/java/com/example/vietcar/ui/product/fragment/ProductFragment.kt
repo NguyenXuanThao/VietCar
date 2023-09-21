@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.base.dialogs.AddProductDialog
@@ -50,7 +51,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
                 is Resource.Success -> {
                     productAdapter.differ.submitList(resource.data?.data)
                     binding.rvProductFragment.adapter = productAdapter
-                    binding.rvProductFragment.layoutManager = GridLayoutManager(requireContext(), 2)
+                    binding.rvProductFragment.layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
                     frameLayout.visibility = View.GONE
                 }
 

@@ -8,6 +8,7 @@
         android:id="@+id/view"
         android:layout_width="4dp"
         android:layout_height="24dp"
+        android:layout_marginStart="12dp"
         android:background="@drawable/bg_add_product"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -17,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="Gía đỡ, Bảng điện thoại - Tẩu sạc"
+        android:text="Giá đỡ, Bảng điện thoại - Tẩu sạc"
         android:textColor="#2B3141"
         android:textSize="16sp"
        android:fontFamily="@font/app_font_bold"
@@ -29,6 +30,7 @@
         android:id="@+id/tvShowAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:text="Xem tất cả"
         android:textColor="#68AD0E"
         android:textSize="14sp"
@@ -39,9 +41,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvListProduct"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view" />

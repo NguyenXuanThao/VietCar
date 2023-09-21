@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.data.model.product_group.ProductGroup
@@ -14,7 +15,8 @@ import com.example.vietcar.databinding.ItemListProductBinding
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 
-class ListProductAdapter (private val itemShoppingCartClick: ItemShoppingCartClick) : RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>() {
+class ListProductAdapter(private val itemShoppingCartClick: ItemShoppingCartClick) :
+    RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>() {
 
     private var binding: ItemListProductBinding? = null
 
@@ -60,11 +62,14 @@ class ListProductAdapter (private val itemShoppingCartClick: ItemShoppingCartCli
             binding.tvNameListProduct.text = productGroup.name
             binding.rvListProduct.adapter = productAdapter
             binding.rvListProduct.layoutManager =
-                GridLayoutManager(itemView.context, 2)
+                GridLayoutManager(itemView.context, 2, LinearLayoutManager.VERTICAL, false)
 
-            binding.tvShowAll.setOnClickListener {mView ->
+            binding.tvShowAll.setOnClickListener { mView ->
 
-                val action = HomeFragmentDirections.actionBottomNavHomeToProductGroupFragment(productGroup.id.toString(), productGroup.name.toString())
+                val action = HomeFragmentDirections.actionBottomNavHomeToProductGroupFragment(
+                    productGroup.id.toString(),
+                    productGroup.name.toString()
+                )
                 mView.findNavController().navigate(action)
             }
         }

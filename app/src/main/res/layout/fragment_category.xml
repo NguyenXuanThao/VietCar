@@ -14,8 +14,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctTabLayout"
             android:layout_width="match_parent"
-            android:background="#FAFAFA"
             android:layout_height="100dp"
+            android:background="#FAFAFA"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,12 +25,12 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/app_font_bold"
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="Giá đỡ, số điện thoại-Tẩu"
                 android:textColor="#3F3F3F"
                 android:textSize="18sp"
-                android:fontFamily="@font/app_font_bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,17 +49,17 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvBack"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                app:cardCornerRadius="18dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="12dp"
+                app:cardCornerRadius="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_back" />
 
@@ -92,8 +92,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Danh mục"
             android:fontFamily="@font/app_font_medium"
+            android:text="Danh mục"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/imgCategory"
             app:layout_constraintStart_toEndOf="@+id/imgCategory"
@@ -108,9 +108,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategoryFragment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

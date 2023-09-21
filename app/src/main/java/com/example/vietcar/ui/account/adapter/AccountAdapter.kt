@@ -95,7 +95,7 @@ class AccountAdapter(private val logOutAccount: LogOutAccount) :
 
                         Toast.makeText(
                             itemView.context,
-                            adapterPosition.toString(),
+                            "chưa có thông tin cho chức năng này",
                             Toast.LENGTH_SHORT
                         ).show()
                         switchScreen(

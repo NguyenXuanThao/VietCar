@@ -162,9 +162,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                     binding.tvPhoneNumber.text = accountInformation?.phone
 
                     val uriImage = "https://vietcargroup.com${accountInformation?.image}"
-                    Glide.with(requireContext()).load(uriImage)
-                        .into(binding.imgAvatar)
-
+                    if (accountInformation?.image!!.isNotEmpty()) {
+                        Glide.with(requireContext()).load(uriImage)
+                            .into(binding.imgAvatar)
+                    }
                 }
 
                 is Resource.Error -> {

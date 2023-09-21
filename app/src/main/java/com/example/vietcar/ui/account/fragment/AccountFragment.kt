@@ -45,7 +45,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
         super.obServerLivedata()
 
         frameLayout = requireActivity().findViewById(R.id.frameLayout)
-//        frameLayout.visibility = View.VISIBLE
 
         accountViewModel.accountInformationResponse.observe(viewLifecycleOwner) { resource ->
 
@@ -58,9 +57,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
                     binding.tvName.text = accountInformation?.name
                     binding.tvPhoneNumber.text = accountInformation?.phone
                     val uriImage = "https://vietcargroup.com${accountInformation?.image}"
-                    Glide.with(requireContext()).load(uriImage)
-                        .into(binding.imgAvatar)
-
+                    if (accountInformation?.image!!.isNotEmpty()) {
+                        Glide.with(requireContext()).load(uriImage)
+                            .into(binding.imgAvatar)
+                    }
                 }
 
                 is Resource.Error -> {

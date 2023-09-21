@@ -38,7 +38,7 @@
             android:id="@+id/imgAvatarFake"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="12dp"
             android:src="@drawable/ic_avatar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,9 +64,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
             app:layout_constraintStart_toEndOf="@+id/imgAvatar"
-            app:layout_constraintTop_toTopOf="@+id/imgAvatar"
-            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar">
+            app:layout_constraintTop_toTopOf="@+id/imgAvatar">
 
             <TextView
                 android:id="@+id/tvHello"
@@ -144,31 +144,38 @@
                 android:id="@+id/rvCategory"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginBottom="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgPromote"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPromote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="20dp"
-                android:scaleType="fitXY"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/rvCategory"
                 app:layout_constraintStart_toStartOf="@+id/rvCategory"
-                app:layout_constraintTop_toBottomOf="@+id/rvCategory" />
+                app:layout_constraintTop_toBottomOf="@+id/rvCategory">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgPromote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY" />
+            </androidx.cardview.widget.CardView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvListProduct"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgPromote" />
+                app:layout_constraintTop_toBottomOf="@+id/cvPromote" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

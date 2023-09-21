@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
@@ -89,7 +90,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
                     productAdapter.differ.submitList(resource.data?.data)
                     binding.rvCategoryFragment.adapter = productAdapter
                     binding.rvCategoryFragment.layoutManager =
-                        GridLayoutManager(requireContext(), 2)
+                        GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
                     frameLayout.visibility = View.GONE
                 }
@@ -245,7 +246,11 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(
         if (DataLocal.STATUS == 0) {
             showDialogProductInfo(product)
         } else {
-            Utils.showDialogConfirm(requireContext(),"Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?", this)
+            Utils.showDialogConfirm(
+                requireContext(),
+                "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
+                this
+            )
         }
     }
 

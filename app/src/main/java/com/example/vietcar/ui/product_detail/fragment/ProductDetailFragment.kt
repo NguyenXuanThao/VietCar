@@ -17,7 +17,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
@@ -31,7 +30,7 @@ import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductDetailBinding
 import com.example.vietcar.ui.product_detail.viewmodel.ProductDetailViewModel
-import com.example.vietcar.ui.product.adapter.ProductAdapter
+import com.example.vietcar.ui.product_detail.adapter.ProductDetailAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +44,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
 
     private val args: ProductDetailFragmentArgs by navArgs()
 
-    private val productAdapter = ProductAdapter(this)
+    private val productAdapter = ProductDetailAdapter(this)
 
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
 
@@ -56,6 +55,13 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     private var isClickAddProduct = false
 
     private lateinit var frameLayout: FrameLayout
+
+    override fun onResume() {
+        super.onResume()
+
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
+        bottomNavigationView.visibility = View.GONE
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -74,7 +80,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
                     productAdapter.differ.submitList(resource.data?.data)
                     binding.rvRelatedProducts.adapter = productAdapter
                     binding.rvRelatedProducts.layoutManager =
-                        LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
                     frameLayout.visibility = View.GONE
                 }
@@ -148,7 +154,11 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
             if (DataLocal.STATUS == 0) {
                 showDialogProductInfo(product!!)
             } else {
-                Utils.showDialogConfirm(requireContext(),"Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?", this)
+                Utils.showDialogConfirm(
+                    requireContext(),
+                    "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
+                    this
+                )
             }
         }
     }
@@ -160,20 +170,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
         val action = ProductDetailFragmentDirections.actionDetailProductFragmentToLoginFragment()
         findNavController().navigate(action)
     }
-
-//    /**
-//     * check login
-//     */
-//
-//    private fun retrieveData() {
-//        val sharedPreferences =
-//            requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-//
-//        val retrievedStatus = sharedPreferences.getInt("status_key", 1)
-//
-//        status = retrievedStatus
-//    }
-
 
     private fun setUpView() {
 
@@ -292,7 +288,11 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
         if (DataLocal.STATUS == 0) {
             showDialogProductInfo(product)
         } else {
-            Utils.showDialogConfirm(requireContext(),"Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?", this)
+            Utils.showDialogConfirm(
+                requireContext(),
+                "Bạn chưa đăng nhập. Đăng nhập ngay bây gi để thực hiện chức năng này?",
+                this
+            )
         }
     }
 

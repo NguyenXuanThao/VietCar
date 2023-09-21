@@ -12,7 +12,6 @@ import com.example.vietcar.click.ItemShoppingCartClick
 import com.example.vietcar.data.model.product.Product
 import com.example.vietcar.databinding.ItemProductBinding
 import com.example.vietcar.ui.category.fragment.CategoryFragmentDirections
-import com.example.vietcar.ui.product_detail.fragment.ProductDetailFragmentDirections
 import com.example.vietcar.ui.home.fragment.HomeFragmentDirections
 import com.example.vietcar.ui.product.fragment.ProductFragmentDirections
 import com.example.vietcar.ui.product_group.fragment.ProductGroupFragmentDirections
@@ -86,11 +85,6 @@ class ProductAdapter(private val itemShoppingCartClick: ItemShoppingCartClick) :
                     )
 
                 val action5 =
-                    ProductDetailFragmentDirections.actionDetailProductFragmentSelf(
-                        product
-                    )
-
-                val action6 =
                     SearchDetailFragmentDirections.actionDetailSearchFragmentToDetailProductFragment(
                         product
                     )
@@ -113,12 +107,8 @@ class ProductAdapter(private val itemShoppingCartClick: ItemShoppingCartClick) :
                         mView.findNavController().navigate(action2)
                     }
 
-                    R.id.detailProductFragment -> {
-                        mView.findNavController().navigate(action5)
-                    }
-
                     R.id.searchDetailFragment -> {
-                        mView.findNavController().navigate(action6)
+                        mView.findNavController().navigate(action5)
                     }
                 }
             }
