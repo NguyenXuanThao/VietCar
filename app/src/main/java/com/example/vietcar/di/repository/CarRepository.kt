@@ -9,6 +9,8 @@ import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
+import com.example.vietcar.data.model.avatar.Avatar
+import com.example.vietcar.data.model.avatar.AvatarBody
 import com.example.vietcar.data.model.banner.ListBanner
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
@@ -34,6 +36,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class CarRepository @Inject constructor(
@@ -104,6 +108,12 @@ class CarRepository @Inject constructor(
     override suspend fun updateInfo(body: AccountBody): AccountInformation {
         return withContext(Dispatchers.IO) {
             carApi.updateInfo(body = body)
+        }
+    }
+
+    override suspend fun updateAvatar( image: MultipartBody.Part): Avatar {
+        return withContext(Dispatchers.IO) {
+            carApi.updateAvatar( image = image)
         }
     }
 

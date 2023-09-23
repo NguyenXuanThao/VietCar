@@ -6,6 +6,8 @@ import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
+import com.example.vietcar.data.model.avatar.Avatar
+import com.example.vietcar.data.model.avatar.AvatarBody
 import com.example.vietcar.data.model.banner.ListBanner
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
@@ -28,6 +30,8 @@ import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
 import com.example.vietcar.data.model.search_history.SearchHistoryEntity
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 interface ICarRepository {
 
@@ -51,6 +55,8 @@ interface ICarRepository {
     suspend fun getAccountInformation(): AccountInformation
 
     suspend fun updateInfo(body: AccountBody): AccountInformation
+
+    suspend fun updateAvatar( image: MultipartBody.Part): Avatar
 
     suspend fun getRelatedProducts(productId: String): ListProduct
 

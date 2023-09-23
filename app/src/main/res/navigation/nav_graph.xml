@@ -551,6 +551,11 @@
             app:launchSingleTop="true"
             app:popUpTo="@+id/bottomNavAccount"
             app:popUpToInclusive="true"/>
+        <argument
+            android:name="image"
+            app:argType="string"
+            app:nullable="true"/>
+
     </fragment>
 
 </navigation>

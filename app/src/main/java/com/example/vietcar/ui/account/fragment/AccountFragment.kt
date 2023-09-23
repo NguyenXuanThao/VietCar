@@ -40,6 +40,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
+    private var image : String? = null
+
     private fun setVisibility(isLoading: Boolean) {
         frameLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
@@ -60,6 +62,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
                     binding.tvName.text = accountInformation?.name
                     binding.tvPhoneNumber.text = accountInformation?.phone
                     val uriImage = "https://vietcargroup.com${accountInformation?.image}"
+
+                    image = uriImage
+
                     Glide.with(requireContext()).load(uriImage).error(R.drawable.ic_user)
                         .into(binding.imgAvatar)
                 }
@@ -104,7 +109,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
         super.evenClick()
 
         binding.cvEditFile.setOnClickListener {
-            val action = AccountFragmentDirections.actionBottomNavAccountToUpdateInfoFragment()
+            val action = AccountFragmentDirections.actionBottomNavAccountToUpdateInfoFragment(image!!)
             findNavController().navigate(action)
         }
 

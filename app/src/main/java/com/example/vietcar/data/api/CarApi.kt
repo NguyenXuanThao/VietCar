@@ -7,6 +7,8 @@ import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
 import com.example.vietcar.data.model.address.ListAddress
 import com.example.vietcar.data.model.address.UpdateDeliveryAddressBody
+import com.example.vietcar.data.model.avatar.Avatar
+import com.example.vietcar.data.model.avatar.AvatarBody
 import com.example.vietcar.data.model.banner.ListBanner
 import com.example.vietcar.data.model.bill.BillBody
 import com.example.vietcar.data.model.bill.BillResponse
@@ -24,12 +26,16 @@ import com.example.vietcar.data.model.product_group.ListProductGroup
 import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -62,6 +68,13 @@ interface CarApi {
         @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Body body: AccountBody
     ): AccountInformation
+
+    @Multipart
+    @POST("api/auth/update_avatar")
+    suspend fun updateAvatar(
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
+        @Part image: MultipartBody.Part
+    ): Avatar
 
     @GET("api/noauth/getListCategory")
     suspend fun getCategory(

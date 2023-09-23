@@ -83,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="Chỉnh sửa hồ sơ"
             android:textColor="@color/black" />
     </androidx.cardview.widget.CardView>
