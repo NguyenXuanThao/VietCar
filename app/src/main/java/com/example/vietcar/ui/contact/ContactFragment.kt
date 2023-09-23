@@ -2,15 +2,27 @@ package com.example.vietcar.ui.contact
 
 import android.content.Intent
 import android.net.Uri
+import android.view.View
 import androidx.navigation.fragment.findNavController
+import com.example.vietcar.R
 import com.example.vietcar.base.BaseFragment
 import com.example.vietcar.databinding.FragmentContactBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class ContactFragment : BaseFragment<FragmentContactBinding>(
     FragmentContactBinding::inflate
 ) {
 
+    private lateinit var bottomNavigationView: BottomNavigationView
+
+    override fun initView() {
+        super.initView()
+
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
+        bottomNavigationView.visibility = View.GONE
+
+    }
 
     override fun evenClick() {
         super.evenClick()

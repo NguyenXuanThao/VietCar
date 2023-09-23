@@ -22,7 +22,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     private lateinit var bottomNavigationView: BottomNavigationView
     private val loginViewModel: LoginViewModel by viewModels()
 
-
     override fun obServerLivedata() {
         super.obServerLivedata()
 
@@ -69,11 +68,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
             findNavController().navigate(action)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bottomNavigationView.visibility = View.VISIBLE
     }
 
     private fun showDialogError(content: String) {

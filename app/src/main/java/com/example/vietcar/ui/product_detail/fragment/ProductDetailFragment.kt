@@ -56,18 +56,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
 
     private lateinit var frameLayout: FrameLayout
 
-    override fun onResume() {
-        super.onResume()
-
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
-        bottomNavigationView.visibility = View.GONE
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bottomNavigationView.visibility = View.VISIBLE
-    }
-
     override fun obServerLivedata() {
         super.obServerLivedata()
 

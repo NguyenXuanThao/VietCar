@@ -24,35 +24,21 @@
             android:src="@drawable/ic_back" />
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewDetailSearch"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="12dp"
-        android:background="@drawable/car_background"
-        app:cardCornerRadius="4dp"
+        android:background="@drawable/search_view_bg"
+        android:theme="@style/SearchViewStyle"
+        app:iconifiedByDefault="false"
         app:layout_constraintBottom_toBottomOf="@+id/cvBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cvBack"
-        app:layout_constraintTop_toTopOf="@+id/cvBack">
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edtSearch"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@null"
-            android:drawableEnd="@drawable/ic_search"
-            android:drawableTint="@color/inactive_text_color"
-            android:hint="Tìm kiếm ..."
-            android:imeOptions="actionDone"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/inactive_text_color"
-            android:textCursorDrawable="@color/custom_icon_color" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="@+id/cvBack"
+        app:queryHint="Tìm kiếm ..." />
 
     <View
         android:id="@+id/viewUnderTabLayout"
@@ -62,7 +48,7 @@
         android:background="@drawable/background_under_tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardViewDetailSearch"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
         tools:ignore="NotSibling" />
 
     <androidx.recyclerview.widget.RecyclerView

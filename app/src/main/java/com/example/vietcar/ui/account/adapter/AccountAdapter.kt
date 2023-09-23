@@ -21,15 +21,13 @@ class AccountAdapter(private val logOutAccount: LogOutAccount) :
 
     private val diffUtil = object : DiffUtil.ItemCallback<AccountScreenCategory>() {
         override fun areItemsTheSame(
-            oldItem: AccountScreenCategory,
-            newItem: AccountScreenCategory
+            oldItem: AccountScreenCategory, newItem: AccountScreenCategory
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: AccountScreenCategory,
-            newItem: AccountScreenCategory
+            oldItem: AccountScreenCategory, newItem: AccountScreenCategory
         ): Boolean {
             return oldItem == newItem
         }
@@ -73,8 +71,7 @@ class AccountAdapter(private val logOutAccount: LogOutAccount) :
                     )
 
                     3 -> switchScreen(
-                        AccountFragmentDirections.actionBottomNavAccountToAddressAllFragment(),
-                        view
+                        AccountFragmentDirections.actionBottomNavAccountToAddressAllFragment(), view
                     )
 
                     7 -> switchScreen(
@@ -83,8 +80,7 @@ class AccountAdapter(private val logOutAccount: LogOutAccount) :
                     )
 
                     8 -> switchScreen(
-                        AccountFragmentDirections.actionBottomNavAccountToContactFragment(),
-                        view
+                        AccountFragmentDirections.actionBottomNavAccountToContactFragment(), view
                     )
 
                     9 -> logOutAccount.logOut()
@@ -98,10 +94,6 @@ class AccountAdapter(private val logOutAccount: LogOutAccount) :
                             "chưa có thông tin cho chức năng này",
                             Toast.LENGTH_SHORT
                         ).show()
-                        switchScreen(
-                            AccountFragmentDirections.actionBottomNavAccountToEmptyFragment(),
-                            view
-                        )
                     }
                 }
 

@@ -29,6 +29,7 @@ import com.example.vietcar.databinding.FragmentHomeBinding
 import com.example.vietcar.ui.home.adapter.CategoryAdapter
 import com.example.vietcar.ui.home.adapter.ListProductAdapter
 import com.example.vietcar.ui.home.viewmodel.HomeViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -47,7 +48,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     private var isClickAddProduct = false
 
+    private lateinit var bottomNavigationView: BottomNavigationView
+
     private var categories: ListCategory? = null
+
+    private var networkErrorDialogShown = false
 
     private lateinit var frameLayout: FrameLayout
 
@@ -68,13 +73,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                     val banners = resource.data
 
                     val uriImage = "https://vietcargroup.com${banners?.data!![0].url_image}"
-                    Glide.with(requireContext()).load(uriImage)
-                        .into(binding.imgPromote)
+                    Glide.with(requireContext()).load(uriImage).into(binding.imgPromote)
                 }
 
                 is Resource.Error -> {
-                    val errorMessage = resource.message ?: "Có lỗi mạng"
-                    Utils.showDialogError(requireContext(), errorMessage)
+                    if (!networkErrorDialogShown) {
+                        networkErrorDialogShown = true
+                        val errorMessage = resource.message ?: "Có lỗi mạng"
+                        Utils.showDialogError(requireContext(), errorMessage)
+                    }
                 }
 
                 is Resource.Loading -> {
@@ -97,8 +104,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
 
                 is Resource.Error -> {
-                    val errorMessage = resource.message ?: "Có lỗi mạng"
-                    Utils.showDialogError(requireContext(), errorMessage)
+                    if (!networkErrorDialogShown) {
+                        networkErrorDialogShown = true
+                        val errorMessage = resource.message ?: "Có lỗi mạng"
+                        Utils.showDialogError(requireContext(), errorMessage)
+                    }
                 }
 
                 is Resource.Loading -> {
@@ -118,8 +128,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
 
                 is Resource.Error -> {
-                    val errorMessage = resource.message ?: "Có lỗi mạng"
-                    Utils.showDialogError(requireContext(), errorMessage)
+                    if (!networkErrorDialogShown) {
+                        networkErrorDialogShown = true
+                        val errorMessage = resource.message ?: "Có lỗi mạng"
+                        Utils.showDialogError(requireContext(), errorMessage)
+                    }
                 }
 
                 is Resource.Loading -> {
@@ -162,15 +175,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                     binding.tvPhoneNumber.text = accountInformation?.phone
 
                     val uriImage = "https://vietcargroup.com${accountInformation?.image}"
-                    if (accountInformation?.image!!.isNotEmpty()) {
-                        Glide.with(requireContext()).load(uriImage)
-                            .into(binding.imgAvatar)
-                    }
+                    Glide.with(requireContext()).load(uriImage).error(R.drawable.ic_avatar)
+                        .into(binding.imgAvatar)
                 }
 
                 is Resource.Error -> {
-                    val errorMessage = resource.message ?: "Có lỗi mạng"
-                    Utils.showDialogError(requireContext(), errorMessage)
+                    if (!networkErrorDialogShown) {
+                        networkErrorDialogShown = true
+                        val errorMessage = resource.message ?: "Có lỗi mạng"
+                        Utils.showDialogError(requireContext(), errorMessage)
+                    }
                 }
 
                 is Resource.Loading -> {
@@ -196,6 +210,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             updateView()
         }
 
+    }
+
+    override fun initView() {
+        super.initView()
+
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
+        bottomNavigationView.visibility = View.VISIBLE
     }
 
     override fun evenClick() {
@@ -311,8 +332,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         addProductDialog.window?.setGravity(Gravity.CENTER)
         addProductDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         addProductDialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
 

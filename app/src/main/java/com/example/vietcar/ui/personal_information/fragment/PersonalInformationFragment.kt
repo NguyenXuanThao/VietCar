@@ -26,18 +26,6 @@ class PersonalInformationFragment : BaseFragment<FragmentPersonalInformationBind
 
     private lateinit var frameLayout: FrameLayout
 
-    override fun onResume() {
-        super.onResume()
-
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
-        bottomNavigationView.visibility = View.GONE
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bottomNavigationView.visibility = View.VISIBLE
-    }
-
     override fun obServerLivedata() {
         super.obServerLivedata()
 
@@ -64,6 +52,8 @@ class PersonalInformationFragment : BaseFragment<FragmentPersonalInformationBind
             }
         }
     }
+
+
 
     override fun evenClick() {
         super.evenClick()

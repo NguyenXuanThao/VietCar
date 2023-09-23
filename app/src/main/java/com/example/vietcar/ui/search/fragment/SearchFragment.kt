@@ -2,8 +2,8 @@ package com.example.vietcar.ui.search.fragment
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
+ import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,18 +28,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private var searchHistoryAdapter = SearchHistoryAdapter(this)
-
-    override fun onResume() {
-        super.onResume()
-
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
-        bottomNavigationView.visibility = View.GONE
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bottomNavigationView.visibility = View.VISIBLE
-    }
 
     override fun obServerLivedata() {
         super.obServerLivedata()
@@ -73,35 +61,34 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             findNavController().popBackStack()
         }
 
-        binding.edtSearch.requestFocus()
+        binding.searchView.clearFocus()
 
-        binding.edtSearch.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (binding.edtSearch.right - binding.edtSearch.compoundDrawables[2].bounds.width())) {
-                    handleSearchIconClick()
-
-                    return@setOnTouchListener true
-                }
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                handleSearchIconClick(query!!)
+                return true
             }
-            return@setOnTouchListener false
-        }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return false
+            }
+        })
     }
 
     override fun deleteSearchHistoryClick(searchHistoryEntity: SearchHistoryEntity) {
         searchViewModel.deleteText(searchHistoryEntity)
     }
 
-    private fun handleSearchIconClick() {
+    private fun handleSearchIconClick(query: String) {
 
         Log.d("SearchFragment", "icon search click")
 
-        val text = binding.edtSearch.text.toString()
-
-        val action = SearchFragmentDirections.actionSearchFragmentToDetailSearchFragment(text)
+        val action = SearchFragmentDirections.actionSearchFragmentToDetailSearchFragment(query)
         findNavController().navigate(action)
 
-        if (text.isNotEmpty()) {
-            val searchHistoryEntity = SearchHistoryEntity(query = text)
+        if (query.isNotEmpty()) {
+            val searchHistoryEntity = SearchHistoryEntity(query = query)
 
             searchViewModel.insertText(searchHistoryEntity)
         }

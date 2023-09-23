@@ -11,8 +11,8 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="12dp"
-        app:cardCornerRadius="14dp"
         android:layout_marginTop="20dp"
+        app:cardCornerRadius="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -50,9 +50,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textIPPhone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle">
@@ -68,9 +70,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textIPPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textIPPhone"
@@ -98,28 +102,44 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/bg_add_product"
         android:fontFamily="@font/app_font_bold"
         android:foreground="?android:attr/selectableItemBackground"
-        android:text="Đăng Nhâp"
+        android:text="Đăng Nhập"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/textIPPassword"
         app:layout_constraintStart_toStartOf="@+id/textIPPassword"
         app:layout_constraintTop_toBottomOf="@id/tvLostPassword" />
 
-    <TextView
-        android:id="@+id/tvTransitToRegister"
+    <LinearLayout
+        android:id="@+id/lnTransitToRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:fontFamily="@font/app_font_medium"
-        android:text="Chưa có tài khoản? Đăng ký"
-        android:textColor="@color/black"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btnLogin"
-        app:layout_constraintStart_toStartOf="@+id/btnLogin" />
+        app:layout_constraintStart_toStartOf="@+id/btnLogin">
+
+        <TextView
+            android:id="@+id/tvQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/app_font_medium"
+            android:text="Chưa có tài khoản? "
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvTransitToRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/app_font_medium"
+            android:text="Đăng kí"
+            android:textColor="@color/PriceColor" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

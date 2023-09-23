@@ -38,4 +38,9 @@
         <item name="colorAccent">#C50B0B</item>
         <item name="android:textColorPrimary">@android:color/darker_gray</item>
     </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Màu của con trỏ khi có focus -->
+        <item name="android:textCursorDrawable">@drawable/cursor_color</item>
+    </style>
 </resources>

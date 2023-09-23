@@ -18,6 +18,7 @@ import com.example.vietcar.data.model.account.AccountScreenCategory
 import com.example.vietcar.databinding.FragmentAccountBinding
 import com.example.vietcar.ui.account.adapter.AccountAdapter
 import com.example.vietcar.ui.account.viewmodel.AccountViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -36,6 +37,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
     private val accountViewModel: AccountViewModel by viewModels()
 
     private lateinit var frameLayout: FrameLayout
+
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     private fun setVisibility(isLoading: Boolean) {
         frameLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
@@ -57,10 +60,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
                     binding.tvName.text = accountInformation?.name
                     binding.tvPhoneNumber.text = accountInformation?.phone
                     val uriImage = "https://vietcargroup.com${accountInformation?.image}"
-                    if (accountInformation?.image!!.isNotEmpty()) {
-                        Glide.with(requireContext()).load(uriImage)
-                            .into(binding.imgAvatar)
-                    }
+                    Glide.with(requireContext()).load(uriImage).error(R.drawable.ic_user)
+                        .into(binding.imgAvatar)
                 }
 
                 is Resource.Error -> {
@@ -91,6 +92,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
     override fun initView() {
         super.initView()
 
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
+        bottomNavigationView.visibility = View.VISIBLE
+
         accountAdapter.differ.submitList(listCategory)
         binding.rvAccountScreen.adapter = accountAdapter
         binding.rvAccountScreen.layoutManager = LinearLayoutManager(requireContext())
@@ -98,6 +102,11 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(
 
     override fun evenClick() {
         super.evenClick()
+
+        binding.cvEditFile.setOnClickListener {
+            val action = AccountFragmentDirections.actionBottomNavAccountToUpdateInfoFragment()
+            findNavController().navigate(action)
+        }
 
         binding.btnLogin.setOnClickListener {
 

@@ -18,18 +18,6 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding>(
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
-    override fun onResume() {
-        super.onResume()
-
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
-        bottomNavigationView.visibility = View.GONE
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bottomNavigationView.visibility = View.VISIBLE
-    }
-
     override fun initView() {
         super.initView()
 

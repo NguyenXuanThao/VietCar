@@ -3,6 +3,7 @@ package com.example.vietcar.di.repository
 import com.example.vietcar.data.api.CarApi
 import com.example.vietcar.data.api.LocationApi
 import com.example.vietcar.data.db.CarDao
+import com.example.vietcar.data.model.account.AccountBody
 import com.example.vietcar.data.model.account.AccountInformation
 import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
@@ -97,6 +98,12 @@ class CarRepository @Inject constructor(
     override suspend fun getAccountInformation(): AccountInformation {
         return withContext(Dispatchers.IO) {
             carApi.getAccountInformation()
+        }
+    }
+
+    override suspend fun updateInfo(body: AccountBody): AccountInformation {
+        return withContext(Dispatchers.IO) {
+            carApi.updateInfo(body = body)
         }
     }
 

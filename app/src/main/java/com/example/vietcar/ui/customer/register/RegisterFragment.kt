@@ -39,6 +39,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(
             findNavController().popBackStack()
         }
 
+        binding.tvTransitToLogin.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.btnRegister.setOnClickListener {
 
             val phoneNumber = binding.textIPPhone.editText?.text.toString()

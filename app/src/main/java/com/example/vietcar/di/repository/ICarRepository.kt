@@ -1,5 +1,6 @@
 package com.example.vietcar.di.repository
 
+import com.example.vietcar.data.model.account.AccountBody
 import com.example.vietcar.data.model.account.AccountInformation
 import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
@@ -48,6 +49,8 @@ interface ICarRepository {
     suspend fun register(registerBody: RegisterBody): RegisterResponse
 
     suspend fun getAccountInformation(): AccountInformation
+
+    suspend fun updateInfo(body: AccountBody): AccountInformation
 
     suspend fun getRelatedProducts(productId: String): ListProduct
 

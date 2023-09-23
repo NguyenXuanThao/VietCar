@@ -1,6 +1,7 @@
 package com.example.vietcar.data.api
 
 import com.example.vietcar.common.DataLocal
+import com.example.vietcar.data.model.account.AccountBody
 import com.example.vietcar.data.model.account.AccountInformation
 import com.example.vietcar.data.model.address.AddressBody
 import com.example.vietcar.data.model.address.AddressResult
@@ -54,6 +55,12 @@ interface CarApi {
     @GET("api/auth/user-profile")
     suspend fun getAccountInformation(
         @Header("Authorization") token: String = DataLocal.BEARER_TOKEN
+    ): AccountInformation
+
+    @POST("api/auth/updateinfo")
+    suspend fun updateInfo(
+        @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
+        @Body body: AccountBody
     ): AccountInformation
 
     @GET("api/noauth/getListCategory")

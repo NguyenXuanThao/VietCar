@@ -37,18 +37,6 @@ class AddressAllFragment : BaseFragment<FragmentAddressAllBinding>(
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
-    override fun onResume() {
-        super.onResume()
-
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
-        bottomNavigationView.visibility = View.GONE
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bottomNavigationView.visibility = View.VISIBLE
-    }
-
     override fun obServerLivedata() {
         super.obServerLivedata()
 
@@ -112,6 +100,14 @@ class AddressAllFragment : BaseFragment<FragmentAddressAllBinding>(
         super.initData()
 
         addressAllViewModel.getAddress()
+    }
+
+    override fun initView() {
+        super.initView()
+
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
+        bottomNavigationView.visibility = View.GONE
+
     }
 
     override fun evenClick() {

@@ -19,7 +19,8 @@
             android:id="@+id/imgAvatar"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:src="@drawable/ic_avatar"
+            android:src="@drawable/ic_user"
+            android:background="@drawable/bg_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline2"/>

@@ -25,6 +25,7 @@ import com.example.vietcar.data.model.product.ProductBody
 import com.example.vietcar.databinding.FragmentProductBinding
 import com.example.vietcar.ui.product.adapter.ProductAdapter
 import com.example.vietcar.ui.product.viewmodel.ProductViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +42,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
 
     private lateinit var frameLayout: FrameLayout
 
+    private lateinit var bottomNavigationView: BottomNavigationView
     override fun obServerLivedata() {
 
         frameLayout = requireActivity().findViewById(R.id.frameLayout)
@@ -51,7 +53,8 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
                 is Resource.Success -> {
                     productAdapter.differ.submitList(resource.data?.data)
                     binding.rvProductFragment.adapter = productAdapter
-                    binding.rvProductFragment.layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+                    binding.rvProductFragment.layoutManager =
+                        GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
                     frameLayout.visibility = View.GONE
                 }
 
@@ -92,8 +95,16 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(
     }
 
     override fun initData() {
+        super.initData()
 
         productViewModel.getAllProduct()
+    }
+
+    override fun initView() {
+        super.initView()
+
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNav)
+        bottomNavigationView.visibility = View.VISIBLE
     }
 
     override fun evenClick() {

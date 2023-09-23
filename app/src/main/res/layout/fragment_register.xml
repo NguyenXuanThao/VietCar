@@ -11,8 +11,8 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="12dp"
-        app:cardCornerRadius="14dp"
         android:layout_marginTop="20dp"
+        app:cardCornerRadius="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -90,7 +90,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/textIPPhone"
         app:layout_constraintStart_toStartOf="@+id/textIPPhone"
-        app:layout_constraintTop_toBottomOf="@+id/textCode">
+        app:layout_constraintTop_toBottomOf="@+id/textCode"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -107,7 +108,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/textIPPhone"
         app:layout_constraintStart_toStartOf="@+id/textIPPhone"
-        app:layout_constraintTop_toBottomOf="@+id/textIPPassword">
+        app:layout_constraintTop_toBottomOf="@+id/textIPPassword"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -130,15 +132,32 @@
         app:layout_constraintStart_toStartOf="@+id/textIPConfirmPassword"
         app:layout_constraintTop_toBottomOf="@id/textIPConfirmPassword" />
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/lnTransitToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:fontFamily="@font/app_font_medium"
-        android:text="Đã có tài khoản? Đăng nhập"
-        android:textColor="@color/black"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btnRegister"
-        app:layout_constraintStart_toStartOf="@+id/btnRegister" />
+        app:layout_constraintStart_toStartOf="@+id/btnRegister">
+
+        <TextView
+            android:id="@+id/tvQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/app_font_medium"
+            android:text="Đã có tài khoản? "
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvTransitToLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/app_font_medium"
+            android:text="Đăng nhập"
+            android:textColor="@color/PriceColor" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
