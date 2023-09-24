@@ -129,7 +129,7 @@ class ProductGroupFragment : BaseFragment<FragmentProductGroupBinding>(
     override fun evenClick() {
         super.evenClick()
 
-        binding.cvBack.setOnClickListener {
+        binding.imgBack.setOnClickListener {
             findNavController().popBackStack()
         }
 

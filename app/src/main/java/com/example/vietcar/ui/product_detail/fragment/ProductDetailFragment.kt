@@ -134,7 +134,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(
     override fun evenClick() {
         super.evenClick()
 
-        binding.cvBack.setOnClickListener {
+        binding.imgBack.setOnClickListener {
             findNavController().popBackStack()
         }
 

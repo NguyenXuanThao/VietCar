@@ -71,7 +71,7 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(
     override fun evenClick() {
         super.evenClick()
 
-        binding.cvBack.setOnClickListener {
+        binding.imgBack.setOnClickListener {
             findNavController().popBackStack()
         }
 

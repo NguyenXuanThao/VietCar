@@ -58,7 +58,7 @@ class PersonalInformationFragment : BaseFragment<FragmentPersonalInformationBind
     override fun evenClick() {
         super.evenClick()
 
-        binding.cvBack.setOnClickListener {
+        binding.imgBack.setOnClickListener {
             findNavController().popBackStack()
         }
     }

@@ -95,16 +95,18 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
             if (!hasAddressData) {
                 when (resource) {
                     is Resource.Success -> {
-                        if (resource.data?.data!!.isNotEmpty()) {
+
+                        if (resource.data?.data != null) {
                             binding.tvAddress.visibility = View.GONE
                             binding.tvName.visibility = View.VISIBLE
                             binding.tvPhone.visibility = View.VISIBLE
                             binding.tvAddressDefault.visibility = View.VISIBLE
 
                             val lastAddress = resource.data.data.last()
+                            addressId = lastAddress.id!!
 
                             binding.tvName.text = lastAddress.customer_name
-                            binding.tvPhone.text = "SĐT ${lastAddress?.customer_phone}"
+                            binding.tvPhone.text = "SĐT ${lastAddress.customer_phone}"
                             binding.tvAddressDefault.text = lastAddress.address
                         }
                     }
@@ -171,7 +173,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(
     override fun evenClick() {
         super.evenClick()
 
-        binding.cvBack.setOnClickListener {
+        binding.imgBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
