@@ -70,6 +70,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     open fun evenClick() {}
 
     override fun onDestroy() {
+        Log.d("BaseFragment", "onDestroy")
         super.onDestroy()
         _binding = null
     }

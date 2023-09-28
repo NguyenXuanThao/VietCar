@@ -29,6 +29,11 @@ import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
 import com.example.vietcar.data.model.search_history.SearchHistoryEntity
+import com.example.vietcar.data.model.store.StoreBody
+import com.example.vietcar.data.model.store.StoreData
+import com.example.vietcar.data.model.store_detail.StoreDetail
+import com.example.vietcar.data.model.store_detail.StoreDetailBody
+import com.example.vietcar.data.model.store_detail.StoreDetailData
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -42,6 +47,8 @@ interface ICarRepository {
     suspend fun getProductGroup(): ListProductGroup
 
     suspend fun getListProductCategory(categoryId: String): ListProduct
+    suspend fun getAllStore(body: StoreBody): StoreData
+    suspend fun getStoreDetail(body: StoreDetailBody): StoreDetailData
 
     suspend fun getListProductGroup(groupId: String): ListProduct
     suspend fun getAllProduct(): ListProduct
@@ -56,7 +63,7 @@ interface ICarRepository {
 
     suspend fun updateInfo(body: AccountBody): AccountInformation
 
-    suspend fun updateAvatar( image: MultipartBody.Part): Avatar
+    suspend fun updateAvatar(image: MultipartBody.Part): Avatar
 
     suspend fun getRelatedProducts(productId: String): ListProduct
 

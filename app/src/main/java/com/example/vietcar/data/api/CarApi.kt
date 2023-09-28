@@ -26,6 +26,11 @@ import com.example.vietcar.data.model.product_group.ListProductGroup
 import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
+import com.example.vietcar.data.model.store.StoreBody
+import com.example.vietcar.data.model.store.StoreData
+import com.example.vietcar.data.model.store_detail.StoreDetail
+import com.example.vietcar.data.model.store_detail.StoreDetailBody
+import com.example.vietcar.data.model.store_detail.StoreDetailData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -75,6 +80,18 @@ interface CarApi {
         @Header("Authorization") token: String = DataLocal.BEARER_TOKEN,
         @Part image: MultipartBody.Part
     ): Avatar
+
+    @POST("api/noauth/shop_getall")
+    suspend fun getAllStore(
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Body body: StoreBody
+    ): StoreData
+
+    @POST("api/noauth/detailnews")
+    suspend fun getStoreDetail(
+        @Header("tokendev") tokeDev: String = DataLocal.TOKEN_DEV,
+        @Body body: StoreDetailBody
+    ): StoreDetailData
 
     @GET("api/noauth/getListCategory")
     suspend fun getCategory(

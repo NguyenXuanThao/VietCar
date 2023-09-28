@@ -32,6 +32,10 @@ import com.example.vietcar.data.model.product_to_cart.ProductToCart
 import com.example.vietcar.data.model.register.RegisterBody
 import com.example.vietcar.data.model.register.RegisterResponse
 import com.example.vietcar.data.model.search_history.SearchHistoryEntity
+import com.example.vietcar.data.model.store.StoreBody
+import com.example.vietcar.data.model.store.StoreData
+import com.example.vietcar.data.model.store_detail.StoreDetailBody
+import com.example.vietcar.data.model.store_detail.StoreDetailData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -66,6 +70,18 @@ class CarRepository @Inject constructor(
     override suspend fun getListProductCategory(categoryId: String): ListProduct {
         return withContext(Dispatchers.IO) {
             carApi.getListProductCategory(categoryId = categoryId)
+        }
+    }
+
+    override suspend fun getAllStore(body: StoreBody): StoreData {
+        return withContext(Dispatchers.IO) {
+            carApi.getAllStore(body = body)
+        }
+    }
+
+    override suspend fun getStoreDetail(body: StoreDetailBody): StoreDetailData {
+        return withContext(Dispatchers.IO) {
+            carApi.getStoreDetail(body = body)
         }
     }
 
@@ -111,9 +127,9 @@ class CarRepository @Inject constructor(
         }
     }
 
-    override suspend fun updateAvatar( image: MultipartBody.Part): Avatar {
+    override suspend fun updateAvatar(image: MultipartBody.Part): Avatar {
         return withContext(Dispatchers.IO) {
-            carApi.updateAvatar( image = image)
+            carApi.updateAvatar(image = image)
         }
     }
 

@@ -160,9 +160,17 @@
     </fragment>
     <fragment
         android:id="@+id/bottomNavStore"
-        android:name="com.example.vietcar.StoreFragment"
+        android:name="com.example.vietcar.ui.store.fragment.StoreFragment"
         android:label="fragment_store"
-        tools:layout="@layout/fragment_store" />
+        tools:layout="@layout/fragment_store" >
+        <action
+            android:id="@+id/action_bottomNavStore_to_storeDetailFragment"
+            app:destination="@id/storeDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.vietcar.ui.customer.login.LoginFragment"
@@ -562,5 +570,14 @@
         android:name="com.example.vietcar.WalletFragment"
         android:label="fragment_wallet"
         tools:layout="@layout/fragment_wallet" />
+    <fragment
+        android:id="@+id/storeDetailFragment"
+        android:name="com.example.vietcar.ui.store_detail.fragment.StoreDetailFragment"
+        android:label="fragment_store_detail"
+        tools:layout="@layout/fragment_store_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

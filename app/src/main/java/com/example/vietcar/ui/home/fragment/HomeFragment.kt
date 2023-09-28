@@ -122,9 +122,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
             when (resource) {
                 is Resource.Success -> {
+                    Log.d("ThaoNX4", "BACK")
                     listProductAdapter.differ.submitList(resource.data?.data)
                     binding.rvListProduct.adapter = listProductAdapter
                     binding.rvListProduct.layoutManager = LinearLayoutManager(requireContext())
+
                 }
 
                 is Resource.Error -> {
